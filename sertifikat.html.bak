@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sertifikat Sutan Arlie Johan</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            'heading': ['Playfair Display', 'serif'],
+            'body': ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="loading font-body text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  <div id="spotlight"></div>
+
+  <div id="custom-cursor">
+    <div id="cursor-dot"></div>
+    <div id="cursor-circle"></div>
+  </div>
+
+  <!-- animated background sama persis dengan index.html -->
+  <div class="animated-background">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div id="loader">
+    <div class="progress-container">
+      <div class="progress-bar-fill"></div>
+    </div>
+    <span class="progress-percentage">0</span>
+    <p>Memuat Sertifikat...</p>
+  </div>
+
+  <header id="main-header" class="main-header fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-all duration-300">
+    <nav class="navbar container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <a href="index.html" class="nav-logo font-heading text-2xl font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">SAJ.</a>
+      <ul class="nav-menu hidden md:flex items-center space-x-8">
+        <li><a href="index.html" class="nav-link text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">Home</a></li>
+        <li><a href="sertifikat.html" class="nav-link active text-blue-600 dark:text-blue-400 font-semibold">Sertifikat</a></li>
+        <li><a href="index.html#contact" class="nav-link text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">Kontak</a></li>
+      </ul>
+      <div class="nav-actions flex items-center gap-4">
+        <button id="theme-toggle" aria-label="Toggle Dark/Light Mode" class="theme-toggle p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 010 1.06l-1.591 1.59a.75.75 0 01-1.06-1.061l1.591-1.59a.75.75 0 011.06 0zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5h2.25a.75.75 0 01.75.75zM17.836 17.894a.75.75 0 011.06 0l1.591 1.59a.75.75 0 01-1.06 1.06l-1.591-1.59a.75.75 0 010-1.06zM12 21.75a.75.75 0 01-.75-.75v-2.25a.75.75 0 011.5 0v2.25a.75.75 0 01-.75.75zM5.106 17.894a.75.75 0 010-1.06l1.591-1.59a.75.75 0 011.06 1.06l-1.591 1.59a.75.75 0 01-1.06 0zM2.25 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3a.75.75 0 01-.75-.75zM6.106 5.106a.75.75 0 011.06 0l1.591 1.59a.75.75 0 01-1.06 1.06L6.106 6.166a.75.75 0 010-1.06z" />
+          </svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 004.463-.948.75.75 0 01.981.634A11.25 11.25 0 0112 21.75c-6.21 0-11.25-5.04-11.25-11.25 0-4.346 2.456-8.053 6.082-9.94a.75.75 0 01.446.108z"
+              clip-rule="evenodd" />
+          </svg>
+        </button>
+        <button class="hamburger md:hidden flex flex-col gap-1.5 p-2" id="hamburger-button" aria-label="Buka Menu Navigasi">
+          <span class="bar w-6 h-0.5 bg-gray-700 dark:bg-gray-300 transition-all"></span>
+          <span class="bar w-6 h-0.5 bg-gray-700 dark:bg-gray-300 transition-all"></span>
+          <span class="bar w-6 h-0.5 bg-gray-700 dark:bg-gray-300 transition-all"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container max-w-7xl mx-auto px-4 py-32">
+    <h1 class="section-title font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-4">Sertifikat Penghargaan</h1>
+    <p class="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
+      Bukti kompetensi dan pencapaian profesional saya. Klik tombol untuk melihat dan mengunduh sertifikat.
+    </p>
+
+    <div class="cert-gallery grid md:grid-cols-2 gap-8">
+
+      <!-- 1. HKI / Trash Point -->
+      <div class="cert-card animate-on-scroll">
+        <div class="cert-preview-placeholder">
+          <embed src="Sertifikat-Bootcamp-Sutan-Arlie.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
+            type="application/pdf" width="100%" height="100%" style="pointer-events: none; object-fit: cover;" />
+        </div>
+        <div class="cert-info">
+          <!-- HARUS SAMA dengan title di script.js -->
+          <h3>Surat Pencatatan Ciptaan HKI</h3>
+          <div class="cert-meta">
+            <div>Kementerian Hukum dan HAM RI</div>
+            <div>06 Agustus 2025</div>
+          </div>
+          <p class="cert-desc">
+            Surat Pencatatan Ciptaan HKI untuk program komputer aplikasi edukasi dan pengelolaan sampah “Trash Point”.
+          </p>
+          <div class="cert-actions">
+            <button type="button" class="btn btn-primary cert-open-btn">
+              Lihat Sertifikat
+            </button>
+            <button type="button" class="btn btn-secondary cert-download-btn">
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Juara 2 - IT Bootcamp -->
+      <div class="cert-card animate-on-scroll">
+        <div class="cert-preview-placeholder">
+          <embed src="Sertifikat-Bootcamp.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf"
+            width="100%" height="100%" style="pointer-events: none; object-fit: cover;" />
+        </div>
+        <div class="cert-info">
+          <!-- HARUS SAMA -->
+          <h3>Juara 2 - IT Bootcamp Software Development</h3>
+          <div class="cert-meta">
+            <div>Universitas Bina Sarana Informatika</div>
+            <div>25 Juni 2025</div>
+          </div>
+          <p class="cert-desc">
+            Penghargaan Juara 2 IT Bootcamp Software Development For Industry dengan proyek web full‑stack.
+          </p>
+          <div class="cert-actions">
+            <button type="button" class="btn btn-primary cert-open-btn">
+              Lihat Sertifikat
+            </button>
+            <button type="button" class="btn btn-secondary cert-download-btn">
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Cisco -->
+      <div class="cert-card animate-on-scroll">
+        <div class="cert-preview-placeholder">
+          <embed src="Sertifikat-Cisco.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf"
+            width="100%" height="100%" style="pointer-events: none; object-fit: cover;" />
+        </div>
+        <div class="cert-info">
+          <!-- HARUS SAMA -->
+          <h3>Introduction to Cybersecurity</h3>
+          <div class="cert-meta">
+            <div>Cisco Networking Academy</div>
+            <div>03 November 2025</div>
+          </div>
+          <p class="cert-desc">
+            Sertifikasi pengenalan keamanan siber: ancaman, perlindungan data pribadi, dan keamanan infrastruktur
+            jaringan.
+          </p>
+          <div class="cert-actions">
+            <button type="button" class="btn btn-primary cert-open-btn">
+              Lihat Sertifikat
+            </button>
+            <button type="button" class="btn btn-secondary cert-download-btn">
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. MikroTik MTCNA -->
+      <div class="cert-card animate-on-scroll">
+        <div class="cert-preview-placeholder">
+          <embed src="Sutan-Arlie-MTCNA.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf"
+            width="100%" height="100%" style="pointer-events: none; object-fit: cover;" />
+        </div>
+        <div class="cert-info">
+          <!-- HARUS SAMA -->
+          <h3>MikroTik Certified Network Associate (MTCNA)</h3>
+          <div class="cert-meta">
+            <div>MikroTik</div>
+            <div>17 Januari 2026</div>
+          </div>
+          <p class="cert-desc">
+            Sertifikasi MTCNA untuk konfigurasi RouterOS, manajemen bandwidth, firewall, dan routing dasar.
+          </p>
+          <div class="cert-actions">
+            <button type="button" class="btn btn-primary cert-open-btn">
+              Lihat Sertifikat
+            </button>
+            <button type="button" class="btn btn-secondary cert-download-btn">
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- modal bawaan script.js (biarin apa adanya supaya ga error) -->
+    <div id="project-modal" class="modal">
+      <div class="modal-content">
+        <button id="modal-close-btn" class="modal-close">&times;</button>
+        <div id="modal-body"></div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
