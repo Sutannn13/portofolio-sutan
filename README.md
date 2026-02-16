@@ -4,7 +4,7 @@ Portfolio profesional menampilkan project, skills, dan pengalaman saya sebagai m
 
 ## 🌐 Live Demo
 
-> https://sutanarlie.netlify.app _(update dengan link deployment Anda)_
+> https://sutanarlie.netlify.app
 
 ## 👤 Tentang Saya
 
