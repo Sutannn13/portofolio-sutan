@@ -13,8 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
        1. STATE & CONSTANTS
        ============================================= */
     const state = {
-        blogCurrentPage: 1,
-        blogPostsPerPage: 3,
         isTouchDevice: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
         gsapReady: false,
     };
@@ -26,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Trash Point (HKI)': {
             type: 'project',
             title: 'Trash Point (Proyek Unggulan & Peraih HKI)',
-            image: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+            image: './HKI.jpeg',
             description: 'Platform manajemen sampah berbasis IoT dengan sistem poin insentif. Memperoleh sertifikat HKI resmi dari Kemenkumham RI. Prototipe fungsional yang mengintegrasikan sensor MQTT dengan dashboard web real-time.',
             purpose: 'Mengurangi penumpukan sampah dan memberikan nilai ekonomis melalui sistem reward berbasis poin.',
             tech: ['React.js', 'Node.js', 'PostgreSQL', 'MQTT', 'IoT'],
@@ -37,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Fish Market': {
             type: 'project',
             title: 'Fish Market - Platform Jual Beli Ikan',
-            image: 'https://images.unsplash.com/photo-1544943910-4c1dc44aab44?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+            image: './fish market.png',
             description: 'Platform jual beli ikan online yang menghubungkan penjual dan pembeli dengan sistem transaksi yang aman dan efisien. Menyediakan fitur katalog produk, manajemen pesanan, dan tracking pengiriman.',
             purpose: 'Memudahkan transaksi jual beli ikan secara online dengan sistem yang user-friendly dan terpercaya.',
             tech: ['PHP', 'MySQL', 'JavaScript', 'Bootstrap'],
@@ -51,67 +49,68 @@ document.addEventListener('DOMContentLoaded', () => {
         "Introduction to Cybersecurity": {
             type: "certificate",
             title: "Introduction to Cybersecurity",
-            isPdf: true,
             issuer: "Cisco Networking Academy",
             date: "03 November 2025",
-            description: "Sertifikasi kompetensi dasar keamanan siber yang mencakup pengenalan ancaman siber, perlindungan data pribadi, dan keamanan infrastruktur jaringan perusahaan.",
-            fileUrl: "Sertifikat-Cisco.pdf",
+            badgeClass: "cert-type-badge type-certification",
+            badgeLabel: "Sertifikat Keamanan",
+            description: "Sertifikasi kompetensi dasar keamanan siber dari Cisco yang mencakup pengenalan ancaman siber, perlindungan data pribadi, dan keamanan infrastruktur jaringan perusahaan.",
+            highlights: [
+                "Memahami jenis ancaman siber seperti malware, phishing, dan ransomware",
+                "Mempelajari cara melindungi perangkat dan data pribadi secara efektif",
+                "Mengenal konsep keamanan jaringan dan enkripsi data",
+                "Sertifikasi resmi dari Cisco Networking Academy yang diakui secara global",
+            ],
+            imageUrl: "Sertifikat-Cisco_page-0001.jpg",
         },
         "Juara 2 - IT Bootcamp Software Development": {
             type: "certificate",
             title: "Juara 2 - IT Bootcamp Software Development",
-            isPdf: true,
             issuer: "Universitas Bina Sarana Informatika",
             date: "25 Juni 2025",
-            description: "Penghargaan Juara 2 dalam kompetisi IT Bootcamp Software Development For Industry.",
-            fileUrl: "Sertifikat-Bootcamp.pdf",
+            badgeClass: "cert-type-badge type-award",
+            badgeLabel: "Penghargaan Kompetisi",
+            description: "Penghargaan Juara 2 dalam kompetisi IT Bootcamp Software Development For Industry yang diselenggarakan oleh Universitas Bina Sarana Informatika.",
+            highlights: [
+                "Merancang dan membangun aplikasi web full-stack dalam waktu terbatas",
+                "Berkolaborasi dalam tim menggunakan metodologi Agile",
+                "Mempresentasikan solusi teknis kepada panel juri industri",
+                "Bersaing dengan puluhan tim peserta dari berbagai kampus",
+            ],
+            imageUrl: "HKI.jpeg",
         },
         "Surat Pencatatan Ciptaan HKI": {
             type: "certificate",
             title: "Surat Pencatatan Ciptaan HKI",
-            isPdf: true,
             issuer: "Kementerian Hukum dan HAM RI",
             date: "06 Agustus 2025",
-            description: "Surat Pencatatan Ciptaan HKI resmi untuk Program Komputer Aplikasi Edukasi Dan Pengelolaan Sampah Berbasis Web Trash Point.",
-            fileUrl: "Sertifikat-Bootcamp-Sutan-Arlie.pdf",
+            badgeClass: "cert-type-badge type-hki",
+            badgeLabel: "Hak Kekayaan Intelektual",
+            description: "Surat Pencatatan Ciptaan HKI resmi dari Kemenkumham RI untuk program komputer aplikasi edukasi dan pengelolaan sampah berbasis web bernama Trash Point.",
+            highlights: [
+                "Karya terdaftar sebagai Ciptaan Program Komputer di bawah UUHC RI",
+                "Aplikasi edukasi pengelolaan sampah berbasis web \u2014 Trash Point",
+                "Perlindungan hukum resmi terhadap karya intelektual asli",
+                "Nomor pencatatan resmi dari Dirjen Kekayaan Intelektual Kemenkumham RI",
+            ],
+            imageUrl: "Sertifikat-Bootcamp-Sutan-Arlie_page-0001.jpg",
         },
         "MikroTik Certified Network Associate (MTCNA)": {
             type: "certificate",
             title: "MikroTik Certified Network Associate (MTCNA)",
-            isPdf: true,
             issuer: "MikroTik",
             date: "17 Januari 2026",
-            description: "Sertifikasi resmi MTCNA yang mencakup konfigurasi dasar RouterOS, manajemen bandwidth, firewall, dan routing.",
-            fileUrl: "Sutan-Arlie-MTCNA.pdf",
+            badgeClass: "cert-type-badge type-certification",
+            badgeLabel: "Sertifikasi Jaringan",
+            description: "Sertifikasi resmi dari MikroTik yang membuktikan kemampuan konfigurasi, manajemen, dan keamanan perangkat jaringan berbasis RouterOS.",
+            highlights: [
+                "Konfigurasi router MikroTik dan RouterOS dari dasar hingga mahir",
+                "Manajemen bandwidth menggunakan Queue Tree dan Simple Queue",
+                "Konfigurasi firewall, NAT, dan filtering paket jaringan",
+                "Routing statis, dinamis (OSPF/BGP), dan manajemen VLAN",
+            ],
+            imageUrl: "Sutan-Arlie-MTCNA_page-0001.jpg",
         },
     };
-
-    const blogPosts = [
-        {
-            id: 1,
-            title: 'Memahami Asynchronous JavaScript',
-            category: 'Teknologi',
-            date: '10 Agustus 2025',
-            excerpt: 'JavaScript modern sangat bergantung pada operasi asynchronous. Mari kita bedah perbedaan Promise vs Async/Await.',
-            image: 'https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=75'
-        },
-        {
-            id: 2,
-            title: 'Pengenalan IoT dengan MQTT Protocol',
-            category: 'IoT',
-            date: '25 September 2025',
-            excerpt: 'MQTT adalah protokol ringan yang populer di dunia IoT. Pelajari cara kerja publish-subscribe dan implementasinya di proyek nyata.',
-            image: 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=75'
-        },
-        {
-            id: 3,
-            title: 'Tips Clean Code untuk Pemula',
-            category: 'Best Practice',
-            date: '5 November 2025',
-            excerpt: 'Menulis kode yang bersih dan mudah dibaca adalah skill penting. Berikut prinsip-prinsip clean code yang wajib dipraktekkan sejak awal.',
-            image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=75'
-        },
-    ];
 
     /* =============================================
        3. MODULE: LOADER (Real Document-Ready)
@@ -141,10 +140,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Skip loader on certificate page (more robust detection)
             const pathname = window.location.pathname.toLowerCase();
-            const isCertificatePage = pathname.includes('sertifikat') || 
-                                      pathname.includes('certificate') || 
-                                      document.querySelector('body[data-page="certificate"]') !== null;
-            
+            const isCertificatePage = pathname.includes('sertifikat') ||
+                pathname.includes('certificate') ||
+                document.querySelector('body[data-page="certificate"]') !== null;
+
             if (isCertificatePage) {
                 hide();
                 return;
@@ -297,8 +296,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // - .timeline items → handled by initTimeline()
                 // - .stagger-container items → handled by stagger-item logic above
                 // But DON'T skip stats cards - they need animation
-                if ((el.closest('#hero') && !el.classList.contains('premium-stat-card')) || 
-                    el.closest('.timeline') || 
+                if ((el.closest('#hero') && !el.classList.contains('premium-stat-card')) ||
+                    el.closest('.timeline') ||
                     el.classList.contains('stagger-item')) return;
 
                 // Set initial state
@@ -523,7 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('========================');
 
             // IMPORTANT: Clear any inline transforms that might override CSS positioning
-            gsap.set(items, { 
+            gsap.set(items, {
                 opacity: 0,
                 clearProps: 'transform,x,y,left,translateX,translateY'
             });
@@ -664,7 +663,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const draw = (currentTime) => {
                 if (!isVisible) return;
-                
+
                 // Frame rate limiting for better performance
                 if (currentTime - lastFrameTime < frameInterval) {
                     animId = requestAnimationFrame(draw);
@@ -681,7 +680,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
                     ctx.fillStyle = p.color + '0.6)';
                     ctx.fill();
-                    
+
                     // Only draw connections if not on mobile (performance)
                     if (!isMobile) {
                         for (let j = i + 1; j < particles.length; j++) {
@@ -790,43 +789,45 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const setupEventListeners = () => {
-            // Check if mobile/touch device
-            const isMobile = state.isTouchDevice || window.innerWidth < 768;
-            
-            if (isMobile) {
-                // Simple tap-to-flip on mobile
-                wrapper.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    toggleFlip();
-                });
-                wrapper.style.cursor = 'pointer';
-            } else {
-                // Full drag physics on desktop
-                wrapper.addEventListener('mousedown', handleDragStart);
-                document.addEventListener('mousemove', handleDragMove);
-                document.addEventListener('mouseup', handleDragEnd);
-                wrapper.style.cursor = 'grab';
+            // Mouse events
+            wrapper.addEventListener('mousedown', handlePointerStart);
+            document.addEventListener('mousemove', handlePointerMove);
+            document.addEventListener('mouseup', handlePointerEnd);
+
+            // Touch events
+            wrapper.addEventListener('touchstart', handlePointerStart, { passive: false });
+            document.addEventListener('touchmove', handlePointerMove, { passive: false });
+            document.addEventListener('touchend', handlePointerEnd);
+
+            wrapper.style.cursor = 'grab';
+        };
+
+        const getPointerPos = (e) => {
+            if (e.touches && e.touches.length > 0) {
+                return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            } else if (e.changedTouches && e.changedTouches.length > 0) {
+                return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
             }
-
-            // Touch events with simple tap-to-flip
-            wrapper.addEventListener('touchstart', handleTouchStart, { passive: true });
-            wrapper.addEventListener('touchend', handleTouchEnd, { passive: true });
+            return { x: e.clientX, y: e.clientY };
         };
 
-        const handleDragStart = (e) => {
+        const handlePointerStart = (e) => {
             isDragging = true;
-            dragStartX = e.clientX - offsetX;
-            dragStartY = e.clientY - offsetY;
+            const pos = getPointerPos(e);
+            dragStartX = pos.x - offsetX;
+            dragStartY = pos.y - offsetY;
             wrapper.style.cursor = 'grabbing';
-            e.preventDefault();
+            // Only prevent default on touch if it's not a scroll intent or if it's the wrapper itself? Wait, we're building a draggable element, let's preventDefault to stop page scroll while dragging card.
+            if (e.cancelable) e.preventDefault();
         };
 
-        const handleDragMove = (e) => {
+        const handlePointerMove = (e) => {
             if (!isDragging) return;
+            if (e.cancelable) e.preventDefault();
 
-            e.preventDefault();
-            const deltaX = e.clientX - dragStartX;
-            const deltaY = e.clientY - dragStartY;
+            const pos = getPointerPos(e);
+            const deltaX = pos.x - dragStartX;
+            const deltaY = pos.y - dragStartY;
 
             // Limit drag distance
             const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -844,14 +845,12 @@ document.addEventListener('DOMContentLoaded', () => {
             rotationAngle = offsetX * ROTATION_FACTOR;
         };
 
-        const handleDragEnd = (e) => {
+        const handlePointerEnd = (e) => {
             if (!isDragging) return;
 
-            // Calculate if it was a click (small movement)
-            const moveDistance = Math.sqrt(
-                Math.pow(e.clientX - dragStartX, 2) +
-                Math.pow(e.clientY - dragStartY, 2)
-            );
+            // Calculate if it was a click (small movement) based on offset 
+            // since offset gets reset to delta. If moved less than CLICK_THRESHOLD pixels, it's a tap.
+            const moveDistance = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
 
             if (moveDistance < CLICK_THRESHOLD) {
                 toggleFlip();
@@ -859,26 +858,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             isDragging = false;
             wrapper.style.cursor = 'grab';
-        };
-
-        const handleTouchStart = (e) => {
-            // Store initial touch position for tap detection
-            const touch = e.touches[0];
-            dragStartX = touch.clientX;
-            dragStartY = touch.clientY;
-        };
-
-        const handleTouchEnd = (e) => {
-            // Simple tap-to-flip: if touch moved less than threshold, it's a tap
-            const touch = e.changedTouches[0];
-            const moveDistance = Math.sqrt(
-                Math.pow(touch.clientX - dragStartX, 2) +
-                Math.pow(touch.clientY - dragStartY, 2)
-            );
-
-            if (moveDistance < CLICK_THRESHOLD) {
-                toggleFlip();
-            }
         };
 
         const toggleFlip = () => {
@@ -1063,7 +1042,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const trapFocus = (e) => {
             if (!modal || !modal.classList.contains('open')) return;
-            
+
             const focusableElements = getFocusableElements(modal);
             if (focusableElements.length === 0) return;
 
@@ -1105,26 +1084,25 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     </div>`;
             } else {
-                const fileUrl = data.fileUrl;
+                const imageUrl = data.imageUrl || '';
+                // Widen modal for 2-column certificate layout
+                modal.querySelector('.modal-content')?.classList.add('cert-modal-wide');
                 html = `
-                    <div class="modal-header">
-                        <h2>${data.title}</h2>
-                        <p class="modal-meta">
-                            <span><strong>Penyelenggara:</strong> ${data.issuer}</span><br>
-                            <span><strong>Tanggal:</strong> ${data.date}</span>
-                        </p>
-                    </div>
-                    <div class="modal-content">
-                        <p class="modal-description">${data.description}</p>
-                        <div class="modal-certificate-preview modal-cert-image-preview">
-                            <div class="cert-pdf-placeholder">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-16 h-16 text-indigo-400 mx-auto mb-3"><path d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625z"/><path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z"/></svg>
-                                <p class="text-gray-500 dark:text-gray-400 text-sm">Klik tombol di bawah untuk melihat atau mengunduh sertifikat PDF</p>
-                            </div>
+                    <div class="cert-modal-layout">
+                        <div class="cert-modal-left">
+                            <img src="${imageUrl}" alt="${data.title}" class="cert-modal-img" loading="lazy" decoding="async" />
                         </div>
-                        <div class="modal-actions">
-                            <a href="${fileUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Buka Sertifikat</a>
-                            <a href="${fileUrl}" download class="btn btn-outline">Download PDF</a>
+                        <div class="cert-modal-right">
+                            <span class="${data.badgeClass}">${data.badgeLabel}</span>
+                            <h2 class="cert-modal-title">${data.title}</h2>
+                            <div class="cert-modal-meta">
+                                <div><strong>Penyelenggara:</strong> ${data.issuer}</div>
+                                <div><strong>Tanggal:</strong> ${data.date}</div>
+                            </div>
+                            <p class="cert-modal-description">${data.description}</p>
+                            <ul class="cert-modal-highlights">
+                                ${(data.highlights || []).map(h => `<li>${h}</li>`).join('')}
+                            </ul>
                         </div>
                     </div>`;
             }
@@ -1134,7 +1112,7 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.setAttribute('aria-hidden', 'false');
             document.body.classList.add('modal-open');
             if (lenis) lenis.stop();
-            
+
             // Focus management: store current focus and focus close button
             previouslyFocusedElement = document.activeElement;
             setTimeout(() => {
@@ -1143,19 +1121,79 @@ document.addEventListener('DOMContentLoaded', () => {
                     focusableElements[0].focus();
                 }
             }, 100);
-            
+
             // Add focus trap listener
             document.addEventListener('keydown', trapFocus);
+
+            // Drag handle
+            const contentEl = modal.querySelector('.modal-content');
+            if (contentEl && !contentEl.querySelector('.modal-drag-handle')) {
+                const handle = document.createElement('div');
+                handle.className = 'modal-drag-handle';
+                handle.innerHTML = '<span></span>';
+                contentEl.prepend(handle);
+            }
+
+            // Drag to reposition
+            const _contentEl = modal.querySelector('.modal-content');
+            const _handle = _contentEl?.querySelector('.modal-drag-handle');
+            if (_handle && _contentEl) {
+                let isDragging = false, startY = 0, startMargin = 0;
+                const onDown = (e) => {
+                    isDragging = true;
+                    startY = e.touches ? e.touches[0].clientY : e.clientY;
+                    startMargin = parseInt(_contentEl.style.marginTop || '0', 10);
+                    _contentEl.style.transition = 'none';
+                    document.addEventListener('mousemove', onMove);
+                    document.addEventListener('mouseup', onUp);
+                    document.addEventListener('touchmove', onMove, { passive: false });
+                    document.addEventListener('touchend', onUp);
+                };
+                const onMove = (e) => {
+                    if (!isDragging) return;
+                    if (e.cancelable) e.preventDefault();
+                    const y = e.touches ? e.touches[0].clientY : e.clientY;
+                    const delta = y - startY;
+                    const next = Math.max(-200, Math.min(200, startMargin + delta));
+                    _contentEl.style.marginTop = next + 'px';
+                };
+                const onUp = () => {
+                    isDragging = false;
+                    _contentEl.style.transition = '';
+                    document.removeEventListener('mousemove', onMove);
+                    document.removeEventListener('mouseup', onUp);
+                    document.removeEventListener('touchmove', onMove);
+                    document.removeEventListener('touchend', onUp);
+                };
+                _handle.addEventListener('mousedown', onDown);
+                _handle.addEventListener('touchstart', onDown, { passive: true });
+            }
         };
 
         const close = () => {
             if (!modal) return;
             modal.classList.remove('open');
+            modal.querySelector('.modal-content')?.classList.remove('cert-modal-wide');
+            // Reset drag position
+            const contentEl = modal.querySelector('.modal-content');
+            if (contentEl) contentEl.style.marginTop = '';
             modal.setAttribute('aria-hidden', 'true');
             document.body.classList.remove('modal-open');
+
+            // Force clear any overflow styles
             document.body.style.overflow = '';
-            if (lenis) lenis.start();
-            
+            document.body.style.position = '';
+            document.body.style.width = '';
+
+            // Restart Lenis smooth scroll
+            if (lenis) {
+                lenis.start();
+                // Force scroll refresh
+                requestAnimationFrame(() => {
+                    if (lenis) lenis.resize();
+                });
+            }
+
             // Remove focus trap and restore previous focus
             document.removeEventListener('keydown', trapFocus);
             if (previouslyFocusedElement && previouslyFocusedElement.focus) {
@@ -1174,8 +1212,20 @@ document.addEventListener('DOMContentLoaded', () => {
             // Project cards
             document.querySelectorAll('.project-card').forEach(card => {
                 card.addEventListener('click', (e) => {
+                    // Don't open modal if clicking on links, buttons, or tech tag spans
+                    if (e.target.closest('a, button') || e.target.closest('.flex.flex-wrap.gap-2')) {
+                        return;
+                    }
                     e.preventDefault();
                     open(card);
+                });
+
+                // Prevent modal from opening when clicking project links
+                const links = card.querySelectorAll('a, button');
+                links.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
                 });
             });
 
@@ -1204,65 +1254,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })();
 
     /* =============================================
-       14. MODULE: BLOG
-       ============================================= */
-    const Blog = (() => {
-        const init = () => {
-            const container = document.getElementById('blog-posts-container');
-            const pagination = document.getElementById('blog-pagination');
-            if (!container || !pagination) return;
-
-            const render = () => {
-                container.innerHTML = '';
-                const start = (state.blogCurrentPage - 1) * state.blogPostsPerPage;
-                blogPosts.slice(start, start + state.blogPostsPerPage).forEach((post, i) => {
-                    const el = document.createElement('div');
-                    el.className = 'blog-card gsap-stagger-child';
-                    el.innerHTML = `
-                        <img src="${post.image}" alt="${post.title}" class="blog-card-image" loading="lazy">
-                        <div class="blog-card-content">
-                            <span class="category">${post.category}</span>
-                            <h3>${post.title}</h3>
-                            <p>${post.excerpt}</p>
-                            <div class="blog-card-footer">
-                                <span>${post.date}</span>
-                                <a href="#" class="read-more">Baca &rarr;</a>
-                            </div>
-                        </div>`;
-                    container.appendChild(el);
-                });
-                renderPagination();
-            };
-
-            const renderPagination = () => {
-                pagination.innerHTML = '';
-                const total = Math.ceil(blogPosts.length / state.blogPostsPerPage);
-                if (total <= 1) return;
-                const btn = (txt, page, disabled, active) => {
-                    const b = document.createElement('button');
-                    b.innerHTML = txt; b.disabled = disabled;
-                    if (active) b.classList.add('active');
-                    b.addEventListener('click', () => { 
-                        state.blogCurrentPage = page; 
-                        render(); 
-                        // Use LenisScroll for consistent smooth scrolling
-                        LenisScroll.scrollTo(container);
-                    });
-                    return b;
-                };
-                pagination.append(btn('&laquo;', state.blogCurrentPage - 1, state.blogCurrentPage === 1));
-                for (let i = 1; i <= total; i++) pagination.append(btn(i, i, false, state.blogCurrentPage === i));
-                pagination.append(btn('&raquo;', state.blogCurrentPage + 1, state.blogCurrentPage === total));
-            };
-
-            render();
-        };
-
-        return { init };
-    })();
-
-    /* =============================================
-       15. MODULE: CONTACT FORM
+       14. MODULE: CONTACT FORM
        ============================================= */
     const ContactForm = (() => {
         const form = document.getElementById('contact-form');
@@ -1334,7 +1326,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })();
 
     /* =============================================
-       16. MODULE: UTILITIES
+       15. MODULE: UTILITIES
        ============================================= */
     const throttle = (fn, limit) => {
         let inThrottle;
@@ -1361,7 +1353,6 @@ document.addEventListener('DOMContentLoaded', () => {
         HeroParticles.init();
         IdCard.init();
         TypingEffect.init();
-        Blog.init();
         Modal.init();
         ContactForm.init();
         updateCopyrightYear();

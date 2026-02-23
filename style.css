@@ -16,8 +16,7 @@
   --font-family-body:
     "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
-  --font-family-mono:
-    "JetBrains Mono", "Fira Code", "Courier New", monospace;
+  --font-family-mono: "JetBrains Mono", "Fira Code", "Courier New", monospace;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
@@ -1072,43 +1071,57 @@ html.dark .moon-icon {
 }
 
 .id-card-lanyard {
-  width: 14px;
-  height: 80px;
-  background: repeating-linear-gradient(
-    45deg,
-    #1a1a1a,
-    #1a1a1a 5px,
-    #2a2a2a 5px,
-    #2a2a2a 10px
-  );
-  border-radius: 4px;
+  width: 20px;
+  height: 90px;
+  background: linear-gradient(to right, #1e293b, #334155, #1e293b);
+  border-radius: 2px;
   position: relative;
   z-index: 5;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: 
+    inset 2px 0 4px rgba(0, 0, 0, 0.4),
+    inset -2px 0 4px rgba(0, 0, 0, 0.4),
+    0 4px 6px rgba(0, 0, 0, 0.5);
+  margin-bottom: -10px; /* Connect seamlessly to the clip */
+}
+
+/* Stitched edge effect for the lanyard */
+.id-card-lanyard::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 3px;
+  right: 3px;
+  border-left: 1px dashed rgba(255, 255, 255, 0.15);
+  border-right: 1px dashed rgba(255, 255, 255, 0.15);
+  pointer-events: none;
 }
 
 .id-card-clip {
-  width: 55px;
-  height: 32px;
-  background: linear-gradient(to bottom, #cfd9df, #e2ebf0);
+  width: 48px;
+  height: 28px;
+  background: linear-gradient(135deg, #e2e8f0, #94a3b8, #cbd5e1);
   border-radius: 6px;
   position: relative;
   z-index: 6;
-  margin-top: -5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+    0 4px 8px rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #a8b4bb;
+  border: 1px solid #64748b;
+  margin-bottom: -4px; /* Connect seamlessly to the ID card */
 }
 
+/* Enhancing the metallic clip hole section */
 .id-card-clip::after {
   content: "";
-  width: 24px;
-  height: 16px;
-  background: linear-gradient(to bottom, #999, #7a7a7a);
-  border-radius: 3px;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+  width: 22px;
+  height: 12px;
+  background: linear-gradient(to bottom, #475569, #1e293b);
+  border-radius: 4px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8), 0 1px 1px rgba(255, 255, 255, 0.4);
 }
 
 .id-card-holder {
@@ -2475,123 +2488,7 @@ html.dark .projects-section::before {
 }
 
 /* ============================================================
-   14. BLOG SECTION
-   ============================================================ */
-.blog-section {
-  padding: var(--section-padding);
-  background-color: transparent;
-}
-
-.blog-posts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
-  margin-bottom: 3rem;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.blog-card {
-  background: var(--color-surface);
-  border-radius: var(--border-radius-md);
-  overflow: hidden;
-  box-shadow: var(--shadow-soft);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--color-border);
-  will-change: transform;
-}
-
-.blog-card:hover {
-  transform: translateY(-6px);
-  box-shadow:
-    0 20px 40px rgba(99, 102, 241, 0.12),
-    var(--shadow-large);
-  border-color: var(--color-primary);
-}
-
-.blog-card-image {
-  height: 200px;
-  width: 100%;
-  object-fit: cover;
-}
-
-.blog-card-content {
-  padding: 1.5rem;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.blog-card-content .category {
-  color: var(--color-primary);
-  font-size: 0.8rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-}
-
-.blog-card-content h3 {
-  font-size: 1.25rem;
-  margin-bottom: 0.75rem;
-}
-
-.blog-card-content p {
-  color: var(--color-text-muted);
-  font-size: 0.95rem;
-  flex-grow: 1;
-}
-
-.blog-card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 1rem;
-  border-top: 1px solid var(--color-border);
-  font-size: 0.85rem;
-  color: var(--color-text-muted);
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.pagination button {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  color: var(--color-text);
-  padding: 0.5rem 1rem;
-  border-radius: var(--border-radius-sm);
-  cursor: pointer;
-  transition: all var(--transition-speed) ease;
-}
-
-.pagination button:hover {
-  background-color: var(--color-border);
-}
-
-.pagination button.active {
-  background: linear-gradient(
-    135deg,
-    var(--color-primary),
-    var(--color-primary-hover)
-  );
-  color: #fff;
-  border-color: var(--color-primary);
-}
-
-.pagination button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* ============================================================
-   15. CONTACT SECTION
+   14. CONTACT SECTION
    ============================================================ */
 .contact-section {
   padding: var(--section-padding);
@@ -2654,7 +2551,7 @@ html.dark .projects-section::before {
 }
 
 /* ============================================================
-   16. COMPONENTS (Buttons, Modals, Forms)
+   15. COMPONENTS (Buttons, Modals, Forms)
    ============================================================ */
 
 /* Buttons */
@@ -2767,14 +2664,20 @@ html.dark .projects-section::before {
   display: none;
   justify-content: center;
   align-items: center;
+  padding: 1rem;
   z-index: 2000;
   opacity: 0;
-  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .modal.open {
   display: flex;
   opacity: 1;
+  animation: modalFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .modal-content {
@@ -2787,12 +2690,17 @@ html.dark .projects-section::before {
   overflow-y: auto;
   position: relative;
   transform: scale(0.9) translateY(20px);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid var(--color-border);
 }
 
 .modal.open .modal-content {
   transform: scale(1) translateY(0);
+  animation: modalScaleUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes modalScaleUp {
+  from { transform: scale(0.95) translateY(20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
 }
 
 .modal-close {
@@ -2807,10 +2715,36 @@ html.dark .projects-section::before {
   cursor: pointer;
   transition: color var(--transition-speed) ease;
   line-height: 1;
+  z-index: 50;
 }
 
 .modal-close:hover {
   color: var(--color-text);
+}
+
+/* Drag handle at top of modal */
+.modal-drag-handle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 0 0.75rem;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  margin: -2rem -2rem 1rem;
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+.modal-drag-handle:active {
+  cursor: grabbing;
+}
+
+.modal-drag-handle span {
+  display: block;
+  width: 3rem;
+  height: 4px;
+  background: var(--color-border);
+  border-radius: 99px;
 }
 
 .modal-body img,
@@ -2889,6 +2823,89 @@ html.dark .projects-section::before {
   height: 500px;
   border-radius: var(--border-radius-md);
   border: 1px solid var(--color-border);
+}
+
+/* ---- Certificate modal 2-column layout ---- */
+.cert-modal-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.cert-modal-img {
+  width: 100%;
+  height: auto;
+  max-height: 480px;
+  object-fit: contain;
+  border-radius: var(--border-radius-md);
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  background: #0d1117;
+}
+
+.cert-modal-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0.5rem 0 0.75rem;
+  line-height: 1.4;
+}
+
+.cert-modal-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.cert-modal-description {
+  color: var(--color-text);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.cert-modal-highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cert-modal-highlights li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.cert-modal-highlights li::before {
+  content: "\2726";
+  color: var(--color-primary);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.modal-content.cert-modal-wide {
+  max-width: 960px;
+  width: 95vw;
+}
+
+@media (max-width: 640px) {
+  .cert-modal-layout {
+    grid-template-columns: 1fr;
+  }
+  .cert-modal-img {
+    max-height: 260px;
+  }
 }
 
 .modal-actions {
@@ -2978,7 +2995,7 @@ textarea {
 }
 
 /* ============================================================
-   17. GSAP ANIMATION HELPERS
+   16. GSAP ANIMATION HELPERS
    ============================================================ */
 
 /* Smooth page load fade-in */
@@ -3084,13 +3101,13 @@ body:not(.gsap-loaded) .stagger-item {
 }
 
 /* ============================================================
-   18. SCROLL TO TOP & UTILITIES
+   17. SCROLL TO TOP & UTILITIES
    ============================================================ */
 /* NOTE: Scroll-to-top styles are defined earlier in this file (around line 769)
    to avoid duplication. The .show class is used to toggle visibility. */
 
 /* ============================================================
-   19. CERTIFICATE PAGE STYLES
+   18. CERTIFICATE PAGE STYLES
    ============================================================ */
 .cert-gallery {
   display: grid;
@@ -3099,22 +3116,31 @@ body:not(.gsap-loaded) .stagger-item {
   margin-top: 2rem;
 }
 
+/* Spotlight Effect: Dim all cards when the gallery is hovered */
+.cert-gallery:hover .cert-card {
+  filter: brightness(0.4) grayscale(50%);
+  transform: scale(0.98);
+}
+
 .cert-card {
   background: var(--color-surface);
   padding: 2rem;
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-soft);
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: default;
+  cursor: pointer; /* make it feel clickable */
   border: 1px solid var(--color-border);
   position: relative;
-  will-change: transform;
+  will-change: transform, filter;
 }
 
-.cert-card:hover {
-  transform: translateY(-6px);
+/* Spotlight Effect: Keep the hovered card bright and scaled up */
+.cert-gallery .cert-card:hover {
+  filter: brightness(1) grayscale(0%) !important;
+  transform: translateY(-8px) scale(1.02) !important;
+  z-index: 10;
   box-shadow:
-    0 20px 40px rgba(99, 102, 241, 0.12),
+    0 20px 40px rgba(99, 102, 241, 0.3),
     var(--shadow-large);
   border-color: var(--color-primary);
 }
@@ -3187,7 +3213,7 @@ body:not(.gsap-loaded) .stagger-item {
 }
 
 /* ============================================================
-   20. RESPONSIVE DESIGN (COMPREHENSIVE - ALL DEVICES)
+   19. RESPONSIVE DESIGN (COMPREHENSIVE - ALL DEVICES)
    ============================================================ */
 
 /* --- Global: Prevent horizontal overflow on all devices --- */
@@ -3311,11 +3337,6 @@ body {
 
   /* Skills 2-column on tablet */
   .skills-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* Blog 2-column */
-  .blog-posts-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -3642,12 +3663,6 @@ body {
   .testimonial-avatar {
     width: 60px;
     height: 60px;
-  }
-
-  /* === BLOG MOBILE === */
-  .blog-posts-grid {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
   }
 
   /* === CONTACT MOBILE === */
@@ -4123,10 +4138,6 @@ body {
 
   .contact-container {
     padding: 2rem;
-  }
-
-  .blog-posts-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 
   /* Certificate gallery 2 columns on tablet */

@@ -86,6 +86,57 @@
       opacity: 1;
     }
 
+    .cert-thumb-badge {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+    }
+
+    /* Override default cert-card padding for edge-to-edge thumbnail */
+    .cert-card {
+      padding: 0 !important;
+      overflow: hidden;
+    }
+
+    /* Thumbnail wrapper — matches project card image style */
+    .cert-thumb-wrapper {
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      position: relative;
+      border-radius: 16px 16px 0 0;
+      background: #0d1117;
+    }
+
+    .cert-thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .cert-thumb-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(10, 10, 25, 0.7) 100%);
+    }
+
+    .cert-card-body {
+      padding: 1.5rem;
+    }
+
+    .cert-card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--color-text, #f1f5f9);
+      margin-bottom: 0.5rem;
+      margin-top: 0.4rem;
+      line-height: 1.4;
+    }
+
     /* Badge for cert type */
     .cert-type-badge {
       display: inline-flex;
@@ -198,8 +249,8 @@
         Sertifikat & Penghargaan
       </h1>
       <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
-        Bukti kompetensi dan pencapaian profesional saya. Klik <strong>Lihat PDF</strong> untuk membuka sertifikat di
-        tab baru, atau <strong>Download</strong> untuk menyimpannya.
+        Bukti kompetensi dan pencapaian profesional saya. Klik <strong>Lihat Sertifikat</strong> untuk melihat detail
+        dan penjelasan lengkap setiap sertifikat.
       </p>
     </div>
 
@@ -208,30 +259,11 @@
 
       <!-- 1. HKI / Trash Point -->
       <article class="cert-card gsap-stagger-child" aria-labelledby="cert-hki-title">
-        <!-- PDF Icon Preview (replaces <embed>) -->
-        <a href="Sertifikat-Bootcamp-Sutan-Arlie.pdf" target="_blank" rel="noopener noreferrer"
-          class="cert-icon-preview" aria-label="Buka PDF Surat Pencatatan Ciptaan HKI">
-          <svg class="pdf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-            aria-hidden="true">
-            <path
-              d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625z" />
-            <path
-              d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
-          </svg>
-          <span class="preview-label">Surat Pencatatan Ciptaan HKI.pdf</span>
-          <div class="hover-overlay" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
-              <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-              <path fill-rule="evenodd"
-                d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
-                clip-rule="evenodd" />
-            </svg>
-            Buka PDF
-          </div>
-        </a>
-
-        <div class="cert-info">
-          <span class="cert-type-badge type-hki">
+        <div class="cert-thumb-wrapper">
+          <img src="Sertifikat-Bootcamp-Sutan-Arlie_page-0001.jpg" alt="Surat Pencatatan Ciptaan HKI"
+            class="cert-thumb-img" loading="lazy" decoding="async" />
+          <div class="cert-thumb-overlay"></div>
+          <span class="cert-type-badge type-hki cert-thumb-badge">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3 h-3">
               <path fill-rule="evenodd"
                 d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.883l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
@@ -239,13 +271,15 @@
             </svg>
             Hak Kekayaan Intelektual
           </span>
-          <h2 id="cert-hki-title" class="cert-info h3">Surat Pencatatan Ciptaan HKI</h2>
+        </div>
+        <div class="cert-card-body">
+          <h3 id="cert-hki-title" class="cert-card-title">Surat Pencatatan Ciptaan HKI</h3>
           <div class="cert-meta">
             <div>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                 class="w-4 h-4 inline mr-1 text-indigo-400">
                 <path fill-rule="evenodd"
-                  d="M4 16.5v-13h-.25a.75.75 0 010-1.5h12.5a.75.75 0 010 1.5H16v13h.25a.75.75 0 010 1.5h-3.5a.75.75 0 01-.75-.75v-2.5a.75.75 0 00-.75-.75h-2.5a.75.75 0 00-.75.75v2.5a.75.75 0 01-.75.75h-3.5a.75.75 0 010-1.5H4zm3-11a.5.5 0 01.5-.5h1a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-1zm.5 3.5a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h1a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5h-1zm2.5-.5a.5.5 0 01.5-.5h1a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-1z"
+                  d="M4 16.5v-13h-.25a.75.75 0 010-1.5h12.5a.75.75 0 010 1.5H16v13h.25a.75.75 0 010 1.5h-3.5a.75.75 0 01-.75-.75v-2.5a.75.75 0 00-.75-.75h-2.5a.75.75 0 00-.75.75v2.5a.75.75 0 01-.75.75h-3.5a.75.75 0 010-1.5H4z"
                   clip-rule="evenodd" />
               </svg>
               Kementerian Hukum dan HAM RI
@@ -260,13 +294,10 @@
               06 Agustus 2025
             </div>
           </div>
-          <p class="cert-desc">
-            Surat Pencatatan Ciptaan HKI resmi untuk Program Komputer Aplikasi Edukasi dan Pengelolaan Sampah Berbasis
-            Web <em>Trash Point</em>.
-          </p>
+          <p class="cert-desc">Surat Pencatatan Ciptaan HKI resmi dari Kemenkumham RI untuk program komputer aplikasi
+            edukasi dan pengelolaan sampah berbasis web <em>Trash Point</em>.</p>
           <div class="cert-actions">
-            <a href="Sertifikat-Bootcamp-Sutan-Arlie.pdf" target="_blank" rel="noopener noreferrer"
-              class="btn btn-primary cert-open-btn">
+            <button class="btn btn-primary cert-open-btn">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"
                 aria-hidden="true">
                 <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
@@ -274,48 +305,19 @@
                   d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
                   clip-rule="evenodd" />
               </svg>
-              Lihat PDF
-            </a>
-            <a href="Sertifikat-Bootcamp-Sutan-Arlie.pdf" download="HKI-Trash-Point-Sutan-Arlie.pdf"
-              class="btn btn-outline cert-download-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"
-                aria-hidden="true">
-                <path
-                  d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
-                <path
-                  d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
-              </svg>
-              Download
-            </a>
+              Lihat Sertifikat
+            </button>
           </div>
         </div>
       </article>
 
       <!-- 2. Juara 2 - IT Bootcamp -->
       <article class="cert-card gsap-stagger-child" aria-labelledby="cert-bootcamp-title">
-        <a href="Sertifikat-Bootcamp.pdf" target="_blank" rel="noopener noreferrer" class="cert-icon-preview"
-          aria-label="Buka PDF Juara 2 IT Bootcamp">
-          <svg class="pdf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-            aria-hidden="true">
-            <path
-              d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625z" />
-            <path
-              d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
-          </svg>
-          <span class="preview-label">Sertifikat-Bootcamp.pdf</span>
-          <div class="hover-overlay" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
-              <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-              <path fill-rule="evenodd"
-                d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
-                clip-rule="evenodd" />
-            </svg>
-            Buka PDF
-          </div>
-        </a>
-
-        <div class="cert-info">
-          <span class="cert-type-badge type-award">
+        <div class="cert-thumb-wrapper">
+          <img src="HKI.jpeg" alt="Juara 2 - IT Bootcamp Software Development" class="cert-thumb-img" loading="lazy"
+            decoding="async" />
+          <div class="cert-thumb-overlay"></div>
+          <span class="cert-type-badge type-award cert-thumb-badge">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3 h-3">
               <path fill-rule="evenodd"
                 d="M10 1a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 1zM5.05 3.05a.75.75 0 011.06 0l1.062 1.06A.75.75 0 116.11 5.173L5.05 4.11a.75.75 0 010-1.06zm9.9 0a.75.75 0 010 1.06l-1.06 1.062a.75.75 0 01-1.062-1.061l1.061-1.06a.75.75 0 011.06 0zM3 8a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5A.75.75 0 013 8zm11 0a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5A.75.75 0 0114 8zm-6.828 2.828a.75.75 0 010 1.061L6.11 12.95a.75.75 0 01-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm3.594-3.317a.75.75 0 00-1.37.364l-.492 6.861a.75.75 0 001.204.65l1.043-.799.985 3.678a.75.75 0 001.45-.388l-.978-3.646 1.292.204a.75.75 0 00.74-1.16l-3.874-5.764z"
@@ -323,13 +325,15 @@
             </svg>
             Penghargaan Kompetisi
           </span>
-          <h2 id="cert-bootcamp-title" class="cert-info h3">Juara 2 — IT Bootcamp Software Development</h2>
+        </div>
+        <div class="cert-card-body">
+          <h3 id="cert-bootcamp-title" class="cert-card-title">Juara 2 - IT Bootcamp Software Development</h3>
           <div class="cert-meta">
             <div>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                 class="w-4 h-4 inline mr-1 text-indigo-400">
                 <path fill-rule="evenodd"
-                  d="M4 16.5v-13h-.25a.75.75 0 010-1.5h12.5a.75.75 0 010 1.5H16v13h.25a.75.75 0 010 1.5h-3.5a.75.75 0 01-.75-.75v-2.5a.75.75 0 00-.75-.75h-2.5a.75.75 0 00-.75.75v2.5a.75.75 0 01-.75.75h-3.5a.75.75 0 010-1.5H4zm3-11a.5.5 0 01.5-.5h1a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-1zm.5 3.5a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h1a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5h-1zm2.5-.5a.5.5 0 01.5-.5h1a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-1z"
+                  d="M4 16.5v-13h-.25a.75.75 0 010-1.5h12.5a.75.75 0 010 1.5H16v13h.25a.75.75 0 010 1.5h-3.5a.75.75 0 01-.75-.75v-2.5a.75.75 0 00-.75-.75h-2.5a.75.75 0 00-.75.75v2.5a.75.75 0 01-.75.75h-3.5a.75.75 0 010-1.5H4z"
                   clip-rule="evenodd" />
               </svg>
               Universitas Bina Sarana Informatika
@@ -344,13 +348,10 @@
               25 Juni 2025
             </div>
           </div>
-          <p class="cert-desc">
-            Penghargaan Juara 2 dalam kompetisi IT Bootcamp Software Development For Industry dengan proyek web
-            full-stack inovatif.
-          </p>
+          <p class="cert-desc">Penghargaan Juara 2 dalam kompetisi IT Bootcamp Software Development For Industry — bukti
+            kemampuan membangun aplikasi web full-stack inovatif.</p>
           <div class="cert-actions">
-            <a href="Sertifikat-Bootcamp.pdf" target="_blank" rel="noopener noreferrer"
-              class="btn btn-primary cert-open-btn">
+            <button class="btn btn-primary cert-open-btn">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"
                 aria-hidden="true">
                 <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
@@ -358,62 +359,35 @@
                   d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
                   clip-rule="evenodd" />
               </svg>
-              Lihat PDF
-            </a>
-            <a href="Sertifikat-Bootcamp.pdf" download="Juara2-Bootcamp-Sutan-Arlie.pdf"
-              class="btn btn-outline cert-download-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"
-                aria-hidden="true">
-                <path
-                  d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
-                <path
-                  d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
-              </svg>
-              Download
-            </a>
+              Lihat Sertifikat
+            </button>
           </div>
         </div>
       </article>
 
       <!-- 3. Cisco Cybersecurity -->
       <article class="cert-card gsap-stagger-child" aria-labelledby="cert-cisco-title">
-        <a href="Sertifikat-Cisco.pdf" target="_blank" rel="noopener noreferrer" class="cert-icon-preview"
-          aria-label="Buka PDF Sertifikat Cisco Cybersecurity">
-          <svg class="pdf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-            aria-hidden="true">
-            <path
-              d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625z" />
-            <path
-              d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
-          </svg>
-          <span class="preview-label">Sertifikat-Cisco.pdf</span>
-          <div class="hover-overlay" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
-              <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-              <path fill-rule="evenodd"
-                d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
-                clip-rule="evenodd" />
-            </svg>
-            Buka PDF
-          </div>
-        </a>
-
-        <div class="cert-info">
-          <span class="cert-type-badge type-certification">
+        <div class="cert-thumb-wrapper">
+          <img src="Sertifikat-Cisco_page-0001.jpg" alt="Introduction to Cybersecurity" class="cert-thumb-img"
+            loading="lazy" decoding="async" />
+          <div class="cert-thumb-overlay"></div>
+          <span class="cert-type-badge type-certification cert-thumb-badge">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3 h-3">
               <path fill-rule="evenodd"
                 d="M10 1a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 1zM5.05 3.05a.75.75 0 011.06 0l1.062 1.06A.75.75 0 116.11 5.173L5.05 4.11a.75.75 0 010-1.06zm9.9 0a.75.75 0 010 1.06l-1.06 1.062a.75.75 0 01-1.062-1.061l1.061-1.06a.75.75 0 011.06 0zM3 8a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5A.75.75 0 013 8zm11 0a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5A.75.75 0 0114 8z"
                 clip-rule="evenodd" />
             </svg>
-            Sertifikasi Internasional
+            Sertifikat Keamanan
           </span>
-          <h2 id="cert-cisco-title" class="cert-info h3">Introduction to Cybersecurity</h2>
+        </div>
+        <div class="cert-card-body">
+          <h3 id="cert-cisco-title" class="cert-card-title">Introduction to Cybersecurity</h3>
           <div class="cert-meta">
             <div>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                 class="w-4 h-4 inline mr-1 text-indigo-400">
                 <path fill-rule="evenodd"
-                  d="M4 16.5v-13h-.25a.75.75 0 010-1.5h12.5a.75.75 0 010 1.5H16v13h.25a.75.75 0 010 1.5h-3.5a.75.75 0 01-.75-.75v-2.5a.75.75 0 00-.75-.75h-2.5a.75.75 0 00-.75.75v2.5a.75.75 0 01-.75.75h-3.5a.75.75 0 010-1.5H4zm3-11a.5.5 0 01.5-.5h1a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-1zm.5 3.5a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h1a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5h-1zm2.5-.5a.5.5 0 01.5-.5h1a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-1z"
+                  d="M4 16.5v-13h-.25a.75.75 0 010-1.5h12.5a.75.75 0 010 1.5H16v13h.25a.75.75 0 010 1.5h-3.5a.75.75 0 01-.75-.75v-2.5a.75.75 0 00-.75-.75h-2.5a.75.75 0 00-.75.75v2.5a.75.75 0 01-.75.75h-3.5a.75.75 0 010-1.5H4z"
                   clip-rule="evenodd" />
               </svg>
               Cisco Networking Academy
@@ -428,13 +402,10 @@
               03 November 2025
             </div>
           </div>
-          <p class="cert-desc">
-            Sertifikasi kompetensi dasar keamanan siber: pengenalan ancaman, perlindungan data pribadi, dan keamanan
-            infrastruktur jaringan.
-          </p>
+          <p class="cert-desc">Sertifikasi dari Cisco yang membuktikan kompetensi dasar keamanan siber: ancaman digital,
+            perlindungan data, dan keamanan infrastruktur jaringan.</p>
           <div class="cert-actions">
-            <a href="Sertifikat-Cisco.pdf" target="_blank" rel="noopener noreferrer"
-              class="btn btn-primary cert-open-btn">
+            <button class="btn btn-primary cert-open-btn">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"
                 aria-hidden="true">
                 <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
@@ -442,48 +413,19 @@
                   d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
                   clip-rule="evenodd" />
               </svg>
-              Lihat PDF
-            </a>
-            <a href="Sertifikat-Cisco.pdf" download="Cisco-Cybersecurity-Sutan-Arlie.pdf"
-              class="btn btn-outline cert-download-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"
-                aria-hidden="true">
-                <path
-                  d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
-                <path
-                  d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
-              </svg>
-              Download
-            </a>
+              Lihat Sertifikat
+            </button>
           </div>
         </div>
       </article>
 
       <!-- 4. MikroTik MTCNA -->
       <article class="cert-card gsap-stagger-child" aria-labelledby="cert-mtcna-title">
-        <a href="Sutan-Arlie-MTCNA.pdf" target="_blank" rel="noopener noreferrer" class="cert-icon-preview"
-          aria-label="Buka PDF Sertifikat MTCNA MikroTik">
-          <svg class="pdf-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-            aria-hidden="true">
-            <path
-              d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625z" />
-            <path
-              d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
-          </svg>
-          <span class="preview-label">Sutan-Arlie-MTCNA.pdf</span>
-          <div class="hover-overlay" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
-              <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-              <path fill-rule="evenodd"
-                d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z"
-                clip-rule="evenodd" />
-            </svg>
-            Buka PDF
-          </div>
-        </a>
-
-        <div class="cert-info">
-          <span class="cert-type-badge type-certification">
+        <div class="cert-thumb-wrapper">
+          <img src="Sutan-Arlie-MTCNA_page-0001.jpg" alt="MikroTik MTCNA" class="cert-thumb-img" loading="lazy"
+            decoding="async" />
+          <div class="cert-thumb-overlay"></div>
+          <span class="cert-type-badge type-certification cert-thumb-badge">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3 h-3">
               <path fill-rule="evenodd"
                 d="M10 1a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0110 1zM5.05 3.05a.75.75 0 011.06 0l1.062 1.06A.75.75 0 116.11 5.173L5.05 4.11a.75.75 0 010-1.06zm9.9 0a.75.75 0 010 1.06l-1.06 1.062a.75.75 0 01-1.062-1.061l1.061-1.06a.75.75 0 011.06 0zM3 8a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5A.75.75 0 013 8zm11 0a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5A.75.75 0 0114 8z"
@@ -491,13 +433,15 @@
             </svg>
             Sertifikasi Jaringan
           </span>
-          <h2 id="cert-mtcna-title" class="cert-info h3">MikroTik Certified Network Associate (MTCNA)</h2>
+        </div>
+        <div class="cert-card-body">
+          <h3 id="cert-mtcna-title" class="cert-card-title">MikroTik Certified Network Associate (MTCNA)</h3>
           <div class="cert-meta">
             <div>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                 class="w-4 h-4 inline mr-1 text-indigo-400">
                 <path fill-rule="evenodd"
-                  d="M4 16.5v-13h-.25a.75.75 0 010-1.5h12.5a.75.75 0 010 1.5H16v13h.25a.75.75 0 010 1.5h-3.5a.75.75 0 01-.75-.75v-2.5a.75.75 0 00-.75-.75h-2.5a.75.75 0 00-.75.75v2.5a.75.75 0 01-.75.75h-3.5a.75.75 0 010-1.5H4zm3-11a.5.5 0 01.5-.5h1a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-1zm.5 3.5a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h1a.5.5 0 00.5-.5v-1a.5.5 0 00-.5-.5h-1zm2.5-.5a.5.5 0 01.5-.5h1a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-1a.5.5 0 01-.5-.5v-1z"
+                  d="M4 16.5v-13h-.25a.75.75 0 010-1.5h12.5a.75.75 0 010 1.5H16v13h.25a.75.75 0 010 1.5h-3.5a.75.75 0 01-.75-.75v-2.5a.75.75 0 00-.75-.75h-2.5a.75.75 0 00-.75.75v2.5a.75.75 0 01-.75.75h-3.5a.75.75 0 010-1.5H4z"
                   clip-rule="evenodd" />
               </svg>
               MikroTik
@@ -512,13 +456,10 @@
               17 Januari 2026
             </div>
           </div>
-          <p class="cert-desc">
-            Sertifikasi resmi MTCNA yang mencakup konfigurasi dasar RouterOS, manajemen bandwidth, firewall, dan routing
-            jaringan.
-          </p>
+          <p class="cert-desc">Sertifikasi resmi dari MikroTik yang mencakup konfigurasi RouterOS, manajemen bandwidth,
+            firewall, routing, dan keamanan jaringan.</p>
           <div class="cert-actions">
-            <a href="Sutan-Arlie-MTCNA.pdf" target="_blank" rel="noopener noreferrer"
-              class="btn btn-primary cert-open-btn">
+            <button class="btn btn-primary cert-open-btn">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"
                 aria-hidden="true">
                 <path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
@@ -526,32 +467,15 @@
                   d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
                   clip-rule="evenodd" />
               </svg>
-              Lihat PDF
-            </a>
-            <a href="Sutan-Arlie-MTCNA.pdf" download="MTCNA-Sutan-Arlie.pdf" class="btn btn-outline cert-download-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4"
-                aria-hidden="true">
-                <path
-                  d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
-                <path
-                  d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
-              </svg>
-              Download
-            </a>
+              Lihat Sertifikat
+            </button>
           </div>
         </div>
       </article>
 
     </div><!-- /cert-gallery -->
 
-    <!-- Modal for cert detail (used by script.js) -->
-    <div id="project-modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true"
-      aria-labelledby="modal-title">
-      <div class="modal-content">
-        <button id="modal-close-btn" class="modal-close" aria-label="Tutup">&times;</button>
-        <div id="modal-body"></div>
-      </div>
-    </div>
+    <!-- End of cert-gallery -->
 
   </main>
 
@@ -561,6 +485,18 @@
     <p>&copy; <span id="copyright-year">2026</span> Sutan Arlie Johan. Semua Hak Cipta Dilindungi.</p>
     <p class="mt-1"><a href="index.html" class="hover:text-indigo-400 transition-colors">← Kembali ke Portofolio</a></p>
   </footer>
+
+  <!-- Modal for cert detail (used by script.js) -->
+  <div id="project-modal" class="modal fixed inset-0 z-50 items-center justify-center bg-black/50 backdrop-blur-sm"
+    role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modal-title">
+    <div class="modal-content bg-white dark:bg-gray-900 rounded-2xl max-w-4xl mx-auto p-6 md:p-8 shadow-2xl relative">
+      <button id="modal-close-btn"
+        class="modal-close absolute top-3 right-3 md:top-4 md:right-4 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 transition-colors text-3xl z-[9999] cursor-pointer pointer-events-auto shadow-md"
+        aria-label="Tutup"
+        onclick="this.closest('.modal').classList.remove('open'); document.body.classList.remove('modal-open');">&times;</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
 
   <!-- Scripts (no AOS) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
