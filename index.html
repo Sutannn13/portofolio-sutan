@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="id" class="dark">
+﻿<!DOCTYPE html>
+<html lang="id" class="dark" data-theme="portfolioDark">
 
 <head>
     <meta charset="UTF-8">
@@ -32,43 +32,125 @@
 
     <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#f0f0f0" media="(prefers-color-scheme: light)">
-    <link rel="apple-touch-icon" href="/assets/icons/icon-192x192.png">
+    <link rel="apple-touch-icon" href="./assets/icons/icon-192x192.png">
 
     <link rel="icon" type="image/png" href="sutanpixel.png">
 
-    <!-- Google Fonts: Playfair Display (elegant headings) + Inter (readable body/UI) -->
+    <!-- Google Fonts: Plus Jakarta Sans (Modern Indonesian font) + JetBrains Mono (Code/Tech) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
         rel="stylesheet">
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'heading': ['Playfair Display', 'serif'],
-                        'body': ['Inter', 'sans-serif']
-                    },
-                    colors: {
-                        primary: {
-                            DEFAULT: '#6366f1',
-                            hover: '#4f46e5',
-                            light: '#818cf8',
-                            dark: '#818cf8'
-                        }
-                    }
-                }
+    <!-- Vite + Tailwind CSS + DaisyUI (compiled via PostCSS) -->
+    <script type="module" src="./src/main.js"></script>
+    <!-- Custom styles (loaded AFTER Tailwind to override base reset) -->
+    <link rel="stylesheet" href="./style.css?v=2026022225">
+
+    <!-- CRITICAL INLINE CSS - Timeline Fix v5 (back to left positioning + clearfix) -->
+    <!-- Last Updated: 2026-02-22 12:25 -->
+    <style>
+        /* FORCE block display and clearfix */
+        .timeline {
+            display: block !important;
+            overflow: visible !important;
+        }
+
+        /* BASE: Clear both to force vertical stack */
+        .timeline-item {
+            position: relative !important;
+            width: 50% !important;
+            padding-bottom: 3rem !important;
+            padding-top: 0 !important;
+            display: block !important;
+            clear: both !important;
+        }
+
+        /* LEFT ITEMS: Stay on left (normal flow) */
+        .timeline-left {
+            left: 0 !important;
+            margin-left: 0 !important;
+            float: none !important;
+            padding-left: 0 !important;
+            padding-right: 3.5rem !important;
+            text-align: right !important;
+        }
+
+        /* RIGHT ITEMS: Push to right using left: 50% */
+        .timeline-right {
+            left: 50% !important;
+            margin-left: 0 !important;
+            float: none !important;
+            padding-left: 3.5rem !important;
+            padding-right: 0 !important;
+            text-align: left !important;
+        }
+
+        .timeline-left .timeline-dot {
+            right: -7px !important;
+            left: auto !important;
+        }
+
+        .timeline-right .timeline-dot {
+            left: -7px !important;
+            right: auto !important;
+        }
+
+        .timeline-left .timeline-content::after {
+            content: "" !important;
+            display: block !important;
+            position: absolute;
+            top: 12px;
+            right: -10px !important;
+            left: auto !important;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent var(--color-surface);
+            filter: drop-shadow(2px 0 1px rgba(0, 0, 0, 0.05));
+        }
+
+        .timeline-right .timeline-content::after {
+            content: "" !important;
+            display: block !important;
+            position: absolute;
+            top: 12px;
+            left: -10px !important;
+            right: auto !important;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent var(--color-surface) transparent transparent;
+            filter: drop-shadow(-2px 0 1px rgba(0, 0, 0, 0.05));
+        }
+
+        /* Mobile: single column */
+        @media (max-width: 767px) {
+
+            .timeline-left,
+            .timeline-right {
+                left: 0 !important;
+                padding-left: 55px !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+            }
+
+            .timeline-left .timeline-dot,
+            .timeline-right .timeline-dot {
+                left: 14px !important;
+                right: auto !important;
+            }
+
+            .timeline-left .timeline-content::after,
+            .timeline-right .timeline-content::after {
+                display: none !important;
             }
         }
-    </script>
-    <link rel="stylesheet" href="style.css">
-    <!-- AOS (Animate On Scroll) CSS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    </style>
+
 
     <script type="application/ld+json">
         {
@@ -208,10 +290,10 @@
                     </p>
                     <div class="hero-cta flex flex-wrap gap-4">
                         <a href="#projects"
-                            class="btn btn-primary inline-flex items-center justify-center px-8 py-3 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                            class="btn btn-glow inline-flex items-center justify-center px-8 py-3 font-semibold rounded-xl"
                             data-magnetic>Lihat Proyek Saya</a>
                         <a href="#contact"
-                            class="btn btn-secondary inline-flex items-center justify-center px-8 py-3 font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                            class="btn btn-glow inline-flex items-center justify-center px-8 py-3 font-semibold rounded-xl"
                             data-magnetic>Hubungi Saya</a>
                     </div>
 
@@ -229,7 +311,34 @@
 
                             <!-- BACK SIDE -->
                             <div class="id-card-side id-card-back">
-                                <!-- Plain background, no content -->
+                                <!-- Magnetic Strip -->
+                                <div class="id-card-magnetic-strip"></div>
+
+                                <!-- Decorative Border -->
+                                <div class="id-card-back-decor"></div>
+
+                                <!-- Back Content with Biodata -->
+                                <div class="id-card-back-content">
+                                    <div class="id-card-back-title">BIODATA MAHASISWA</div>
+                                    <div class="id-card-back-subtitle">Teknologi Informasi</div>
+
+                                    <div class="id-card-back-info">
+                                        <p><strong>NIM</strong>17230125</p>
+                                        <p><strong>Tempat, Tanggal Lahir</strong>Depok, 25 Januari 2005</p>
+                                        <p><strong>Program Studi</strong>Teknologi Informasi (S1)</p>
+                                        <p><strong>Kampus</strong>UBSI Margonda</p>
+                                        <p><strong>Status</strong>Mahasiswa Aktif</p>
+                                        <p><strong>Email</strong>sutanarliejohan@gmail.com</p>
+                                    </div>
+
+                                    <div class="id-card-back-footer">
+                                        <svg class="id-card-qr-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path
+                                                d="M3 11h8V3H3v8zm2-6h4v4H5V5zm8-2v8h8V3h-8zm6 6h-4V5h4v4zM3 21h8v-8H3v8zm2-6h4v4H5v-4zm13-2h2v2h-2v-2zm0 4h2v4h-2v-4zm-3-3h2v2h-2v-2z" />
+                                        </svg>
+                                        <p class="id-card-back-note">Click/Tap untuk flip</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -238,32 +347,49 @@
         </section>
 
 
-        <section id="stats" class="stats-section py-16" aria-labelledby="stats-title" data-aos="fade-up">
-            <div class="container stats-container max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
-                <h2 id="stats-title" class="sr-only">Statistik Pencapaian</h2>
-                <div class="stat-item animate-on-scroll text-center">
-                    <span
-                        class="stat-number text-4xl md:text-5xl font-heading font-bold text-indigo-400 dark:text-indigo-300 block mb-2"
-                        data-target="3">0</span>
-                    <p class="stat-label text-gray-600 dark:text-gray-400 text-sm md:text-base">Tahun Pengalaman</p>
-                </div>
-                <div class="stat-item animate-on-scroll text-center">
-                    <span
-                        class="stat-number text-4xl md:text-5xl font-heading font-bold text-indigo-400 dark:text-indigo-300 block mb-2"
-                        data-target="15">0</span>
-                    <p class="stat-label text-gray-600 dark:text-gray-400 text-sm md:text-base">Total Proyek</p>
-                </div>
-                <div class="stat-item animate-on-scroll text-center">
-                    <span
-                        class="stat-number text-4xl md:text-5xl font-heading font-bold text-indigo-400 dark:text-indigo-300 block mb-2"
-                        data-target="4">0</span>
-                    <p class="stat-label text-gray-600 dark:text-gray-400 text-sm md:text-base">Sertifikat</p>
-                </div>
-                <div class="stat-item animate-on-scroll text-center">
-                    <span
-                        class="stat-number text-4xl md:text-5xl font-heading font-bold text-indigo-400 dark:text-indigo-300 block mb-2"
-                        data-target="2">0</span>
-                    <p class="stat-label text-gray-600 dark:text-gray-400 text-sm md:text-base">Penghargaan (HKI & Juara)</p>
+        <section id="stats" class="stats-section py-16" aria-labelledby="stats-title">
+            <h2 id="stats-title" class="sr-only">Statistik Pencapaian</h2>
+            <div class="container max-w-5xl mx-auto px-4">
+                <div class="premium-stats-grid">
+                    <div class="premium-stat-card animate-on-scroll">
+                        <div class="premium-stat-icon" style="color:#a78bfa">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" stroke-width="1.5" width="36" height="36">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
+                        </div>
+                        <span class="stat-number text-4xl md:text-5xl font-heading font-bold block"
+                            style="color:#a78bfa" data-target="4">0</span>
+                        <p class="premium-stat-label">Total Proyek</p>
+                        <p class="premium-stat-sub">Web, IoT &amp; Mobile</p>
+                    </div>
+                    <div class="premium-stat-card animate-on-scroll">
+                        <div class="premium-stat-icon" style="color:#22d3ee">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" stroke-width="1.5" width="36" height="36">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                            </svg>
+                        </div>
+                        <span class="stat-number text-4xl md:text-5xl font-heading font-bold block"
+                            style="color:#22d3ee" data-target="4">0</span>
+                        <p class="premium-stat-label">Sertifikat</p>
+                        <p class="premium-stat-sub">International &amp; National</p>
+                    </div>
+                    <div class="premium-stat-card animate-on-scroll">
+                        <div class="premium-stat-icon" style="color:#fbbf24">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" stroke-width="1.5" width="36" height="36">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                            </svg>
+                        </div>
+                        <span class="stat-number text-4xl md:text-5xl font-heading font-bold block"
+                            style="color:#fbbf24" data-target="1">0</span>
+                        <p class="premium-stat-label">Penghargaan</p>
+                        <p class="premium-stat-sub">HKI &amp; Juara Kompetisi</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -271,12 +397,11 @@
 
         <section id="about" class="about-section py-20" aria-labelledby="about-title">
             <div class="container about-container max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-                <div class="about-image-wrapper animate-on-scroll" data-aos="fade-right" data-aos-duration="1000">
+                <div class="about-image-wrapper animate-on-scroll">
                     <img src="sutan_transparan.png" alt="Sutan Arlie Johan dalam lingkungan kerja"
                         class="about-image w-full h-auto rounded-2xl shadow-2xl" loading="lazy">
                 </div>
-                <div class="about-content animate-on-scroll space-y-6" data-aos="fade-left" data-aos-duration="1000"
-                    data-aos-delay="200">
+                <div class="about-content animate-on-scroll space-y-6">
                     <h2 id="about-title"
                         class="section-title reveal-text font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                         Tentang Saya</h2>
@@ -297,7 +422,7 @@
                         sekumpulan instruksi, tetapi alat untuk menciptakan perubahan.
                     </p>
                     <a href="cv sutan arlie.pdf" target="_blank"
-                        class="btn btn-primary inline-flex items-center gap-2 px-6 py-3 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                        class="btn btn-glow inline-flex items-center gap-2 px-6 py-3 font-semibold rounded-xl"
                         id="download-cv-btn" download="CV_Sutan_Arlie_Johan.pdf">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
                             <path fill-rule="evenodd"
@@ -314,39 +439,52 @@
         <section id="internship" class="internship-section py-20" aria-labelledby="internship-title">
             <div class="container max-w-5xl mx-auto px-4">
                 <h2 id="internship-title"
-                    class="section-title reveal-text font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-12"
-                    data-aos="fade-up">Tujuan Magang</h2>
-                <div class="internship-content bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl border border-gray-200/50 dark:border-gray-700/50" data-aos="fade-up" data-aos-delay="100">
+                    class="section-title reveal-text font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-12">
+                    Tujuan Magang</h2>
+                <div
+                    class="internship-content bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-xl border border-gray-200/50 dark:border-gray-700/50">
                     <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-8">
-                        Saya adalah mahasiswa semester 6 Teknologi Informasi UBSI yang aktif mencari kesempatan magang untuk mengaplikasikan ilmu dan skill yang telah saya pelajari di lingkungan profesional. Saya siap berkontribusi, belajar teknologi baru, dan bekerja dalam tim.
+                        Saya adalah mahasiswa semester 6 Teknologi Informasi UBSI yang aktif mencari kesempatan magang
+                        untuk mengaplikasikan ilmu dan skill yang telah saya pelajari di lingkungan profesional. Saya
+                        siap berkontribusi, belajar teknologi baru, dan bekerja dalam tim.
                     </p>
-                    <div class="grid md:grid-cols-3 gap-6">
-                        <div class="internship-card text-center p-6 rounded-xl bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800/30" data-aos="fade-up" data-aos-delay="150">
-                            <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center">
-                                <svg class="w-7 h-7 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div
+                            class="internship-card text-center p-6 rounded-xl bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800/30">
+                            <div
+                                class="w-14 h-14 mx-auto mb-4 rounded-full bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center">
+                                <svg class="w-7 h-7 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                                </svg>
                             </div>
-                            <h3 class="text-lg font-heading font-bold text-gray-900 dark:text-white mb-2">Frontend / Fullstack Development</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">React.js, JavaScript, PHP, Node.js, dan framework modern lainnya</p>
+                            <h3 class="text-lg font-heading font-bold text-gray-900 dark:text-white mb-2">Frontend Development</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">React.js, JavaScript, PHP, Node.js, dan
+                                framework modern lainnya</p>
                         </div>
-                        <div class="internship-card text-center p-6 rounded-xl bg-purple-50 dark:bg-purple-900/20 border border-purple-100 dark:border-purple-800/30" data-aos="fade-up" data-aos-delay="200">
-                            <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center">
-                                <svg class="w-7 h-7 text-purple-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm0 8a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zm12 0a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+                        <div
+                            class="internship-card text-center p-6 rounded-xl bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-800/30">
+                            <div
+                                class="w-14 h-14 mx-auto mb-4 rounded-full bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center">
+                                <svg class="w-7 h-7 text-cyan-500" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                                </svg>
                             </div>
-                            <h3 class="text-lg font-heading font-bold text-gray-900 dark:text-white mb-2">UI/UX Implementation</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Figma, Tailwind CSS, responsive design, dan aksesibilitas web</p>
-                        </div>
-                        <div class="internship-card text-center p-6 rounded-xl bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-800/30" data-aos="fade-up" data-aos-delay="250">
-                            <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center">
-                                <svg class="w-7 h-7 text-cyan-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
-                            </div>
-                            <h3 class="text-lg font-heading font-bold text-gray-900 dark:text-white mb-2">IoT & Web Integration</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">MQTT, sensor integration, dashboard real-time, dan embedded systems</p>
+                            <h3 class="text-lg font-heading font-bold text-gray-900 dark:text-white mb-2">Backend
+                                Development</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Node.js, PHP (CodeIgniter), MySQL,
+                                PostgreSQL, REST API, dan manajemen database</p>
                         </div>
                     </div>
                     <div class="text-center mt-8">
                         <a href="#contact"
-                            class="btn btn-primary inline-flex items-center gap-2 px-8 py-3 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            class="btn btn-glow inline-flex items-center gap-2 px-8 py-3 font-semibold rounded-xl">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
                             Tertarik Berkolaborasi? Hubungi Saya
                         </a>
                     </div>
@@ -357,8 +495,8 @@
         <section id="skills" class="skills-section py-20" aria-labelledby="skills-title">
             <div class="container max-w-7xl mx-auto px-4">
                 <h2 id="skills-title"
-                    class="section-title reveal-text font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-12"
-                    data-aos="fade-up">Keahlian & Teknologi</h2>
+                    class="section-title reveal-text font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-12">
+                    Keahlian & Teknologi</h2>
                 <div class="skills-grid stagger-container grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div
                         class="skill-category animate-on-scroll stagger-item bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 shadow-lg">
@@ -401,14 +539,14 @@
                             </div>
                         </div>
                         <div class="skill-item space-y-2 mb-4">
-                            <label for="react-progress"
-                                class="text-sm font-medium text-gray-700 dark:text-gray-300">React.js</label>
+                            <label for="bootstrap-progress"
+                                class="text-sm font-medium text-gray-700 dark:text-gray-300">Bootstrap 5</label>
                             <div
                                 class="progress-bar-container w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
-                                <div id="react-progress"
+                                <div id="bootstrap-progress"
                                     class="progress-bar h-full rounded-full transition-all duration-1000 flex items-center justify-end pr-2"
-                                    style="width: 0%;" data-level="70">
-                                    <span class="text-xs font-bold text-white">70%</span>
+                                    style="width: 0%;" data-level="85">
+                                    <span class="text-xs font-bold text-white">85%</span>
                                 </div>
                             </div>
                         </div>
@@ -454,14 +592,14 @@
                             </div>
                         </div>
                         <div class="skill-item space-y-2 mb-4">
-                            <label for="api-progress" class="text-sm font-medium text-gray-700 dark:text-gray-300">REST
-                                API Design</label>
+                            <label for="mqtt-progress" class="text-sm font-medium text-gray-700 dark:text-gray-300">MQTT
+                                Protocol (IoT)</label>
                             <div
                                 class="progress-bar-container w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
-                                <div id="api-progress"
+                                <div id="mqtt-progress"
                                     class="progress-bar h-full rounded-full transition-all duration-1000 flex items-center justify-end pr-2"
-                                    style="width: 0%;" data-level="70">
-                                    <span class="text-xs font-bold text-white">70%</span>
+                                    style="width: 0%;" data-level="65">
+                                    <span class="text-xs font-bold text-white">65%</span>
                                 </div>
                             </div>
                         </div>
@@ -471,17 +609,14 @@
                         <h3 class="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-6">Tools & Lainnya
                         </h3>
                         <div class="tools-container flex flex-wrap gap-2">
-                            <span class="tool-badge inline-block px-4 py-2 rounded-lg font-medium text-sm">Git
-                                & GitHub</span>
-                            <span class="tool-badge inline-block px-4 py-2 rounded-lg font-medium text-sm">Figma</span>
-                            <span
-                                class="tool-badge inline-block px-4 py-2 rounded-lg font-medium text-sm">Webpack</span>
-                            <span class="tool-badge inline-block px-4 py-2 rounded-lg font-medium text-sm">Jest</span>
-                            <span class="tool-badge inline-block px-4 py-2 rounded-lg font-medium text-sm">Docker</span>
-                            <span class="tool-badge inline-block px-4 py-2 rounded-lg font-medium text-sm">CI/CD</span>
-                            <span class="tool-badge inline-block px-4 py-2 rounded-lg font-medium text-sm">PWA</span>
-                            <span class="tool-badge inline-block px-4 py-2 rounded-lg font-medium text-sm">MQTT
-                                (IoT)</span>
+                            <span class="badge badge-outline badge-lg tool-badge">Git &amp; GitHub</span>
+                            <span class="badge badge-outline badge-lg tool-badge">Tailwind CSS</span>
+                            <span class="badge badge-outline badge-lg tool-badge">Bootstrap 5</span>
+                            <span class="badge badge-outline badge-lg tool-badge">XAMPP</span>
+                            <span class="badge badge-outline badge-lg tool-badge">Postman</span>
+                            <span class="badge badge-outline badge-lg tool-badge">VS Code</span>
+                            <span class="badge badge-outline badge-lg tool-badge">Figma</span>
+                            <span class="badge badge-outline badge-lg tool-badge">MQTT (IoT)</span>
                         </div>
                     </div>
 
@@ -490,33 +625,65 @@
                         class="skill-category animate-on-scroll stagger-item bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 shadow-lg md:col-span-2 lg:col-span-3">
                         <h3 class="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-6">Soft Skills</h3>
                         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                            <div class="soft-skill-item flex flex-col items-center text-center p-4 rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all hover:-translate-y-1">
-                                <div class="w-12 h-12 mb-3 rounded-full bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                            <div
+                                class="soft-skill-item flex flex-col items-center text-center p-4 rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all hover:-translate-y-1">
+                                <div
+                                    class="w-12 h-12 mb-3 rounded-full bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor"
+                                        stroke-width="2" viewBox="0 0 24 24">
+                                        <path
+                                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
                                 </div>
-                                <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Teamwork & Collaboration</span>
+                                <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Teamwork &
+                                    Collaboration</span>
                             </div>
-                            <div class="soft-skill-item flex flex-col items-center text-center p-4 rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all hover:-translate-y-1">
-                                <div class="w-12 h-12 mb-3 rounded-full bg-green-100 dark:bg-green-900/40 flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                            <div
+                                class="soft-skill-item flex flex-col items-center text-center p-4 rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all hover:-translate-y-1">
+                                <div
+                                    class="w-12 h-12 mb-3 rounded-full bg-green-100 dark:bg-green-900/40 flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor"
+                                        stroke-width="2" viewBox="0 0 24 24">
+                                        <path
+                                            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                    </svg>
                                 </div>
-                                <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Problem Solving</span>
+                                <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Problem
+                                    Solving</span>
                             </div>
-                            <div class="soft-skill-item flex flex-col items-center text-center p-4 rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all hover:-translate-y-1">
-                                <div class="w-12 h-12 mb-3 rounded-full bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <div
+                                class="soft-skill-item flex flex-col items-center text-center p-4 rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all hover:-translate-y-1">
+                                <div
+                                    class="w-12 h-12 mb-3 rounded-full bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-amber-500" fill="none" stroke="currentColor"
+                                        stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
                                 </div>
-                                <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Time Management</span>
+                                <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Time
+                                    Management</span>
                             </div>
-                            <div class="soft-skill-item flex flex-col items-center text-center p-4 rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all hover:-translate-y-1">
-                                <div class="w-12 h-12 mb-3 rounded-full bg-pink-100 dark:bg-pink-900/40 flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-pink-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                            <div
+                                class="soft-skill-item flex flex-col items-center text-center p-4 rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all hover:-translate-y-1">
+                                <div
+                                    class="w-12 h-12 mb-3 rounded-full bg-pink-100 dark:bg-pink-900/40 flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-pink-500" fill="none" stroke="currentColor"
+                                        stroke-width="2" viewBox="0 0 24 24">
+                                        <path
+                                            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                    </svg>
                                 </div>
-                                <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Communication (ID & EN)</span>
+                                <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Communication (ID &
+                                    EN)</span>
                             </div>
-                            <div class="soft-skill-item flex flex-col items-center text-center p-4 rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all hover:-translate-y-1">
-                                <div class="w-12 h-12 mb-3 rounded-full bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-cyan-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            <div
+                                class="soft-skill-item flex flex-col items-center text-center p-4 rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-all hover:-translate-y-1">
+                                <div
+                                    class="w-12 h-12 mb-3 rounded-full bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-cyan-500" fill="none" stroke="currentColor"
+                                        stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                    </svg>
                                 </div>
                                 <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Fast Learner</span>
                             </div>
@@ -530,433 +697,198 @@
         <section id="experience" class="experience-section py-20" aria-labelledby="experience-title">
             <div class="container max-w-5xl mx-auto px-4">
                 <h2 id="experience-title"
-                    class="section-title reveal-text font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-12"
-                    data-aos="fade-up">Pengalaman & Sertifikat</h2>
-                <div class="timeline relative">
+                    class="section-title reveal-text font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-12">
+                    Pengalaman & Sertifikat</h2>
+                <div class="timeline">
                     <div class="timeline-progress"></div>
                     <div class="timeline-scroll-dot"></div>
 
-                    <div class="timeline-item relative mb-12 md:mb-16">
+                    <!-- Item 1: MikroTik - KIRI -->
+                    <div class="timeline-item timeline-left">
                         <div class="timeline-dot"></div>
-                        <div
-                            class="timeline-date inline-block text-white px-4 py-1 rounded-full font-bold text-sm mb-4">
-                            2026</div>
-                        <div class="timeline-content bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg ml-0 md:ml-8">
-                            <h3 class="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-3">MikroTik Certified Network Associate (MTCNA)</h3>
-                            <p class="text-gray-600 dark:text-gray-400 mb-3">Mendapatkan sertifikasi resmi MTCNA dari MikroTik.</p>
-                            <ul class="text-gray-600 dark:text-gray-400 text-sm space-y-1 mb-4 list-disc list-inside">
-                                <li>Menguasai konfigurasi dasar RouterOS & manajemen bandwidth</li>
+                        <div class="timeline-date">2026</div>
+                        <div class="timeline-content">
+                            <h3>MikroTik Certified Network Associate (MTCNA)</h3>
+                            <p>Mendapatkan sertifikasi resmi MTCNA dari MikroTik.</p>
+                            <ul>
+                                <li>Menguasai konfigurasi dasar RouterOS &amp; manajemen bandwidth</li>
                                 <li>Implementasi firewall rules dan routing dasar</li>
                                 <li>Lulus ujian sertifikasi internasional</li>
                             </ul>
-                            <span
-                                class="timeline-company text-indigo-400 dark:text-indigo-300 font-semibold text-sm">Lembaga: MikroTik</span>
+                            <span class="timeline-company">Lembaga: MikroTik</span>
                         </div>
                     </div>
-                    <div class="timeline-item relative mb-12 md:mb-16">
+
+                    <!-- Item 2: HKI - KANAN -->
+                    <div class="timeline-item timeline-right">
                         <div class="timeline-dot"></div>
-                        <div
-                            class="timeline-date inline-block text-white px-4 py-1 rounded-full font-bold text-sm mb-4">
-                            2025</div>
-                        <div class="timeline-content bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg ml-0 md:ml-8">
-                            <h3 class="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-3">Juara 2 - IT
-                                Bootcamp Software Development</h3>
-                            <p class="text-gray-600 dark:text-gray-400 mb-3">Meraih posisi kedua dalam kompetisi IT Bootcamp Software Development For Industry di UBSI.</p>
-                            <ul class="text-gray-600 dark:text-gray-400 text-sm space-y-1 mb-4 list-disc list-inside">
-                                <li>Mengembangkan aplikasi web full-stack dalam waktu terbatas</li>
-                                <li>Berkompetisi dengan ratusan mahasiswa dari seluruh Indonesia</li>
-                                <li>Menerapkan best practices CI/CD dan clean code</li>
-                            </ul>
-                            <span
-                                class="timeline-company text-indigo-400 dark:text-indigo-300 font-semibold text-sm">Penyelenggara:
-                                Universitas Bina Sarana Informatika</span>
-                        </div>
-                    </div>
-                    <div class="timeline-item relative mb-12 md:mb-16">
-                        <div class="timeline-dot"></div>
-                        <div
-                            class="timeline-date inline-block text-white px-4 py-1 rounded-full font-bold text-sm mb-4">
-                            2025</div>
-                        <div class="timeline-content bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg ml-0 md:ml-8">
-                            <h3 class="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-3">Hak Kekayaan
-                                Intelektual (HKI) - Proyek "Trash Point"</h3>
-                            <p class="text-gray-600 dark:text-gray-400 mb-3">Menerima sertifikat HKI resmi dari Kemenkumham RI.</p>
-                            <ul class="text-gray-600 dark:text-gray-400 text-sm space-y-1 mb-4 list-disc list-inside">
+                        <div class="timeline-date">2025</div>
+                        <div class="timeline-content">
+                            <h3>Hak Kekayaan Intelektual (HKI) &mdash; Proyek "Trash Point"</h3>
+                            <p>Menerima sertifikat HKI resmi dari Kemenkumham RI.</p>
+                            <ul>
                                 <li>Memperoleh hak cipta untuk program komputer aplikasi "Trash Point"</li>
                                 <li>Sistem manajemen sampah berbasis web dan IoT dengan insentif poin</li>
                                 <li>Aplikasi yang mengintegrasikan edukasi dan pengelolaan sampah</li>
                             </ul>
-                            <span
-                                class="timeline-company text-indigo-400 dark:text-indigo-300 font-semibold text-sm">Instansi:
-                                Kemenkumham RI</span>
+                            <span class="timeline-company">Instansi: Kemenkumham RI</span>
                         </div>
                     </div>
-                    <div class="timeline-item relative mb-12 md:mb-16">
+
+                    <!-- Item 3: Juara 2 - KIRI -->
+                    <div class="timeline-item timeline-left">
                         <div class="timeline-dot"></div>
-                        <div
-                            class="timeline-date inline-block text-white px-4 py-1 rounded-full font-bold text-sm mb-4">
-                            2025</div>
-                        <div class="timeline-content bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg ml-0 md:ml-8">
-                            <h3 class="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-3">Cisco - Introduction to Cybersecurity</h3>
-                            <p class="text-gray-600 dark:text-gray-400 mb-3">Menyelesaikan sertifikasi keamanan siber dari Cisco Networking Academy.</p>
-                            <ul class="text-gray-600 dark:text-gray-400 text-sm space-y-1 mb-4 list-disc list-inside">
+                        <div class="timeline-date">2025</div>
+                        <div class="timeline-content">
+                            <h3>Juara 2 &mdash; IT Bootcamp Software Development</h3>
+                            <p>Meraih posisi kedua dalam kompetisi IT Bootcamp Software Development For Industry di
+                                UBSI.</p>
+                            <ul>
+                                <li>Mengembangkan aplikasi web full-stack dalam waktu terbatas</li>
+                                <li>Berkompetisi dengan ratusan mahasiswa dari seluruh Indonesia</li>
+                                <li>Menerapkan best practices CI/CD dan clean code</li>
+                            </ul>
+                            <span class="timeline-company">Penyelenggara: Universitas Bina Sarana Informatika</span>
+                        </div>
+                    </div>
+
+                    <!-- Item 4: Cisco - KANAN -->
+                    <div class="timeline-item timeline-right">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">2025</div>
+                        <div class="timeline-content">
+                            <h3>Cisco &mdash; Introduction to Cybersecurity</h3>
+                            <p>Menyelesaikan sertifikasi keamanan siber dari Cisco Networking Academy.</p>
+                            <ul>
                                 <li>Memahami ancaman siber modern dan metode perlindungan</li>
                                 <li>Perlindungan data pribadi dan keamanan infrastruktur jaringan</li>
                                 <li>Fundamental network security dan cryptography</li>
                             </ul>
-                            <span
-                                class="timeline-company text-indigo-400 dark:text-indigo-300 font-semibold text-sm">Lembaga:
-                                Cisco Networking Academy</span>
+                            <span class="timeline-company">Lembaga: Cisco Networking Academy</span>
                         </div>
                     </div>
-                    <div class="timeline-item relative mb-12 md:mb-16">
-                        <div class="timeline-dot"></div>
-                        <div
-                            class="timeline-date inline-block text-white px-4 py-1 rounded-full font-bold text-sm mb-4">
-                            2023</div>
-                        <div class="timeline-content bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg ml-0 md:ml-8">
-                            <h3 class="text-2xl font-heading font-bold text-gray-900 dark:text-white mb-3">Web
-                                Development Intern</h3>
-                            <p class="text-gray-600 dark:text-gray-400 mb-3">Magang sebagai pengembang web di perusahaan startup lokal.</p>
-                            <ul class="text-gray-600 dark:text-gray-400 text-sm space-y-1 mb-4 list-disc list-inside">
-                                <li>Meningkatkan page speed website dari 3s ke 1.2s (60% lebih cepat)</li>
-                                <li>Mengimplementasikan 5+ fitur baru menggunakan PHP dan jQuery</li>
-                                <li>Maintenance dan optimasi website perusahaan secara berkala</li>
-                                <li>Berkolaborasi dalam tim pengembangan dengan metodologi Agile</li>
-                            </ul>
-                            <span
-                                class="timeline-company text-indigo-400 dark:text-indigo-300 font-semibold text-sm">Perusahaan:
-                                Startup Maju, Depok</span>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </section>
-        <section id="projects" class="projects-section py-20"
-            aria-labelledby="projects-title">
+
+        <section id="projects" class="projects-section py-20" aria-labelledby="projects-title">
             <div class="container max-w-7xl mx-auto px-4">
                 <h2 id="projects-title"
-                    class="section-title reveal-text font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-4"
-                    data-aos="fade-up">
+                    class="section-title reveal-text font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-4">
                     Proyek Unggulan
                 </h2>
-                <p class="text-center text-gray-600 dark:text-gray-400 text-sm md:text-base max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100">
-                    Koleksi proyek yang mencerminkan skill, kreativitas, dan semangat dalam membangun pengalaman digital yang bermakna.
+                <p class="text-center text-gray-600 dark:text-gray-400 text-sm md:text-base max-w-3xl mx-auto mb-12">
+                    Koleksi proyek yang mencerminkan skill, kreativitas, dan semangat dalam membangun pengalaman digital
+                    yang bermakna.
                 </p>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Project 1: Trash Point -->
-                    <div class="project-card group relative overflow-hidden rounded-2xl transition-all duration-500 border border-gray-200/50 dark:border-white/10"
-                        data-aos="fade-up" data-aos-delay="0">
+                    <div
+                        class="project-card group relative overflow-hidden rounded-2xl transition-all duration-500 border border-gray-200/50 dark:border-white/10">
                         <div class="relative overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600"
-                                alt="Proyek Trash Point" class="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-                            <span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold bg-amber-500 text-white">HKI Certified</span>
+                            <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=75"
+                                alt="Proyek Trash Point"
+                                class="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-110"
+                                loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+                            </div>
+                            <span
+                                class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold bg-amber-500 text-white">HKI
+                                Certified</span>
                         </div>
                         <div class="p-6">
-                            <h3 class="text-xl font-heading font-bold text-gray-900 dark:text-white mb-2">Trash Point (HKI)</h3>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Platform manajemen sampah berbasis IoT dengan sistem poin insentif. Memperoleh sertifikat HKI resmi dari Kemenkumham RI. Prototipe fungsional yang mengintegrasikan sensor MQTT dengan dashboard web real-time.</p>
+                            <h3 class="text-xl font-heading font-bold text-gray-900 dark:text-white mb-2">Trash Point
+                                (HKI)</h3>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Platform manajemen sampah berbasis
+                                IoT dengan sistem poin insentif. Memperoleh sertifikat HKI resmi dari Kemenkumham RI.
+                                Prototipe fungsional yang mengintegrasikan sensor MQTT dengan dashboard web real-time.
+                            </p>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-600/80 text-white">React</span>
-                                <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-600/80 text-white">Node.js</span>
-                                <span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-600/80 text-white">IoT/MQTT</span>
-                                <span class="px-3 py-1 rounded-full text-xs font-medium bg-cyan-600/80 text-white">PostgreSQL</span>
+                                <span
+                                    class="px-3 py-1 rounded-full text-xs font-medium bg-blue-600/80 text-white">React</span>
+                                <span
+                                    class="px-3 py-1 rounded-full text-xs font-medium bg-green-600/80 text-white">Node.js</span>
+                                <span
+                                    class="px-3 py-1 rounded-full text-xs font-medium bg-purple-600/80 text-white">IoT/MQTT</span>
+                                <span
+                                    class="px-3 py-1 rounded-full text-xs font-medium bg-cyan-600/80 text-white">PostgreSQL</span>
                             </div>
                             <div class="flex gap-3 mt-2">
-                                <a href="https://github.com/sutanarlie/trash-point" target="_blank" rel="noopener noreferrer" class="project-link-btn inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gray-700/80 hover:bg-gray-600 text-white text-xs font-medium transition-all">
-                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                                <a href="https://github.com/sutanarlie/trash-point" target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="project-link-btn inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gray-700/80 hover:bg-gray-600 text-white text-xs font-medium transition-all">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                                    </svg>
                                     GitHub
                                 </a>
-                                <a href="#" target="_blank" rel="noopener noreferrer" class="project-link-btn inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-indigo-600/80 hover:bg-indigo-500 text-white text-xs font-medium transition-all">
-                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                                    Live Demo
+                                <a href="javascript:void(0)" aria-disabled="true" title="Coming Soon"
+                                    class="project-link-btn inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-indigo-600/80 hover:bg-indigo-500 text-white text-xs font-medium transition-all opacity-60 cursor-not-allowed">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                        <polyline points="15 3 21 3 21 9" />
+                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                    </svg>
+                                    Coming Soon
                                 </a>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Project 2: E-Learning UBSI -->
-                    <div class="project-card group relative overflow-hidden rounded-2xl transition-all duration-500 border border-gray-200/50 dark:border-white/10"
-                        data-aos="fade-up" data-aos-delay="100">
+                    <!-- Project 2: Fish Market -->
+                    <div
+                        class="project-card group relative overflow-hidden rounded-2xl transition-all duration-500 border border-gray-200/50 dark:border-white/10">
                         <div class="relative overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600"
-                                alt="Proyek E-Learning Platform" class="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                            <img src="https://images.unsplash.com/photo-1544943910-4c1dc44aab44?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=75"
+                                alt="Proyek Fish Market"
+                                class="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-110"
+                                loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+                            </div>
                         </div>
                         <div class="p-6">
-                            <h3 class="text-xl font-heading font-bold text-gray-900 dark:text-white mb-2">E-Learning UBSI</h3>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Platform pembelajaran online interaktif untuk mahasiswa dan dosen UBSI. Mendukung manajemen kelas, upload materi, dan quiz online. Berhasil diimplementasikan untuk beberapa mata kuliah.</p>
+                            <h3 class="text-xl font-heading font-bold text-gray-900 dark:text-white mb-2">Fish Market
+                            </h3>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Platform jual beli ikan online yang
+                                menghubungkan penjual dan pembeli dengan sistem transaksi yang aman dan efisien.
+                                Menyediakan fitur katalog produk, manajemen pesanan, dan tracking pengiriman.</p>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="px-3 py-1 rounded-full text-xs font-medium bg-indigo-600/80 text-white">PHP (CI)</span>
-                                <span class="px-3 py-1 rounded-full text-xs font-medium bg-yellow-600/80 text-white">JavaScript</span>
-                                <span class="px-3 py-1 rounded-full text-xs font-medium bg-pink-600/80 text-white">MySQL</span>
-                                <span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-600/80 text-white">Bootstrap</span>
+                                <span
+                                    class="px-3 py-1 rounded-full text-xs font-medium bg-indigo-600/80 text-white">PHP</span>
+                                <span
+                                    class="px-3 py-1 rounded-full text-xs font-medium bg-pink-600/80 text-white">MySQL</span>
+                                <span
+                                    class="px-3 py-1 rounded-full text-xs font-medium bg-yellow-600/80 text-white">JavaScript</span>
+                                <span
+                                    class="px-3 py-1 rounded-full text-xs font-medium bg-blue-600/80 text-white">Bootstrap</span>
                             </div>
                             <div class="flex gap-3 mt-2">
-                                <a href="https://github.com/sutanarlie/elearning-ubsi" target="_blank" rel="noopener noreferrer" class="project-link-btn inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gray-700/80 hover:bg-gray-600 text-white text-xs font-medium transition-all">
-                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                                <a href="https://github.com/Sutannn13/project-jual-ikan.git" target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="project-link-btn inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gray-700/80 hover:bg-gray-600 text-white text-xs font-medium transition-all">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                                    </svg>
                                     GitHub
                                 </a>
-                                <a href="#" target="_blank" rel="noopener noreferrer" class="project-link-btn inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-indigo-600/80 hover:bg-indigo-500 text-white text-xs font-medium transition-all">
-                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                                    Live Demo
+                                <a href="javascript:void(0)" aria-disabled="true" title="Coming Soon"
+                                    class="project-link-btn inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-indigo-600/80 hover:bg-indigo-500 text-white text-xs font-medium transition-all opacity-60 cursor-not-allowed">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                        <polyline points="15 3 21 3 21 9" />
+                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                    </svg>
+                                    Coming Soon
                                 </a>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Project 3: Dashboard Analitik -->
-                    <div class="project-card group relative overflow-hidden rounded-2xl transition-all duration-500 border border-gray-200/50 dark:border-white/10"
-                        data-aos="fade-up" data-aos-delay="200">
-                        <div class="relative overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600"
-                                alt="Proyek Dashboard Analitik" class="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-heading font-bold text-gray-900 dark:text-white mb-2">Dashboard Analitik</h3>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Dashboard visualisasi data penjualan interaktif dengan chart real-time. Mengolah data dari REST API dan menampilkan insight bisnis melalui grafik yang responsif dan user-friendly.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="px-3 py-1 rounded-full text-xs font-medium bg-yellow-600/80 text-white">JavaScript</span>
-                                <span class="px-3 py-1 rounded-full text-xs font-medium bg-teal-600/80 text-white">Chart.js</span>
-                                <span class="px-3 py-1 rounded-full text-xs font-medium bg-red-600/80 text-white">REST API</span>
-                            </div>
-                            <div class="flex gap-3 mt-2">
-                                <a href="https://github.com/sutanarlie/dashboard-analytics" target="_blank" rel="noopener noreferrer" class="project-link-btn inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gray-700/80 hover:bg-gray-600 text-white text-xs font-medium transition-all">
-                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-                                    GitHub
-                                </a>
-                                <a href="#" target="_blank" rel="noopener noreferrer" class="project-link-btn inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-indigo-600/80 hover:bg-indigo-500 text-white text-xs font-medium transition-all">
-                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                                    Live Demo
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project 4: Kuliner Depok -->
-                    <div class="project-card group relative overflow-hidden rounded-2xl transition-all duration-500 border border-gray-200/50 dark:border-white/10"
-                        data-aos="fade-up" data-aos-delay="300">
-                        <div class="relative overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1583508915901-b5f84c1dcde1?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600"
-                                alt="Proyek Aplikasi Kuliner" class="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-                            <span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold bg-green-500 text-white">PWA</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-heading font-bold text-gray-900 dark:text-white mb-2">Kuliner Depok</h3>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Aplikasi Progressive Web App (offline-first) untuk menemukan dan menyimpan resep masakan khas Depok. Bekerja seperti native app dengan Service Worker dan caching strategy.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="px-3 py-1 rounded-full text-xs font-medium bg-orange-600/80 text-white">PWA</span>
-                                <span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-600/80 text-white">Vanilla JS</span>
-                                <span class="px-3 py-1 rounded-full text-xs font-medium bg-green-600/80 text-white">Service Worker</span>
-                            </div>
-                            <div class="flex gap-3 mt-2">
-                                <a href="https://github.com/sutanarlie/kuliner-depok" target="_blank" rel="noopener noreferrer" class="project-link-btn inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gray-700/80 hover:bg-gray-600 text-white text-xs font-medium transition-all">
-                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-                                    GitHub
-                                </a>
-                                <a href="#" target="_blank" rel="noopener noreferrer" class="project-link-btn inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-indigo-600/80 hover:bg-indigo-500 text-white text-xs font-medium transition-all">
-                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                                    Live Demo
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="testimonials" class="testimonials-section" aria-labelledby="testimonials-title">
-            <div class="container">
-                <h2 id="testimonials-title" class="section-title reveal-text">Apa Kata Mereka</h2>
-                <div class="testimonial-carousel-wrapper">
-                    <button id="testimonial-prev-btn" class="carousel-nav prev" aria-label="Testimoni Sebelumnya">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M15.707 17.293a1 1 0 01-1.414 0L9 12l5.293-5.293a1 1 0 011.414 1.414L11.828 12l3.879 3.879a1 1 0 010 1.414z" />
-                        </svg>
-                    </button>
-
-                    <div id="testimonial-carousel" class="testimonial-carousel">
-                        <div class="testimonial-slide">
-                            <img src="https://i.pravatar.cc/100?u=dosen1" alt="Foto Dosen UBSI"
-                                class="testimonial-avatar" loading="lazy">
-                            <div class="testimonial-rating">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                            </div>
-                            <blockquote>
-                                “Konsep 'Trash Point' Sutan sangat visioner. Dia berhasil membangun prototipe web yang
-                                solid. Namun, integrasi dengan perangkat IoT-nya masih perlu validasi lebih lanjut di
-                                lapangan agar berfungsi optimal.”
-                            </blockquote>
-                            <cite>Dr. Arief Budiman, M.Kom.</cite>
-                            <span>Ketua Jurusan TI, UBSI Margonda</span>
-                        </div>
-                        <div class="testimonial-slide">
-                            <img src="https://i.pravatar.cc/100?u=dosen2" alt="Foto Dosen UBSI"
-                                class="testimonial-avatar" loading="lazy">
-                            <div class="testimonial-rating">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                    opacity="0.3">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                            </div>
-                            <blockquote>
-                                “Secara visual, portofolio ini sangat menarik dan modern. Sutan punya selera desain yang
-                                bagus. Saya hanya menemukan beberapa isu responsivitas minor pada tampilan di perangkat
-                                tablet mode portrait, tapi itu mudah diperbaiki.”
-                            </blockquote>
-                            <cite>Dr. Indah Purnamasari, M.Kom.</cite>
-                            <span>Dosen Desain UI/UX, UBSI</span>
-                        </div>
-                        <div class="testimonial-slide">
-                            <img src="https://i.pravatar.cc/100?u=dosen3" alt="Foto Dosen UBSI"
-                                class="testimonial-avatar" loading="lazy">
-                            <div class="testimonial-rating">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                            </div>
-                            <blockquote>
-                                “Fundamental koding Sutan di HTML, CSS, dan JS sudah matang. Untuk proyek E-Learning,
-                                saran saya efisiensi query database-nya bisa lebih ditingkatkan lagi untuk menangani
-                                ribuan pengguna secara bersamaan.”
-                            </blockquote>
-                            <cite>Bambang Haryanto, M.T.</cite>
-                            <span>Dosen Pemrograman Web Lanjut, UBSI</span>
-                        </div>
-                        <div class="testimonial-slide">
-                            <img src="https://i.pravatar.cc/100?u=dosen4" alt="Foto Dosen UBSI"
-                                class="testimonial-avatar" loading="lazy">
-                            <div class="testimonial-rating">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                    opacity="0.3">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                            </div>
-                            <blockquote>
-                                “Sutan adalah pembelajar yang cepat dan tidak takut mencoba teknologi baru. Langkah
-                                selanjutnya yang perlu ia fokuskan adalah membiasakan menulis dokumentasi kode dan unit
-                                testing untuk meningkatkan skalabilitas proyeknya.”
-                            </blockquote>
-                            <cite>Dewi Lestari, S.Kom., M.Cs.</cite>
-                            <span>Dosen Rekayasa Perangkat Lunak, UBSI</span>
-                        </div>
-                        <div class="testimonial-slide">
-                            <img src="https://i.pravatar.cc/100?u=dosen5" alt="Foto Dosen UBSI"
-                                class="testimonial-avatar" loading="lazy">
-                            <div class="testimonial-rating">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                                </svg>
-                            </div>
-                            <blockquote>
-                                “Kemampuan problem-solvingnya patut diacungi jempol. Pada aplikasi PWA resep, manajemen
-                                state-nya sudah baik, meski terkadang masih terjadi 'race condition' saat data diambil
-                                dalam koneksi internet yang lambat.”
-                            </blockquote>
-                            <cite>Rizky Pratama, M.Kom.</cite>
-                            <span>Dosen Pemrograman Mobile, UBSI</span>
-                        </div>
-                    </div>
-
-                    <button id="testimonial-next-btn" class="carousel-nav next" aria-label="Testimoni Berikutnya">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M8.293 17.293a1 1 0 001.414 0L15 12l-5.293-5.293a1 1 0 00-1.414 1.414L12.172 12l-3.879 3.879a1 1 0 000 1.414z" />
-                        </svg>
-                    </button>
-
-                    <div id="testimonial-indicators" class="testimonial-indicators"></div>
                 </div>
             </div>
         </section>
@@ -975,7 +907,7 @@
 
         <section id="contact" class="contact-section py-20" aria-labelledby="contact-title">
             <div class="container contact-container max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12">
-                <div class="contact-info animate-on-scroll space-y-6" data-aos="fade-right" data-aos-duration="1000">
+                <div class="contact-info gsap-fade-up space-y-6">
                     <h2 id="contact-title"
                         class="section-title reveal-text font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                         Hubungi Saya</h2>
@@ -999,8 +931,10 @@
                         <li>
                             <a href="https://linkedin.com/in/sutanarlie" target="_blank" rel="noopener noreferrer"
                                 class="contact-link flex items-center gap-3 text-gray-700 dark:text-gray-300 hover:text-indigo-400 dark:hover:text-indigo-300 transition-colors">
-                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor">
-                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
+                                    fill="currentColor">
+                                    <path
+                                        d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z" />
                                 </svg>
                                 <span>linkedin.com/in/sutanarlie</span>
                             </a>
@@ -1008,17 +942,21 @@
                         <li>
                             <a href="https://github.com/sutanarlie" target="_blank" rel="noopener noreferrer"
                                 class="contact-link flex items-center gap-3 text-gray-700 dark:text-gray-300 hover:text-indigo-400 dark:hover:text-indigo-300 transition-colors">
-                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor">
-                                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
+                                    fill="currentColor">
+                                    <path
+                                        d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
                                 </svg>
                                 <span>github.com/sutanarlie</span>
                             </a>
                         </li>
                         <li>
-                            <a href="https://wa.me/62895xxxxxxxx" target="_blank" rel="noopener noreferrer"
+                            <a href="https://wa.me/6289512345678" target="_blank" rel="noopener noreferrer"
                                 class="contact-link flex items-center gap-3 text-gray-700 dark:text-gray-300 hover:text-indigo-400 dark:hover:text-indigo-300 transition-colors">
-                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor">
-                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
+                                    fill="currentColor">
+                                    <path
+                                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                                 </svg>
                                 <span>WhatsApp</span>
                             </a>
@@ -1047,9 +985,7 @@
                         </li>
                     </ul>
                 </div>
-                <form id="contact-form"
-                    class="contact-form rounded-2xl p-8 shadow-lg space-y-6"
-                    data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200"
+                <form id="contact-form" class="contact-form rounded-2xl p-8 shadow-lg space-y-6 gsap-fade-up"
                     action="https://formspree.io/f/xYOURREALID" method="POST">
                     <div class="form-group">
                         <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama
@@ -1074,8 +1010,7 @@
                     </div>
                     <!-- REVISION: Added note about Formspree ID -->
                     <!-- Pastikan untuk mengganti 'xYOURREALID' dengan ID Formspree asli Anda -->
-                    <button type="submit"
-                        class="btn btn-primary w-full px-8 py-3 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">Kirim
+                    <button type="submit" class="btn btn-glow w-full px-8 py-3 font-semibold rounded-xl">Kirim
                         Pesan</button>
                     <p id="form-status" role="status" class="text-center text-sm"></p>
                 </form>
@@ -1089,7 +1024,8 @@
         <div class="container footer-container max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8">
             <div class="footer-about">
                 <h3 class="text-xl font-heading font-bold text-white mb-4">Sutan Arlie Johan</h3>
-                <p class="text-gray-400">Mahasiswa Semester 6 Teknologi Informasi UBSI Margonda. Bersemangat menciptakan solusi digital yang berdampak dan siap untuk magang profesional.</p>
+                <p class="text-gray-400">Mahasiswa Semester 6 Teknologi Informasi UBSI Margonda. Bersemangat menciptakan
+                    solusi digital yang berdampak dan siap untuk magang profesional.</p>
             </div>
             <div class="footer-links">
                 <h3 class="text-xl font-heading font-bold text-white mb-4">Navigasi Cepat</h3>
@@ -1140,7 +1076,8 @@
         <div class="footer-copyright border-t border-gray-800 mt-8 pt-8 text-center">
             <p class="text-gray-400">&copy; <span id="copyright-year">2026</span> Sutan Arlie Johan. Semua Hak Cipta
                 Dilindungi.</p>
-            <p class="text-gray-500 text-sm mt-2">Dirancang dengan dedikasi oleh mahasiswa Teknologi Informasi UBSI Margonda</p>
+            <p class="text-gray-500 text-sm mt-2">Dirancang dengan dedikasi oleh mahasiswa Teknologi Informasi UBSI
+                Margonda</p>
         </div>
     </footer>
 
@@ -1165,14 +1102,12 @@
     </button>
 
 
-    <!-- GSAP + ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <!-- AOS (Animate On Scroll) -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- GSAP + ScrollTrigger (load synchronously to ensure availability) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
     <!-- Lenis Smooth Scroll -->
-    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
-    <!-- Main Script -->
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js" defer></script>
+    <!-- Main Script (loads last after all dependencies) -->
     <script src="script.js" defer></script>
 
     <link rel="manifest" href="data:application/manifest+json;charset=utf-8,{

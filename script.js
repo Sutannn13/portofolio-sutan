@@ -1,7 +1,9 @@
 /*
 ================================================================================
-| SCRIPT.JS - PORTOFOLIO SUTAN ARLIE JOHAN (OVERHAUL v4.0)
-| Libraries: AOS, GSAP + ScrollTrigger, Lenis Smooth Scroll
+| SCRIPT.JS - PORTOFOLIO SUTAN ARLIE JOHAN (REFACTOR v5.0)
+| Libraries: GSAP + ScrollTrigger, Lenis Smooth Scroll
+| AOS: REMOVED — GSAP handles all animations exclusively
+| Loader: Real document-ready detection (no fake timer)
 ================================================================================
 */
 
@@ -13,60 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const state = {
         blogCurrentPage: 1,
         blogPostsPerPage: 3,
-        testimonialCurrentIndex: 0,
-        testimonialInterval: null,
         isTouchDevice: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
+        gsapReady: false,
     };
-
-    const selectors = {
-        loader: '#loader',
-        progressBarFill: '.progress-bar-fill',
-        progressPercentage: '.progress-percentage',
-        header: '#main-header',
-        navLinks: '.nav-link',
-        sections: 'section[id]',
-        themeToggle: '#theme-toggle',
-        hamburger: '#hamburger-button',
-        navMenu: '.nav-menu',
-        animateOnScroll: '.animate-on-scroll',
-        statNumbers: '.stat-number',
-        progressBars: '.progress-bar',
-        projectCards: '.project-card',
-        projectFilters: '.project-filters',
-        filterBtns: '.filter-btn',
-        projectModal: '#project-modal',
-        modalCloseBtn: '#modal-close-btn',
-        modalBody: '#modal-body',
-        testimonialCarousel: '#testimonial-carousel',
-        testimonialSlides: '.testimonial-slide',
-        testimonialIndicators: '#testimonial-indicators',
-        testimonialPrevBtn: '#testimonial-prev-btn',
-        testimonialNextBtn: '#testimonial-next-btn',
-        blogPostsContainer: '#blog-posts-container',
-        blogPagination: '#blog-pagination',
-        contactForm: '#contact-form',
-        formStatus: '#form-status',
-        copyrightYear: '#copyright-year',
-        scrollToTopBtn: '#scroll-to-top',
-        heroSection: '.hero-section',
-        typingEffect: '#typing-effect',
-        revealTextElements: '.reveal-text',
-        fadeOnScrollText: '.fade-on-scroll-text',
-        staggerContainers: '.stagger-container',
-        aboutImageWrapper: '.about-image-wrapper',
-        timeline: '.timeline',
-        timelineProgress: '.timeline-progress',
-        timelineScrollDot: '.timeline-scroll-dot',
-        timelineItems: '.timeline-item',
-    };
-
-    const dom = {};
-    for (const key in selectors) {
-        const elements = document.querySelectorAll(selectors[key]);
-        if (elements.length > 0) {
-            dom[key] = elements.length === 1 ? elements[0] : Array.from(elements);
-        }
-    }
 
     /* =============================================
        2. DATA
@@ -75,46 +26,24 @@ document.addEventListener('DOMContentLoaded', () => {
         'Trash Point (HKI)': {
             type: 'project',
             title: 'Trash Point (Proyek Unggulan & Peraih HKI)',
-            image: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200',
+            image: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
             description: 'Platform manajemen sampah berbasis IoT dengan sistem poin insentif. Memperoleh sertifikat HKI resmi dari Kemenkumham RI. Prototipe fungsional yang mengintegrasikan sensor MQTT dengan dashboard web real-time.',
             purpose: 'Mengurangi penumpukan sampah dan memberikan nilai ekonomis melalui sistem reward berbasis poin.',
-            tech: ['React.js', 'Node.js', 'PostgreSQL', 'MQTT', 'PWA'],
+            tech: ['React.js', 'Node.js', 'PostgreSQL', 'MQTT', 'IoT'],
             result: 'Prototipe fungsional dengan HKI resmi dari Kemenkumham RI.',
             liveLink: '#',
             repoLink: 'https://github.com/sutanarlie/trash-point',
         },
-        'E-Learning UBSI': {
+        'Fish Market': {
             type: 'project',
-            title: 'Platform E-Learning UBSI',
-            image: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200',
-            description: 'Platform pembelajaran online interaktif untuk mahasiswa dan dosen UBSI. Mendukung manajemen kelas, upload materi, dan quiz online.',
-            purpose: 'Meningkatkan efektivitas belajar mengajar digital di lingkungan kampus.',
-            tech: ['PHP (CodeIgniter)', 'JavaScript', 'MySQL', 'Bootstrap'],
-            result: 'Berhasil diimplementasikan untuk beberapa mata kuliah di UBSI.',
+            title: 'Fish Market - Platform Jual Beli Ikan',
+            image: 'https://images.unsplash.com/photo-1544943910-4c1dc44aab44?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+            description: 'Platform jual beli ikan online yang menghubungkan penjual dan pembeli dengan sistem transaksi yang aman dan efisien. Menyediakan fitur katalog produk, manajemen pesanan, dan tracking pengiriman.',
+            purpose: 'Memudahkan transaksi jual beli ikan secara online dengan sistem yang user-friendly dan terpercaya.',
+            tech: ['PHP', 'MySQL', 'JavaScript', 'Bootstrap'],
+            result: 'Platform marketplace yang memudahkan transaksi jual beli ikan secara online.',
             liveLink: '#',
-            repoLink: 'https://github.com/sutanarlie/elearning-ubsi',
-        },
-        'Dashboard Analitik': {
-            type: 'project',
-            title: 'Dashboard Analitik Penjualan',
-            image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200',
-            description: 'Dashboard visualisasi data penjualan interaktif dengan chart real-time. Mengolah data dari REST API dan menampilkan insight bisnis.',
-            purpose: 'Membantu tim manajemen mengambil keputusan bisnis berdasarkan data.',
-            tech: ['Vanilla JS', 'Chart.js', 'REST API'],
-            result: 'Dashboard responsif dan cepat untuk mengolah data penjualan skala besar.',
-            liveLink: '#',
-            repoLink: 'https://github.com/sutanarlie/dashboard-analytics',
-        },
-        'Kuliner Depok': {
-            type: 'project',
-            title: 'Aplikasi PWA Resep Kuliner Depok',
-            image: 'https://images.unsplash.com/photo-1583508915901-b5f84c1dcde1?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200',
-            description: 'Aplikasi Progressive Web App (offline-first) untuk menemukan dan menyimpan resep masakan khas Depok. Bekerja seperti native app dengan Service Worker.',
-            purpose: 'Promosi kekayaan kuliner lokal Depok ke audiens yang lebih luas.',
-            tech: ['PWA', 'Service Worker', 'Vanilla JS'],
-            result: 'Aplikasi ringan offline-first yang berfungsi layaknya native app.',
-            liveLink: '#',
-            repoLink: 'https://github.com/sutanarlie/kuliner-depok',
+            repoLink: 'https://github.com/Sutannn13/project-jual-ikan.git',
         },
     };
 
@@ -122,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
         "Introduction to Cybersecurity": {
             type: "certificate",
             title: "Introduction to Cybersecurity",
-            image: "Sertifikat-Cisco.pdf",
             isPdf: true,
             issuer: "Cisco Networking Academy",
             date: "03 November 2025",
@@ -132,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
         "Juara 2 - IT Bootcamp Software Development": {
             type: "certificate",
             title: "Juara 2 - IT Bootcamp Software Development",
-            image: "Sertifikat-Bootcamp.pdf",
             isPdf: true,
             issuer: "Universitas Bina Sarana Informatika",
             date: "25 Juni 2025",
@@ -142,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
         "Surat Pencatatan Ciptaan HKI": {
             type: "certificate",
             title: "Surat Pencatatan Ciptaan HKI",
-            image: "Sertifikat-Bootcamp-Sutan-Arlie.pdf",
             isPdf: true,
             issuer: "Kementerian Hukum dan HAM RI",
             date: "06 Agustus 2025",
@@ -152,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
         "MikroTik Certified Network Associate (MTCNA)": {
             type: "certificate",
             title: "MikroTik Certified Network Associate (MTCNA)",
-            image: "Sutan-Arlie-MTCNA.pdf",
             isPdf: true,
             issuer: "MikroTik",
             date: "17 Januari 2026",
@@ -168,999 +93,1284 @@ document.addEventListener('DOMContentLoaded', () => {
             category: 'Teknologi',
             date: '10 Agustus 2025',
             excerpt: 'JavaScript modern sangat bergantung pada operasi asynchronous. Mari kita bedah perbedaan Promise vs Async/Await.',
-            image: 'https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600'
+            image: 'https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=75'
+        },
+        {
+            id: 2,
+            title: 'Pengenalan IoT dengan MQTT Protocol',
+            category: 'IoT',
+            date: '25 September 2025',
+            excerpt: 'MQTT adalah protokol ringan yang populer di dunia IoT. Pelajari cara kerja publish-subscribe dan implementasinya di proyek nyata.',
+            image: 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=75'
+        },
+        {
+            id: 3,
+            title: 'Tips Clean Code untuk Pemula',
+            category: 'Best Practice',
+            date: '5 November 2025',
+            excerpt: 'Menulis kode yang bersih dan mudah dibaca adalah skill penting. Berikut prinsip-prinsip clean code yang wajib dipraktekkan sejak awal.',
+            image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=75'
         },
     ];
 
     /* =============================================
-       3. INITIALIZATION
+       3. MODULE: LOADER (Real Document-Ready)
        ============================================= */
-    const init = () => {
-        prepareTextReveal();
-        setupEventListeners();
-        initTheme();
-        initLoader();
-        initAOS();
-        initLenis();
-        initScrollSpy();
-        initAnimations();
-        initBlog();
-        initTestimonialCarousel();
-        initInteractiveEffects();
-        initGSAPTimeline();
-        updateCopyrightYear();
-        prepareTextFadeWords();
-        handleTextFadeOnScroll();
-        initHeroParticles();
-    };
+    const Loader = (() => {
+        const loaderEl = document.getElementById('loader');
+        const fillEl = document.querySelector('.progress-bar-fill');
+        const pctEl = document.querySelector('.progress-percentage');
 
-    /* =============================================
-       HERO PARTICLE CANVAS
-       ============================================= */
-    const initHeroParticles = () => {
-        const canvas = document.getElementById('hero-particles');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let animId;
-        const resize = () => {
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-        };
-        resize();
-        window.addEventListener('resize', resize);
-
-        const count = Math.min(60, Math.floor(canvas.width * canvas.height / 15000));
-        for (let i = 0; i < count; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5,
-                r: Math.random() * 2 + 1,
-                color: ['rgba(99,102,241,', 'rgba(139,92,246,', 'rgba(236,72,153,'][Math.floor(Math.random() * 3)]
-            });
-        }
-
-        const draw = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach((p, i) => {
-                p.x += p.vx; p.y += p.vy;
-                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fillStyle = p.color + '0.6)';
-                ctx.fill();
-                // connections
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = p.x - particles[j].x;
-                    const dy = p.y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 120) {
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = p.color + (0.15 * (1 - dist / 120)) + ')';
-                        ctx.lineWidth = 0.5;
-                        ctx.stroke();
-                    }
+        const hide = () => {
+            if (!loaderEl) { document.body.classList.remove('loading'); return; }
+            loaderEl.classList.add('fade-out');
+            document.body.classList.remove('loading');
+            // Trigger GSAP hero entrance after loader hides
+            setTimeout(() => {
+                HeroAnimations.entrance();
+                // Refresh ScrollTrigger after hero animation completes (dynamic timing)
+                if (typeof ScrollTrigger !== 'undefined') {
+                    // Wait for actual animation duration (1.2s stagger + 0.3s buffer)
+                    setTimeout(() => ScrollTrigger.refresh(), 1500);
                 }
-            });
-            animId = requestAnimationFrame(draw);
+            }, 100);
         };
-        draw();
 
-        // Pause when not visible
-        const heroSection = document.getElementById('hero');
-        if (heroSection && typeof IntersectionObserver !== 'undefined') {
-            new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) { if (!animId) draw(); }
-                else { cancelAnimationFrame(animId); animId = null; }
-            }, { threshold: 0.1 }).observe(heroSection);
-        }
-    };
+        const init = () => {
+            if (!loaderEl) { document.body.classList.remove('loading'); return; }
+
+            // Skip loader on certificate page (more robust detection)
+            const pathname = window.location.pathname.toLowerCase();
+            const isCertificatePage = pathname.includes('sertifikat') || 
+                                      pathname.includes('certificate') || 
+                                      document.querySelector('body[data-page="certificate"]') !== null;
+            
+            if (isCertificatePage) {
+                hide();
+                return;
+            }
+
+            // Use real document readiness + image loading
+            let progress = 0;
+            const images = Array.from(document.images);
+            const total = images.length || 1;
+            let loaded = 0;
+
+            const updateProgress = (val) => {
+                progress = Math.min(100, Math.round(val));
+                if (fillEl) fillEl.style.width = progress + '%';
+                if (pctEl) pctEl.textContent = progress + '%';
+                if (progress >= 100) {
+                    setTimeout(hide, 300);
+                }
+            };
+
+            // Animate progress smoothly
+            const tick = () => {
+                const imgProgress = total > 0 ? (loaded / total) * 80 : 80;
+                const docProgress = document.readyState === 'complete' ? 20 : 0;
+                updateProgress(imgProgress + docProgress);
+            };
+
+            if (images.length === 0) {
+                // No images — animate quickly
+                let p = 0;
+                const interval = setInterval(() => {
+                    p += 8;
+                    updateProgress(p);
+                    if (p >= 100) clearInterval(interval);
+                }, 40);
+            } else {
+                images.forEach(img => {
+                    if (img.complete) {
+                        loaded++;
+                        tick();
+                    } else {
+                        img.addEventListener('load', () => { loaded++; tick(); });
+                        img.addEventListener('error', () => { loaded++; tick(); });
+                    }
+                });
+                tick();
+            }
+
+            // Fallback: ensure loader always hides
+            window.addEventListener('load', () => updateProgress(100), { once: true });
+            setTimeout(() => updateProgress(100), 3000);
+        };
+
+        return { init };
+    })();
 
     /* =============================================
-       4. AOS INITIALIZATION
+       4. MODULE: THEME
        ============================================= */
-    const initAOS = () => {
-        if (typeof AOS !== 'undefined') {
-            AOS.init({
-                duration: 800,
-                easing: 'ease-out-cubic',
-                once: true,
-                offset: 80,
-                delay: 0,
+    const Theme = (() => {
+        const toggle = document.getElementById('theme-toggle');
+
+        const apply = (isDark) => {
+            document.documentElement.classList.toggle('dark', isDark);
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        };
+
+        const init = () => {
+            const saved = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            apply(saved === 'dark' || (!saved && prefersDark));
+            if (toggle) toggle.addEventListener('click', () => {
+                apply(!document.documentElement.classList.contains('dark'));
             });
-        }
-    };
+        };
+
+        return { init };
+    })();
 
     /* =============================================
-       5. LENIS SMOOTH SCROLL
+       5. MODULE: LENIS SMOOTH SCROLL
        ============================================= */
     let lenis = null;
-    const initLenis = () => {
-        if (typeof Lenis !== 'undefined') {
+    const LenisScroll = (() => {
+        const init = () => {
+            if (typeof Lenis === 'undefined') return;
             lenis = new Lenis({
                 duration: 1.2,
                 easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
                 orientation: 'vertical',
                 smoothWheel: true,
+                touchMultiplier: 1.5,
             });
 
-            function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
-            requestAnimationFrame(raf);
-
-            // Connect Lenis to GSAP ScrollTrigger
+            // Sync with GSAP ScrollTrigger
             if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
                 lenis.on('scroll', ScrollTrigger.update);
                 gsap.ticker.add((time) => { lenis.raf(time * 1000); });
                 gsap.ticker.lagSmoothing(0);
+            } else {
+                // Fallback RAF loop
+                const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
+                requestAnimationFrame(raf);
             }
-        }
-    };
+        };
+
+        const scrollTo = (target, options = {}) => {
+            if (lenis) {
+                lenis.scrollTo(target, { offset: -80, duration: 1.5, ...options });
+            } else {
+                const el = typeof target === 'string' ? document.querySelector(target) : target;
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        };
+
+        return { init, scrollTo };
+    })();
 
     /* =============================================
-       6. GSAP TIMELINE ANIMATION
+       6. MODULE: GSAP ANIMATIONS (replaces AOS entirely)
        ============================================= */
-    const initGSAPTimeline = () => {
-        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-            // Fallback: use existing JS animation
-            handleTimelineScrollAnimation();
-            return;
-        }
+    const GSAPAnimations = (() => {
+        const init = () => {
+            if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+            gsap.registerPlugin(ScrollTrigger);
+            state.gsapReady = true;
 
-        gsap.registerPlugin(ScrollTrigger);
-
-        const timeline = document.querySelector('.timeline');
-        const progressBar = document.querySelector('.timeline-progress');
-        const scrollDot = document.querySelector('.timeline-scroll-dot');
-        const timelineItems = document.querySelectorAll('.timeline-item');
-
-        if (!timeline || !progressBar || !scrollDot || timelineItems.length === 0) return;
-
-        // Animate the progress line
-        gsap.to(progressBar, {
-            height: '100%',
-            ease: 'none',
-            scrollTrigger: {
-                trigger: timeline,
-                start: 'top 60%',
-                end: 'bottom 40%',
-                scrub: 0.3,
-            }
-        });
-
-        // Animate the scroll dot
-        gsap.to(scrollDot, {
-            top: '100%',
-            ease: 'none',
-            scrollTrigger: {
-                trigger: timeline,
-                start: 'top 60%',
-                end: 'bottom 40%',
-                scrub: 0.3,
-            }
-        });
-
-        // Animate each timeline item
-        timelineItems.forEach((item, index) => {
-            const isOdd = index % 2 === 0;
-
-            // Set initial state explicitly
-            gsap.set(item, { opacity: 0, x: isOdd ? -60 : 60, y: 20 });
-
-            gsap.to(item, {
-                opacity: 1,
-                x: 0,
-                y: 0,
-                duration: 0.8,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: item,
-                    start: 'top 80%',
-                    toggleActions: 'play none none none',
-                    onEnter: () => item.classList.add('is-active'),
-                }
+            // Generic fade-up for sections (.gsap-fade-up)
+            document.querySelectorAll('.gsap-fade-up').forEach(el => {
+                gsap.from(el, {
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.9,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 90%',
+                        end: 'top -10%',
+                        toggleActions: 'play reverse play reverse',
+                    }
+                });
             });
-        });
 
-        // Animate stat counters with GSAP
-        const statNumbers = document.querySelectorAll('.stat-number');
-        statNumbers.forEach(stat => {
-            const target = parseInt(stat.getAttribute('data-target'));
-            ScrollTrigger.create({
-                trigger: stat,
-                start: 'top 85%',
-                once: true,
-                onEnter: () => {
-                    gsap.to(stat, {
-                        innerText: target,
-                        duration: 2,
-                        snap: { innerText: 1 },
-                        ease: 'power2.out',
-                    });
-                }
-            });
-        });
+            // ─── FIX: Legacy .animate-on-scroll elements ─────────────────────
+            // These were previously hidden by CSS opacity:0 and revealed by AOS.
+            // Now GSAP handles them via ScrollTrigger (AOS is fully removed).
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                // Skip elements already handled by specific GSAP modules:
+                // - .hero-text / hero section → handled by HeroAnimations.entrance()
+                // - .timeline items → handled by initTimeline()
+                // - .stagger-container items → handled by stagger-item logic above
+                // But DON'T skip stats cards - they need animation
+                if ((el.closest('#hero') && !el.classList.contains('premium-stat-card')) || 
+                    el.closest('.timeline') || 
+                    el.classList.contains('stagger-item')) return;
 
-        // Animate skill progress bars
-        const progressBars = document.querySelectorAll('.progress-bar');
-        progressBars.forEach(bar => {
-            const level = bar.getAttribute('data-level');
-            ScrollTrigger.create({
-                trigger: bar,
-                start: 'top 90%',
-                once: true,
-                onEnter: () => {
-                    gsap.to(bar, {
-                        width: level + '%',
-                        duration: 1.5,
+                // Set initial state
+                gsap.set(el, { opacity: 0, y: 40 });
+
+                gsap.fromTo(el,
+                    {
+                        y: 40,
+                        opacity: 0,
+                    },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.8,
                         ease: 'power3.out',
-                    });
+                        scrollTrigger: {
+                            trigger: el,
+                            start: 'top 90%',
+                            end: 'top -10%',
+                            toggleActions: 'play reverse play reverse',
+                            onEnter: () => el.classList.add('is-visible'),
+                            onLeave: () => el.classList.remove('is-visible'),
+                            onEnterBack: () => el.classList.add('is-visible'),
+                            onLeaveBack: () => el.classList.remove('is-visible'),
+                        }
+                    }
+                );
+            });
+
+            // ─── FIX: Legacy .stagger-item elements ──────────────────────────
+            // Group stagger-items by their parent .stagger-container
+            document.querySelectorAll('.stagger-container').forEach(container => {
+                const items = container.querySelectorAll('.stagger-item');
+                if (!items.length) return;
+
+                // Set initial state: items start hidden
+                gsap.set(items, { opacity: 0, y: 40 });
+
+                gsap.fromTo(items,
+                    {
+                        y: 40,
+                        opacity: 0,
+                    },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.7,
+                        stagger: 0.1,
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: container,
+                            start: 'top 85%',
+                            end: 'top -10%',
+                            toggleActions: 'play reverse play reverse',
+                            onEnter: () => items.forEach(i => i.classList.add('is-visible')),
+                            onLeave: () => items.forEach(i => i.classList.remove('is-visible')),
+                            onEnterBack: () => items.forEach(i => i.classList.add('is-visible')),
+                            onLeaveBack: () => items.forEach(i => i.classList.remove('is-visible')),
+                        }
+                    }
+                );
+            });
+
+            // Standalone .stagger-item not inside .stagger-container
+            document.querySelectorAll('.stagger-item:not(.stagger-container .stagger-item)').forEach(el => {
+                // Set initial state
+                gsap.set(el, { opacity: 0, y: 40 });
+
+                gsap.fromTo(el,
+                    {
+                        y: 40,
+                        opacity: 0,
+                    },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.7,
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: el,
+                            start: 'top 90%',
+                            end: 'top -10%',
+                            toggleActions: 'play reverse play reverse',
+                            onEnter: () => el.classList.add('is-visible'),
+                            onLeave: () => el.classList.remove('is-visible'),
+                            onEnterBack: () => el.classList.add('is-visible'),
+                            onLeaveBack: () => el.classList.remove('is-visible'),
+                        }
+                    }
+                );
+            });
+
+            // Section titles
+            document.querySelectorAll('.section-title').forEach(title => {
+                gsap.from(title, {
+                    y: 40,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: title,
+                        start: 'top 85%',
+                        end: 'top -10%',
+                        toggleActions: 'play reverse play reverse',
+                    }
+                });
+            });
+
+            // Stagger cards (project, cert, skill)
+            document.querySelectorAll('.gsap-stagger-parent').forEach(parent => {
+                const children = parent.querySelectorAll('.gsap-stagger-child');
+                if (!children.length) return;
+
+                // Check if parent is already visible in viewport
+                const rect = parent.getBoundingClientRect();
+                const alreadyVisible = rect.top < window.innerHeight;
+
+                if (alreadyVisible) {
+                    // Animate immediately — no scroll trigger needed
+                    gsap.fromTo(children,
+                        { y: 40, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out', delay: 0.1 }
+                    );
+                } else {
+                    gsap.fromTo(children,
+                        { y: 60, opacity: 0 },
+                        {
+                            y: 0, opacity: 1,
+                            duration: 0.7,
+                            stagger: 0.12,
+                            ease: 'power3.out',
+                            scrollTrigger: {
+                                trigger: parent,
+                                start: 'top 95%',
+                                end: 'top -10%',
+                                toggleActions: 'play reverse play reverse',
+                            }
+                        }
+                    );
                 }
             });
-        });
 
-        // Refresh ScrollTrigger after setup to catch any visible items
-        ScrollTrigger.refresh();
+            // Stat counters (improved with proper number formatting)
+            document.querySelectorAll('.stat-number').forEach(stat => {
+                const target = parseInt(stat.getAttribute('data-target')) || 0;
+                ScrollTrigger.create({
+                    trigger: stat,
+                    start: 'top 85%',
+                    once: true,
+                    onEnter: () => {
+                        let obj = { value: 0 };
+                        gsap.to(obj, {
+                            value: target,
+                            duration: 2,
+                            ease: 'power2.out',
+                            onUpdate: () => {
+                                stat.textContent = Math.round(obj.value);
+                            }
+                        });
+                    }
+                });
+            });
 
-        // Mark that GSAP is loaded and active (disable CSS fallback)
-        document.body.classList.add('gsap-loaded');
+            // Skill progress bars
+            document.querySelectorAll('.progress-bar').forEach(bar => {
+                const level = bar.getAttribute('data-level') || '0';
+                ScrollTrigger.create({
+                    trigger: bar,
+                    start: 'top 90%',
+                    once: true,
+                    onEnter: () => {
+                        gsap.to(bar, {
+                            width: level + '%',
+                            duration: 1.5,
+                            ease: 'power3.out',
+                        });
+                    }
+                });
+            });
 
-        // Hero entrance animation
-        const heroText = document.querySelector('.hero-text');
-        if (heroText) {
+            // Timeline items
+            initTimeline();
+
+            // About image tilt (desktop only)
+            initAboutImageTilt();
+
+            // Scroll-spy active nav
+            initScrollSpy();
+
+            // Refresh ScrollTrigger and mark as loaded
+            ScrollTrigger.refresh();
+
+            // Add gsap-loaded class AFTER all animations are set up
+            // This prevents CSS from interfering with initial animation states
+            requestAnimationFrame(() => {
+                document.body.classList.add('gsap-loaded');
+            });
+        };
+
+        const initTimeline = () => {
+            const timeline = document.querySelector('.timeline');
+            const progressBar = document.querySelector('.timeline-progress');
+            const scrollDot = document.querySelector('.timeline-scroll-dot');
+            const items = document.querySelectorAll('.timeline-item');
+            if (!timeline || !progressBar || !scrollDot || !items.length) return;
+
+            // DEBUG: Log positioning
+            console.log('=== TIMELINE ITEMS DEBUG (margin-left approach) ===');
+            items.forEach((item, i) => {
+                const computed = window.getComputedStyle(item);
+                const hasLeft = item.classList.contains('timeline-left');
+                const hasRight = item.classList.contains('timeline-right');
+                console.log(`Item ${i + 1}:`, {
+                    classes: `${hasLeft ? 'LEFT' : ''} ${hasRight ? 'RIGHT' : ''}`,
+                    marginLeft: computed.marginLeft,
+                    width: computed.width,
+                    paddingLeft: computed.paddingLeft,
+                    paddingRight: computed.paddingRight,
+                    textAlign: computed.textAlign,
+                });
+            });
+            console.log('========================');
+
+            // IMPORTANT: Clear any inline transforms that might override CSS positioning
+            gsap.set(items, { 
+                opacity: 0,
+                clearProps: 'transform,x,y,left,translateX,translateY'
+            });
+
+            gsap.to(progressBar, {
+                height: '100%',
+                ease: 'none',
+                scrollTrigger: { trigger: timeline, start: 'top 60%', end: 'bottom 40%', scrub: 0.3 }
+            });
+            gsap.to(scrollDot, {
+                top: '100%',
+                ease: 'none',
+                scrollTrigger: { trigger: timeline, start: 'top 60%', end: 'bottom 40%', scrub: 0.3 }
+            });
+
+            items.forEach((item) => {
+                gsap.fromTo(item,
+                    {
+                        opacity: 0,
+                        // Only animate opacity and scale - NO positional transforms
+                        scale: 0.95,
+                    },
+                    {
+                        opacity: 1,
+                        scale: 1,
+                        duration: 0.8,
+                        ease: 'power3.out',
+                        // Clear any transform properties after animation completes
+                        clearProps: 'transform,scale',
+                        scrollTrigger: {
+                            trigger: item,
+                            start: 'top 80%',
+                            end: 'top -10%',
+                            toggleActions: 'play reverse play reverse',
+                            onEnter: () => item.classList.add('is-active'),
+                            onLeave: () => item.classList.remove('is-active'),
+                            onEnterBack: () => item.classList.add('is-active'),
+                            onLeaveBack: () => item.classList.remove('is-active'),
+                        }
+                    });
+            });
+        };
+
+        const initAboutImageTilt = () => {
+            const wrapper = document.querySelector('.about-image-wrapper');
+            if (!wrapper || state.isTouchDevice) return;
+            const img = wrapper.querySelector('.about-image');
+            if (!img) return;
+
+            wrapper.addEventListener('mousemove', (e) => {
+                const { width, height, left, top } = wrapper.getBoundingClientRect();
+                const x = e.clientX - left, y = e.clientY - top;
+                const rotX = ((y - height / 2) / (height / 2)) * -6;
+                const rotY = ((x - width / 2) / (width / 2)) * 6;
+                gsap.to(img, { rotateX: rotX, rotateY: rotY, scale: 1.03, duration: 0.4, ease: 'power2.out', transformPerspective: 1000 });
+            });
+            wrapper.addEventListener('mouseleave', () => {
+                gsap.to(img, { rotateX: 0, rotateY: 0, scale: 1, duration: 0.6, ease: 'power3.out' });
+            });
+        };
+
+        const initScrollSpy = () => {
+            document.querySelectorAll('section[id]').forEach(section => {
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: 'top 60%',
+                    end: 'bottom 40%',
+                    onToggle: ({ isActive }) => {
+                        if (!isActive) return;
+                        const id = section.getAttribute('id');
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            const href = link.getAttribute('href') || '';
+                            link.classList.toggle('active', href.includes(id));
+                        });
+                    }
+                });
+            });
+        };
+
+        return { init };
+    })();
+
+    /* =============================================
+       7. MODULE: HERO ANIMATIONS (GSAP)
+       ============================================= */
+    const HeroAnimations = (() => {
+        const entrance = () => {
+            if (typeof gsap === 'undefined') return;
+            const heroText = document.querySelector('.hero-text');
+            if (!heroText) return;
+
             const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-            tl.from('#hero-title', { y: 60, opacity: 0, duration: 1, delay: 2.2 })
+            tl.from('#hero-title', { y: 60, opacity: 0, duration: 1 })
                 .from('.hero-text .subtitle', { y: 40, opacity: 0, duration: 0.8 }, '-=0.5')
                 .from('.hero-text .description', { y: 30, opacity: 0, duration: 0.8 }, '-=0.4')
                 .from('.hero-cta', { y: 30, opacity: 0, duration: 0.8 }, '-=0.3')
                 .from('.id-card-wrapper', { y: 80, opacity: 0, duration: 1.2, ease: 'elastic.out(1, 0.5)' }, '-=0.6');
-        }
-
-        // Section heading reveal on scroll
-        document.querySelectorAll('.section-title').forEach(title => {
-            gsap.from(title, {
-                y: 40,
-                opacity: 0,
-                duration: 0.8,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: title,
-                    start: 'top 85%',
-                    toggleActions: 'play none none none',
-                }
-            });
-        });
-    };
-
-    /* =============================================
-       7. EVENT LISTENERS
-       ============================================= */
-    const setupEventListeners = () => {
-        if (dom.themeToggle) dom.themeToggle.addEventListener('click', toggleTheme);
-        if (dom.hamburger) dom.hamburger.addEventListener('click', toggleMobileMenu);
-
-        window.addEventListener('scroll', throttle(handleScroll, 16), { passive: true });
-
-        // Mouse effects removed (custom cursor + spotlight deleted)
-
-        if (dom.navLinks) {
-            const navLinksArray = Array.isArray(dom.navLinks) ? dom.navLinks : [dom.navLinks];
-            navLinksArray.forEach(link => {
-                link.addEventListener('click', e => {
-                    const href = link.getAttribute('href');
-                    if (href.startsWith('#')) {
-                        smoothScroll(e);
-                    } else if (href.includes('.html')) {
-                        return;
-                    }
-                    if (dom.navMenu && dom.navMenu.classList.contains('active')) {
-                        toggleMobileMenu();
-                    }
-                });
-            });
-        }
-
-        if (dom.projectFilters) {
-            dom.projectFilters.addEventListener("click", handleProjectFilter);
-        }
-
-        // Cards (projects + certificates)
-        const allCards = document.querySelectorAll(".project-card, .cert-card");
-        if (allCards.length) {
-            allCards.forEach(card => {
-                card.addEventListener("click", e => {
-                    if (card.classList.contains("cert-card")) return;
-                    e.preventDefault();
-                    e.stopPropagation();
-                    openUniversalModal(card);
-                });
-
-                const viewBtn = card.querySelector(".cert-open-btn");
-                const downloadBtn = card.querySelector(".cert-download-btn");
-
-                if (viewBtn) {
-                    viewBtn.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        openUniversalModal(card);
-                    });
-                }
-
-                if (downloadBtn) {
-                    downloadBtn.addEventListener("click", e => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        const title = card.querySelector("h3")?.textContent.trim();
-                        const cert = certificateData[title];
-                        if (!cert) return;
-                        const a = document.createElement("a");
-                        a.href = cert.fileUrl;
-                        a.download = `${title} - sertifikat.pdf`;
-                        document.body.appendChild(a);
-                        a.click();
-                        a.remove();
-                    });
-                }
-            });
-        }
-
-        if (dom.aboutImageWrapper && !state.isTouchDevice) {
-            dom.aboutImageWrapper.addEventListener('mousemove', handleAboutImageTilt);
-            dom.aboutImageWrapper.addEventListener('mouseleave', resetAboutImageTilt);
-        }
-
-        initIdCardPhysics();
-
-        if (dom.projectModal) dom.projectModal.addEventListener('click', handleModalClick);
-        if (dom.modalCloseBtn) dom.modalCloseBtn.addEventListener('click', closeProjectModal);
-        document.addEventListener('keydown', handleKeyboardInput);
-
-        if (dom.contactForm) {
-            dom.contactForm.addEventListener('submit', handleFormSubmit);
-            const formInputs = dom.contactForm.querySelectorAll('input, textarea');
-            formInputs.forEach(input => {
-                input.addEventListener('blur', (e) => validateField(e.target));
-                input.addEventListener('input', (e) => validateField(e.target));
-            });
-        }
-
-        if (dom.testimonialPrevBtn && dom.testimonialNextBtn) {
-            dom.testimonialPrevBtn.addEventListener('click', () => { prevTestimonialSlide(); resetTestimonialInterval(); });
-            dom.testimonialNextBtn.addEventListener('click', () => { nextTestimonialSlide(); resetTestimonialInterval(); });
-        }
-
-        if (dom.scrollToTopBtn) {
-            dom.scrollToTopBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (lenis) {
-                    lenis.scrollTo(0, { duration: 1.5 });
-                } else {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            });
-        }
-    };
-
-    /* =============================================
-       8. HANDLER FUNCTIONS
-       ============================================= */
-    // handleGlobalMouseMove removed (cursor + spotlight deleted)
-
-    const handleScroll = () => {
-        if (dom.header) dom.header.classList.toggle('scrolled', window.scrollY > 50);
-        if (dom.scrollToTopBtn) dom.scrollToTopBtn.classList.toggle('show', window.scrollY > 300);
-        initScrollSpy();
-        handleTextFadeOnScroll();
-
-        // Only use JS timeline animation if GSAP is not available
-        if (typeof gsap === 'undefined') {
-            handleTimelineScrollAnimation();
-        }
-    };
-
-    const prepareTextFadeWords = () => {
-        const elements = document.querySelectorAll('.fade-on-scroll-text');
-        if (!elements.length) return;
-        elements.forEach(paragraph => {
-            const text = paragraph.innerText;
-            const words = text.split(' ');
-            paragraph.innerHTML = '';
-            words.forEach(word => {
-                const span = document.createElement('span');
-                span.textContent = word + ' ';
-                paragraph.appendChild(span);
-            });
-        });
-    };
-
-    const handleTextFadeOnScroll = () => {
-        const elements = document.querySelectorAll('.fade-on-scroll-text');
-        if (!elements.length) return;
-
-        elements.forEach(paragraph => {
-            const rect = paragraph.getBoundingClientRect();
-            const spans = paragraph.querySelectorAll('span');
-            const windowHeight = window.innerHeight;
-            const startTrigger = windowHeight * 0.9;
-            const endTrigger = windowHeight * 0.35;
-            const elementTop = rect.top;
-
-            let progress = (startTrigger - elementTop) / (startTrigger - endTrigger);
-            progress = Math.max(0, Math.min(1, progress));
-
-            const totalWords = spans.length;
-            const wordsToHighlight = Math.floor(progress * totalWords);
-
-            spans.forEach((span, index) => {
-                span.classList.toggle('highlight', index < wordsToHighlight);
-            });
-        });
-    };
-
-    const handleTimelineScrollAnimation = () => {
-        if (!dom.timeline || !dom.timelineProgress || !dom.timelineScrollDot || !dom.timelineItems) return;
-        const timelineEl = dom.timeline;
-        const timelineRect = timelineEl.getBoundingClientRect();
-        const timelineHeight = timelineEl.offsetHeight;
-        const triggerPoint = window.innerHeight * 0.4;
-        const distanceToTrigger = triggerPoint - timelineRect.top;
-        const scrollProgress = Math.min(Math.max(0, distanceToTrigger), timelineHeight);
-        const progressPercentage = (scrollProgress / timelineHeight) * 100;
-
-        dom.timelineProgress.style.height = `${progressPercentage}%`;
-        dom.timelineScrollDot.style.top = `${progressPercentage}%`;
-
-        const items = Array.isArray(dom.timelineItems) ? dom.timelineItems : [dom.timelineItems];
-        items.forEach(item => {
-            const itemCenterInTimeline = item.offsetTop + (item.offsetHeight / 2);
-            if (scrollProgress >= itemCenterInTimeline) {
-                item.classList.add('is-active');
-            }
-        });
-    };
-
-    /* =============================================
-       9. CORE FUNCTIONS
-       ============================================= */
-    const initTheme = () => {
-        const savedTheme = localStorage.getItem('theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    };
-
-    const toggleTheme = () => {
-        const isDark = document.documentElement.classList.toggle('dark');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        // Refresh AOS on theme change
-        if (typeof AOS !== 'undefined') {
-            setTimeout(() => AOS.refresh(), 300);
-        }
-    };
-
-    const initLoader = () => {
-        if (!dom.loader) {
-            document.body.classList.remove("loading");
-            return;
-        }
-
-        const isCertificatePage = window.location.pathname.includes("sertifikat");
-        if (isCertificatePage) {
-            dom.loader.classList.add("fade-out");
-            document.body.classList.remove("loading");
-            return;
-        }
-
-        let progress = 0;
-        const updateUI = () => {
-            if (dom.progressBarFill) dom.progressBarFill.style.width = `${progress}%`;
-            if (dom.progressPercentage) dom.progressPercentage.textContent = progress;
         };
 
-        const intervalId = setInterval(() => {
-            progress += 5;
-            updateUI();
-            if (progress >= 100) {
-                clearInterval(intervalId);
-                dom.loader.classList.add("fade-out");
-                document.body.classList.remove("loading");
-                // Initialize AOS after loader
-                if (typeof AOS !== 'undefined') {
-                    setTimeout(() => AOS.refresh(), 100);
-                }
-            }
-        }, 40);
-    };
-
-    const initScrollSpy = () => {
-        if (!dom.sections || dom.sections.length === 0) return;
-        const scrollY = window.pageYOffset;
-        const sections = Array.isArray(dom.sections) ? dom.sections : [dom.sections];
-        sections.forEach(current => {
-            const sectionHeight = current.offsetHeight;
-            const sectionTop = current.offsetTop - 100;
-            const sectionId = current.getAttribute('id');
-            const navLink = document.querySelector(`.nav-menu a[href*=${sectionId}]`);
-            if (navLink) {
-                navLink.classList.toggle('active', scrollY > sectionTop && scrollY <= sectionTop + sectionHeight);
-            }
-        });
-    };
-
-    const toggleMobileMenu = () => {
-        dom.hamburger.classList.toggle('active');
-        dom.navMenu.classList.toggle('active');
-        document.body.style.overflow = dom.navMenu.classList.contains('active') ? 'hidden' : '';
-    };
-
-    const smoothScroll = (e) => {
-        e.preventDefault();
-        const targetId = e.currentTarget.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            if (lenis) {
-                lenis.scrollTo(targetElement, { offset: -80, duration: 1.5 });
-            } else {
-                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-    };
+        return { entrance };
+    })();
 
     /* =============================================
-       10. ANIMATIONS
+       8. MODULE: HERO PARTICLES (Canvas)
        ============================================= */
-    const initAnimations = () => {
-        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
-        const observer = new IntersectionObserver((entries, obs) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const el = entry.target;
-                    if (el.classList.contains('animate-on-scroll') || el.classList.contains('cert-card')) {
-                        el.classList.add('is-visible');
-                    }
-                    // Only animate with JS if GSAP isn't handling it
-                    if (typeof gsap === 'undefined') {
-                        if (el.matches('.stat-number')) animateCounter(el);
-                        if (el.matches('.progress-bar')) animateProgressBar(el);
-                    }
-                    if (el.matches('.stagger-container')) animateStaggeredChildren(el);
-                    if (el.matches('.reveal-text')) el.classList.add('is-visible');
-                    obs.unobserve(el);
+    const HeroParticles = (() => {
+        const init = () => {
+            const canvas = document.getElementById('hero-particles');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let particles = [], animId;
+            let isVisible = true;
+            let lastFrameTime = 0;
+            const isMobile = window.innerWidth < 768;
+            const targetFps = isMobile ? 30 : 60; // Lower FPS on mobile
+            const frameInterval = 1000 / targetFps;
+
+            const resize = () => {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+            };
+            resize();
+            window.addEventListener('resize', resize, { passive: true });
+
+            // Adaptive particle count: fewer on mobile
+            const baseCount = isMobile ? 25 : 50;
+            const count = Math.min(baseCount, Math.floor(canvas.width * canvas.height / 18000));
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                    r: Math.random() * 2 + 0.5,
+                    color: ['rgba(99,102,241,', 'rgba(139,92,246,', 'rgba(236,72,153,'][Math.floor(Math.random() * 3)]
+                });
+            }
+
+            const draw = (currentTime) => {
+                if (!isVisible) return;
+                
+                // Frame rate limiting for better performance
+                if (currentTime - lastFrameTime < frameInterval) {
+                    animId = requestAnimationFrame(draw);
+                    return;
                 }
+                lastFrameTime = currentTime;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach((p, i) => {
+                    p.x += p.vx; p.y += p.vy;
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color + '0.6)';
+                    ctx.fill();
+                    
+                    // Only draw connections if not on mobile (performance)
+                    if (!isMobile) {
+                        for (let j = i + 1; j < particles.length; j++) {
+                            const dx = p.x - particles[j].x, dy = p.y - particles[j].y;
+                            const dist = Math.sqrt(dx * dx + dy * dy);
+                            if (dist < 110) {
+                                ctx.beginPath();
+                                ctx.moveTo(p.x, p.y);
+                                ctx.lineTo(particles[j].x, particles[j].y);
+                                ctx.strokeStyle = p.color + (0.12 * (1 - dist / 110)) + ')';
+                                ctx.lineWidth = 0.5;
+                                ctx.stroke();
+                            }
+                        }
+                    }
+                });
+                animId = requestAnimationFrame(draw);
+            };
+
+            const start = () => {
+                if (!animId) {
+                    isVisible = true;
+                    animId = requestAnimationFrame(draw);
+                }
+            };
+
+            const stop = () => {
+                if (animId) {
+                    cancelAnimationFrame(animId);
+                    animId = null;
+                    isVisible = false;
+                }
+            };
+
+            start();
+
+            // Pause when hero not visible (IntersectionObserver)
+            const heroSection = document.getElementById('hero');
+            if (heroSection && typeof IntersectionObserver !== 'undefined') {
+                new IntersectionObserver((entries) => {
+                    entries[0].isIntersecting ? start() : stop();
+                }, { threshold: 0.1 }).observe(heroSection);
+            }
+
+            // Pause when page is hidden (battery optimization)
+            document.addEventListener('visibilitychange', () => {
+                document.hidden ? stop() : start();
             });
-        }, observerOptions);
 
-        const elementsToObserve = [
-            ...document.querySelectorAll(selectors.animateOnScroll),
-            ...document.querySelectorAll('.cert-card'),
-            ...document.querySelectorAll(selectors.statNumbers),
-            ...document.querySelectorAll(selectors.progressBars),
-            ...document.querySelectorAll(selectors.staggerContainers),
-            ...document.querySelectorAll(selectors.revealTextElements)
-        ];
-        elementsToObserve.forEach(el => el && observer.observe(el));
-    };
+            // Cleanup on page unload
+            window.addEventListener('beforeunload', stop);
+        };
 
-    const animateCounter = (element) => {
-        const target = +element.getAttribute('data-target');
-        const duration = 2000;
-        let current = 0;
-        const stepTime = Math.max(1, Math.floor(duration / target));
-        const timer = setInterval(() => {
-            current += 1;
-            element.innerText = current;
-            if (current >= target) { element.innerText = target; clearInterval(timer); }
-        }, stepTime);
-    };
-
-    const animateProgressBar = (el) => { el.style.width = el.getAttribute('data-level') + '%'; };
-
-    const animateStaggeredChildren = (container) => {
-        const children = container.querySelectorAll('.stagger-item, .cert-card');
-        children.forEach((child, index) => {
-            setTimeout(() => { child.classList.add('is-visible'); }, index * 150);
-        });
-    };
-
-    const prepareTextReveal = () => {
-        const elements = document.querySelectorAll('.reveal-text');
-        if (!elements.length) return;
-        elements.forEach(el => {
-            const text = el.textContent.trim();
-            el.innerHTML = '';
-            text.split('').forEach((char, index) => {
-                const span = document.createElement('span');
-                span.textContent = char === ' ' ? '\u00A0' : char;
-                span.style.transitionDelay = `${index * 30}ms`;
-                el.appendChild(span);
-            });
-        });
-    };
+        return { init };
+    })();
 
     /* =============================================
-       11. INTERACTIVE EFFECTS
+       9. MODULE: ID CARD PHYSICS
        ============================================= */
-    const handleAboutImageTilt = (e) => {
-        const wrapper = e.currentTarget;
-        const image = wrapper.querySelector('.about-image');
-        if (!image) return;
-        const { width, height, left, top } = wrapper.getBoundingClientRect();
-        const x = e.clientX - left, y = e.clientY - top;
-        const intensity = 6;
-        const rotateX = ((y - height / 2) / (height / 2)) * -intensity;
-        const rotateY = ((x - width / 2) / (width / 2)) * intensity;
-        image.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
-    };
-
-    const resetAboutImageTilt = (e) => {
-        const image = e.currentTarget.querySelector('.about-image');
-        if (image) image.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-    };
-
-    const initInteractiveEffects = () => {
-        // Custom cursor and magnetic buttons removed
-        initTypingEffect();
-    };
-
-    const initIdCardPhysics = () => {
-        const wrapper = document.getElementById('id-card-wrapper');
-        const holder = document.getElementById('id-card');
-        if (!wrapper || !holder) return;
-
-        let isDragging = false;
-        let dragMoved = false;
-        let startX, startY;
-        let currentX = 0, currentY = 0;
-        let velocityX = 0, velocityY = 0;
-        let rotation = 0;
-        let angularVelocity = 0;
+    /* =============================================
+       9. MODULE: ID CARD DRAG & FLIP (REBUILT)
+       ============================================= */
+    const IdCard = (() => {
+        let wrapper, holder, container;
         let isFlipped = false;
+        let isDragging = false;
 
-        const spring = 0.08;
-        const friction = 0.85;
-        const maxPull = 120;
+        // Drag state
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let currentX = 0;
+        let currentY = 0;
+        let offsetX = 0;
+        let offsetY = 0;
+        let velocityX = 0;
+        let velocityY = 0;
+        let rotationAngle = 0;
+        let angularVelocity = 0;
 
-        wrapper.addEventListener('mousedown', (e) => {
+        // Physics constants
+        const SPRING_STRENGTH = 0.1;
+        const DAMPING = 0.88;
+        const MAX_DISTANCE = 100;
+        const ROTATION_FACTOR = 0.2;
+        const CLICK_THRESHOLD = 5;
+
+        const init = () => {
+            wrapper = document.getElementById('id-card-wrapper');
+            holder = document.getElementById('id-card');
+
+            if (!wrapper || !holder) {
+                console.warn('ID Card elements not found');
+                return;
+            }
+
+            container = holder.querySelector('.id-card-container');
+            if (!container) {
+                console.warn('ID Card container not found');
+                return;
+            }
+
+            setupEventListeners();
+            startAnimationLoop();
+
+            console.log('ID Card initialized successfully');
+        };
+
+        const setupEventListeners = () => {
+            // Check if mobile/touch device
+            const isMobile = state.isTouchDevice || window.innerWidth < 768;
+            
+            if (isMobile) {
+                // Simple tap-to-flip on mobile
+                wrapper.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    toggleFlip();
+                });
+                wrapper.style.cursor = 'pointer';
+            } else {
+                // Full drag physics on desktop
+                wrapper.addEventListener('mousedown', handleDragStart);
+                document.addEventListener('mousemove', handleDragMove);
+                document.addEventListener('mouseup', handleDragEnd);
+                wrapper.style.cursor = 'grab';
+            }
+
+            // Touch events with simple tap-to-flip
+            wrapper.addEventListener('touchstart', handleTouchStart, { passive: true });
+            wrapper.addEventListener('touchend', handleTouchEnd, { passive: true });
+        };
+
+        const handleDragStart = (e) => {
             isDragging = true;
-            dragMoved = false;
-            startX = e.clientX;
-            startY = e.clientY;
+            dragStartX = e.clientX - offsetX;
+            dragStartY = e.clientY - offsetY;
             wrapper.style.cursor = 'grabbing';
-        });
+            e.preventDefault();
+        };
 
-        window.addEventListener('mousemove', (e) => {
+        const handleDragMove = (e) => {
             if (!isDragging) return;
-            const deltaX = e.clientX - startX;
-            const deltaY = e.clientY - startY;
-            if (Math.abs(deltaX) > 3 || Math.abs(deltaY) > 3) dragMoved = true;
 
+            e.preventDefault();
+            const deltaX = e.clientX - dragStartX;
+            const deltaY = e.clientY - dragStartY;
+
+            // Limit drag distance
             const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-            const scale = distance > maxPull ? maxPull / distance : 1;
-            const targetX = deltaX * scale;
-            const targetY = Math.max(0, deltaY * scale);
-            currentX += (targetX - currentX) * 0.5;
-            currentY += (targetY - currentY) * 0.5;
-            rotation = currentX * 0.15;
-        });
+            if (distance > MAX_DISTANCE) {
+                const angle = Math.atan2(deltaY, deltaX);
+                offsetX = Math.cos(angle) * MAX_DISTANCE;
+                offsetY = Math.max(0, Math.sin(angle) * MAX_DISTANCE); // Prevent upward drag
+            } else {
+                offsetX = deltaX;
+                offsetY = Math.max(0, deltaY); // Prevent upward drag
+            }
 
-        window.addEventListener('mouseup', () => {
+            currentX = offsetX;
+            currentY = offsetY;
+            rotationAngle = offsetX * ROTATION_FACTOR;
+        };
+
+        const handleDragEnd = (e) => {
             if (!isDragging) return;
+
+            // Calculate if it was a click (small movement)
+            const moveDistance = Math.sqrt(
+                Math.pow(e.clientX - dragStartX, 2) +
+                Math.pow(e.clientY - dragStartY, 2)
+            );
+
+            if (moveDistance < CLICK_THRESHOLD) {
+                toggleFlip();
+            }
+
             isDragging = false;
             wrapper.style.cursor = 'grab';
-        });
+        };
 
-        wrapper.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (!dragMoved) {
-                isFlipped = !isFlipped;
+        const handleTouchStart = (e) => {
+            // Store initial touch position for tap detection
+            const touch = e.touches[0];
+            dragStartX = touch.clientX;
+            dragStartY = touch.clientY;
+        };
+
+        const handleTouchEnd = (e) => {
+            // Simple tap-to-flip: if touch moved less than threshold, it's a tap
+            const touch = e.changedTouches[0];
+            const moveDistance = Math.sqrt(
+                Math.pow(touch.clientX - dragStartX, 2) +
+                Math.pow(touch.clientY - dragStartY, 2)
+            );
+
+            if (moveDistance < CLICK_THRESHOLD) {
+                toggleFlip();
             }
-            dragMoved = false;
-        });
+        };
 
-        const animate = () => {
-            if (!isDragging) {
-                velocityX += -currentX * spring;
-                velocityY += -currentY * spring;
-                velocityX *= friction;
-                velocityY *= friction;
-                currentX += velocityX;
-                currentY += velocityY;
-                angularVelocity += -rotation * 0.04;
-                angularVelocity *= 0.92;
-                rotation += angularVelocity;
-            } else {
-                velocityX = 0;
-                velocityY = 0;
-                angularVelocity = 0;
-            }
+        const toggleFlip = () => {
+            isFlipped = !isFlipped;
+            updateFlip();
+        };
 
-            wrapper.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${rotation}deg)`;
-
-            const container = holder.querySelector('.id-card-container');
+        const updateFlip = () => {
             if (container) {
                 container.style.transform = isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
             }
-
-            requestAnimationFrame(animate);
-        };
-        animate();
-    };
-
-    const initTypingEffect = () => {
-        if (!dom.typingEffect) return;
-        const words = ["Sutan Arlie Johan", "Web Developer", "IT Enthusiast"];
-        let wordIndex = 0, charIndex = 0, isDeleting = false;
-        function type() {
-            const currentWord = words[wordIndex];
-            const typeSpeed = isDeleting ? 75 : 150;
-            dom.typingEffect.textContent = currentWord.substring(0, charIndex);
-            if (!isDeleting && charIndex < currentWord.length) charIndex++;
-            else if (isDeleting && charIndex > 0) charIndex--;
-            else { isDeleting = !isDeleting; if (!isDeleting) wordIndex = (wordIndex + 1) % words.length; }
-            setTimeout(type, isDeleting || charIndex === currentWord.length ? (isDeleting ? typeSpeed : 2000) : typeSpeed);
-        }
-        type();
-    };
-
-    /* =============================================
-       12. PROJECT FILTER & MODAL
-       ============================================= */
-    const handleProjectFilter = (e) => {
-        if (!e.target.matches('.filter-btn')) return;
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        filterBtns.forEach(btn => btn.classList.remove('active'));
-        e.target.classList.add('active');
-        const filter = e.target.dataset.filter;
-        const projectCards = document.querySelectorAll('.project-card');
-        projectCards.forEach(card => {
-            const category = card.dataset.category;
-            if (filter === 'all' || category.includes(filter)) {
-                card.style.display = 'block';
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, 50);
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    };
-
-    const openUniversalModal = cardElement => {
-        if (!dom.projectModal || !dom.modalBody) return;
-        const titleText = cardElement.querySelector("h3")?.textContent.trim();
-        if (!titleText) return;
-
-        let data = projectData[titleText];
-        let type = "project";
-        if (!data && certificateData[titleText]) {
-            data = certificateData[titleText];
-            type = "certificate";
-        }
-        if (!data) return;
-
-        let modalHTML = "";
-
-        if (type === "project") {
-            modalHTML = `
-                <div class="modal-header">
-                    <h2>${data.title}</h2>
-                </div>
-                <div class="modal-content">
-                    <img src="${data.image}" alt="${data.title}" class="modal-image" />
-                    <p class="modal-description">${data.description}</p>
-                    <p class="modal-purpose"><strong>Tujuan:</strong> ${data.purpose}</p>
-                    <p class="modal-result"><strong>Hasil:</strong> ${data.result}</p>
-                    <div class="modal-tech">
-                        <strong>Tech Stack:</strong>
-                        ${data.tech ? data.tech.map(t => `<span class="badge">${t}</span>`).join("") : ""}
-                    </div>
-                </div>`;
-        } else if (type === "certificate") {
-            const fileUrl = data.fileUrl || data.image;
-            modalHTML = `
-                <div class="modal-header">
-                    <h2>${data.title}</h2>
-                    <p class="modal-meta">
-                        <span><strong>Penyelenggara:</strong> ${data.issuer}</span><br>
-                        <span><strong>Tanggal:</strong> ${data.date}</span>
-                    </p>
-                </div>
-                <div class="modal-content">
-                    <p class="modal-description">${data.description}</p>
-                    <div class="modal-certificate-preview">
-                        ${data.isPdf
-                    ? `<embed src="${fileUrl}" type="application/pdf" class="modal-pdf-preview" />`
-                    : `<img src="${data.image}" alt="${data.title}" class="modal-image" />`}
-                    </div>
-                    <div class="modal-actions">
-                        <a href="${fileUrl}" download class="btn btn-primary">Download Sertifikat</a>
-                        <a href="${fileUrl}" target="_blank" class="btn btn-outline">Buka di Tab Baru</a>
-                    </div>
-                </div>`;
-        }
-
-        dom.modalBody.innerHTML = modalHTML;
-        dom.projectModal.classList.add("open");
-        document.body.classList.add("modal-open");
-
-        // Pause Lenis when modal is open
-        if (lenis) lenis.stop();
-    };
-
-    const closeProjectModal = () => {
-        dom.projectModal.classList.remove('open');
-        document.body.classList.remove("modal-open");
-        document.body.style.overflow = '';
-        // Resume Lenis
-        if (lenis) lenis.start();
-    };
-
-    const handleModalClick = (e) => {
-        if (e.target === dom.projectModal) closeProjectModal();
-    };
-
-    /* =============================================
-       13. TESTIMONIAL CAROUSEL
-       ============================================= */
-    const initTestimonialCarousel = () => {
-        if (!dom.testimonialSlides || (Array.isArray(dom.testimonialSlides) && dom.testimonialSlides.length === 0)) return;
-        const slides = Array.isArray(dom.testimonialSlides) ? dom.testimonialSlides : [dom.testimonialSlides];
-        if (dom.testimonialIndicators) {
-            dom.testimonialIndicators.innerHTML = '';
-            slides.forEach((_, i) => {
-                const dot = document.createElement('button');
-                dot.classList.add('indicator-dot');
-                dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-                if (i === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => { goToTestimonialSlide(i); resetTestimonialInterval(); });
-                dom.testimonialIndicators.appendChild(dot);
-            });
-        }
-        startTestimonialInterval();
-
-        if (dom.testimonialCarousel) {
-            let touchstartX = 0;
-            const carouselParent = dom.testimonialCarousel.parentElement;
-            if (carouselParent) {
-                carouselParent.addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; clearInterval(state.testimonialInterval); }, { passive: true });
-                carouselParent.addEventListener('touchend', e => {
-                    const touchendX = e.changedTouches[0].screenX;
-                    if (touchendX < touchstartX) nextTestimonialSlide();
-                    if (touchendX > touchstartX) prevTestimonialSlide();
-                    resetTestimonialInterval();
-                });
-            }
-        }
-    };
-
-    const updateTestimonialCarousel = () => {
-        if (dom.testimonialCarousel) {
-            dom.testimonialCarousel.style.transform = `translateX(-${state.testimonialCurrentIndex * 100}%)`;
-        }
-        if (dom.testimonialIndicators) {
-            dom.testimonialIndicators.querySelectorAll('.indicator-dot').forEach((d, i) => d.classList.toggle('active', i === state.testimonialCurrentIndex));
-        }
-    };
-
-    const nextTestimonialSlide = () => {
-        const slides = Array.isArray(dom.testimonialSlides) ? dom.testimonialSlides : [dom.testimonialSlides];
-        state.testimonialCurrentIndex = (state.testimonialCurrentIndex + 1) % slides.length;
-        updateTestimonialCarousel();
-    };
-
-    const prevTestimonialSlide = () => {
-        const slides = Array.isArray(dom.testimonialSlides) ? dom.testimonialSlides : [dom.testimonialSlides];
-        state.testimonialCurrentIndex = (state.testimonialCurrentIndex - 1 + slides.length) % slides.length;
-        updateTestimonialCarousel();
-    };
-
-    const goToTestimonialSlide = (index) => { state.testimonialCurrentIndex = index; updateTestimonialCarousel(); };
-    const startTestimonialInterval = () => { state.testimonialInterval = setInterval(nextTestimonialSlide, 5000); };
-    const resetTestimonialInterval = () => { clearInterval(state.testimonialInterval); startTestimonialInterval(); };
-
-    /* =============================================
-       14. BLOG
-       ============================================= */
-    const initBlog = () => {
-        if (!dom.blogPostsContainer || !dom.blogPagination) return;
-        const renderBlogPosts = () => {
-            dom.blogPostsContainer.innerHTML = '';
-            const start = (state.blogCurrentPage - 1) * state.blogPostsPerPage;
-            const paginatedPosts = blogPosts.slice(start, start + state.blogPostsPerPage);
-            paginatedPosts.forEach((post, i) => {
-                const postEl = document.createElement('div');
-                postEl.className = 'blog-card';
-                postEl.setAttribute('data-aos', 'fade-up');
-                postEl.setAttribute('data-aos-delay', `${i * 100}`);
-                postEl.innerHTML = `<img src="${post.image}" alt="${post.title}" class="blog-card-image"><div class="blog-card-content"><span class="category">${post.category}</span><h3>${post.title}</h3><p>${post.excerpt}</p><div class="blog-card-footer"><span>${post.date}</span><a href="#" class="read-more">Baca &rarr;</a></div></div>`;
-                dom.blogPostsContainer.appendChild(postEl);
-            });
-            if (typeof AOS !== 'undefined') AOS.refresh();
         };
 
-        const renderBlogPagination = () => {
-            dom.blogPagination.innerHTML = '';
-            const totalPages = Math.ceil(blogPosts.length / state.blogPostsPerPage);
-            if (totalPages <= 1) return;
-            const createBtn = (txt, page, dis, act) => {
-                const btn = document.createElement('button');
-                btn.innerHTML = txt;
-                btn.disabled = dis;
-                if (act) btn.classList.add('active');
-                btn.addEventListener('click', () => {
-                    state.blogCurrentPage = page;
-                    renderBlogPosts();
-                    renderBlogPagination();
-                    dom.blogPostsContainer.scrollIntoView({ behavior: 'smooth' });
-                });
-                return btn;
+        const startAnimationLoop = () => {
+            const animate = () => {
+                if (!isDragging) {
+                    // Apply spring physics to return to center
+                    velocityX += -currentX * SPRING_STRENGTH;
+                    velocityY += -currentY * SPRING_STRENGTH;
+
+                    // Apply damping
+                    velocityX *= DAMPING;
+                    velocityY *= DAMPING;
+
+                    // Update position
+                    currentX += velocityX;
+                    currentY += velocityY;
+
+                    // Update rotation
+                    angularVelocity += -rotationAngle * 0.05;
+                    angularVelocity *= 0.9;
+                    rotationAngle += angularVelocity;
+
+                    // Update offset for smooth return
+                    offsetX = currentX;
+                    offsetY = currentY;
+
+                    // Stop if movement is very small
+                    if (Math.abs(velocityX) < 0.01 && Math.abs(velocityY) < 0.01) {
+                        velocityX = 0;
+                        velocityY = 0;
+                    }
+                }
+
+                // Apply transform
+                wrapper.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${rotationAngle}deg)`;
+
+                requestAnimationFrame(animate);
             };
-            dom.blogPagination.append(createBtn('&laquo;', state.blogCurrentPage - 1, state.blogCurrentPage === 1));
-            for (let i = 1; i <= totalPages; i++) dom.blogPagination.append(createBtn(i, i, false, state.blogCurrentPage === i));
-            dom.blogPagination.append(createBtn('&raquo;', state.blogCurrentPage + 1, state.blogCurrentPage === totalPages));
+
+            animate();
         };
 
-        renderBlogPosts();
-        renderBlogPagination();
-    };
+        return { init };
+    })();
 
     /* =============================================
-       15. FORM
+       10. MODULE: TYPING EFFECT
        ============================================= */
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
-        if (!validateAllFields()) return;
-        const form = e.target;
-        const statusEl = dom.formStatus;
-        statusEl.textContent = 'Mengirim...';
-        statusEl.className = '';
-        try {
-            const response = await fetch(form.action, { method: form.method, body: new FormData(form), headers: { 'Accept': 'application/json' } });
-            if (response.ok) { statusEl.textContent = 'Pesan berhasil terkirim!'; statusEl.className = 'success'; form.reset(); }
-            else { throw new Error('Server error'); }
-        } catch (error) { statusEl.textContent = 'Gagal mengirim pesan. Coba lagi nanti.'; statusEl.className = 'error'; }
-    };
+    const TypingEffect = (() => {
+        const init = () => {
+            const el = document.getElementById('typing-effect');
+            if (!el) return;
+            const words = ['Sutan Arlie Johan', 'Web Developer', 'IT Enthusiast', 'Backend Developer'];
+            let wordIndex = 0, charIndex = 0, isDeleting = false;
 
-    const validateField = (field) => {
-        const errEl = field.nextElementSibling;
-        let ok = true, msg = '';
-        if (field.required && !field.value.trim()) { ok = false; msg = 'Wajib diisi.'; }
-        else if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) { ok = false; msg = 'Email tidak valid.'; }
-        else if (field.minLength > 0 && field.value.length < field.minLength) { ok = false; msg = `Minimal ${field.minLength} karakter.`; }
-        field.parentElement.classList.toggle('error', !ok);
-        if (errEl) errEl.textContent = msg;
-        return ok;
-    };
+            const type = () => {
+                const current = words[wordIndex];
+                el.textContent = current.substring(0, charIndex);
+                const speed = isDeleting ? 70 : 140;
 
-    const validateAllFields = () => Array.from(dom.contactForm.querySelectorAll('input, textarea')).every(f => validateField(f));
+                if (!isDeleting && charIndex < current.length) charIndex++;
+                else if (isDeleting && charIndex > 0) charIndex--;
+                else {
+                    isDeleting = !isDeleting;
+                    if (!isDeleting) wordIndex = (wordIndex + 1) % words.length;
+                }
+                setTimeout(type, isDeleting || charIndex === current.length ? (isDeleting ? speed : 2000) : speed);
+            };
+            type();
+        };
+
+        return { init };
+    })();
 
     /* =============================================
-       16. UTILITIES
+       11. MODULE: NAVIGATION
        ============================================= */
-    const handleKeyboardInput = (e) => { if (e.key === 'Escape' && dom.projectModal && dom.projectModal.classList.contains('open')) closeProjectModal(); };
-    const updateCopyrightYear = () => { if (dom.copyrightYear) dom.copyrightYear.textContent = new Date().getFullYear(); };
-    const throttle = (func, limit) => {
+    const Navigation = (() => {
+        const header = document.getElementById('main-header');
+        const hamburger = document.getElementById('hamburger-button');
+        const navMenu = document.querySelector('.nav-menu');
+        const scrollToTopBtn = document.getElementById('scroll-to-top');
+
+        const handleScroll = () => {
+            if (header) header.classList.toggle('scrolled', window.scrollY > 50);
+            if (scrollToTopBtn) scrollToTopBtn.classList.toggle('show', window.scrollY > 300);
+            // Always call TextFade.handle() for word-by-word fade effect
+            TextFade.handle();
+        };
+
+        const toggleMobileMenu = () => {
+            if (!hamburger || !navMenu) return;
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            // Fix: use 'visible' instead of empty string for better browser compatibility
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'visible';
+        };
+
+        const init = () => {
+            window.addEventListener('scroll', throttle(handleScroll, 16), { passive: true });
+
+            if (hamburger) hamburger.addEventListener('click', toggleMobileMenu);
+
+            // Nav link clicks
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const href = link.getAttribute('href') || '';
+                    if (href.startsWith('#')) {
+                        e.preventDefault();
+                        LenisScroll.scrollTo(href);
+                    }
+                    if (navMenu && navMenu.classList.contains('active')) toggleMobileMenu();
+                });
+            });
+
+            // Scroll to top
+            if (scrollToTopBtn) {
+                scrollToTopBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    LenisScroll.scrollTo(0);
+                });
+            }
+        };
+
+        return { init };
+    })();
+
+    /* =============================================
+       12. MODULE: TEXT FADE ON SCROLL (word-by-word)
+       ============================================= */
+    const TextFade = (() => {
+        const prepare = () => {
+            document.querySelectorAll('.fade-on-scroll-text').forEach(p => {
+                const words = p.innerText.split(' ');
+                p.innerHTML = '';
+                words.forEach(w => {
+                    const span = document.createElement('span');
+                    span.textContent = w + ' ';
+                    p.appendChild(span);
+                });
+            });
+        };
+
+        const handle = () => {
+            document.querySelectorAll('.fade-on-scroll-text').forEach(p => {
+                const rect = p.getBoundingClientRect();
+                const spans = p.querySelectorAll('span');
+                const wh = window.innerHeight;
+                const progress = Math.max(0, Math.min(1, (wh * 0.9 - rect.top) / (wh * 0.55)));
+                const highlight = Math.floor(progress * spans.length);
+                spans.forEach((s, i) => s.classList.toggle('highlight', i < highlight));
+            });
+        };
+
+        return { prepare, handle };
+    })();
+
+    /* =============================================
+       13. MODULE: MODAL
+       ============================================= */
+    const Modal = (() => {
+        const modal = document.getElementById('project-modal');
+        const modalBody = document.getElementById('modal-body');
+        const closeBtn = document.getElementById('modal-close-btn');
+        let previouslyFocusedElement = null;
+
+        const getFocusableElements = (container) => {
+            const focusableSelectors = 'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+            return Array.from(container.querySelectorAll(focusableSelectors));
+        };
+
+        const trapFocus = (e) => {
+            if (!modal || !modal.classList.contains('open')) return;
+            
+            const focusableElements = getFocusableElements(modal);
+            if (focusableElements.length === 0) return;
+
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+
+            // Handle Tab key for focus trap
+            if (e.key === 'Tab') {
+                if (e.shiftKey && document.activeElement === firstElement) {
+                    e.preventDefault();
+                    lastElement.focus();
+                } else if (!e.shiftKey && document.activeElement === lastElement) {
+                    e.preventDefault();
+                    firstElement.focus();
+                }
+            }
+        };
+
+        const open = (cardEl) => {
+            if (!modal || !modalBody) return;
+            const title = cardEl.querySelector('h3')?.textContent.trim();
+            if (!title) return;
+
+            const data = projectData[title] || certificateData[title];
+            if (!data) return;
+
+            let html = '';
+            if (data.type === 'project') {
+                html = `
+                    <div class="modal-header"><h2>${data.title}</h2></div>
+                    <div class="modal-content">
+                        <img src="${data.image}" alt="${data.title}" class="modal-image" loading="lazy" decoding="async"/>
+                        <p class="modal-description">${data.description}</p>
+                        <p class="modal-purpose"><strong>Tujuan:</strong> ${data.purpose}</p>
+                        <p class="modal-result"><strong>Hasil:</strong> ${data.result}</p>
+                        <div class="modal-tech">
+                            <strong>Tech Stack:</strong>
+                            ${data.tech ? data.tech.map(t => `<span class="badge">${t}</span>`).join('') : ''}
+                        </div>
+                    </div>`;
+            } else {
+                const fileUrl = data.fileUrl;
+                html = `
+                    <div class="modal-header">
+                        <h2>${data.title}</h2>
+                        <p class="modal-meta">
+                            <span><strong>Penyelenggara:</strong> ${data.issuer}</span><br>
+                            <span><strong>Tanggal:</strong> ${data.date}</span>
+                        </p>
+                    </div>
+                    <div class="modal-content">
+                        <p class="modal-description">${data.description}</p>
+                        <div class="modal-certificate-preview modal-cert-image-preview">
+                            <div class="cert-pdf-placeholder">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-16 h-16 text-indigo-400 mx-auto mb-3"><path d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625z"/><path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z"/></svg>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm">Klik tombol di bawah untuk melihat atau mengunduh sertifikat PDF</p>
+                            </div>
+                        </div>
+                        <div class="modal-actions">
+                            <a href="${fileUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Buka Sertifikat</a>
+                            <a href="${fileUrl}" download class="btn btn-outline">Download PDF</a>
+                        </div>
+                    </div>`;
+            }
+
+            modalBody.innerHTML = html;
+            modal.classList.add('open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('modal-open');
+            if (lenis) lenis.stop();
+            
+            // Focus management: store current focus and focus close button
+            previouslyFocusedElement = document.activeElement;
+            setTimeout(() => {
+                const focusableElements = getFocusableElements(modal);
+                if (focusableElements.length > 0) {
+                    focusableElements[0].focus();
+                }
+            }, 100);
+            
+            // Add focus trap listener
+            document.addEventListener('keydown', trapFocus);
+        };
+
+        const close = () => {
+            if (!modal) return;
+            modal.classList.remove('open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+            if (lenis) lenis.start();
+            
+            // Remove focus trap and restore previous focus
+            document.removeEventListener('keydown', trapFocus);
+            if (previouslyFocusedElement && previouslyFocusedElement.focus) {
+                previouslyFocusedElement.focus();
+                previouslyFocusedElement = null;
+            }
+        };
+
+        const init = () => {
+            if (closeBtn) closeBtn.addEventListener('click', close);
+            if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal?.classList.contains('open')) close();
+            });
+
+            // Project cards
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    open(card);
+                });
+            });
+
+            // Certificate cards
+            document.querySelectorAll('.cert-card').forEach(card => {
+                const viewBtn = card.querySelector('.cert-open-btn');
+                const dlBtn = card.querySelector('.cert-download-btn');
+
+                if (viewBtn) viewBtn.addEventListener('click', (e) => { e.stopPropagation(); open(card); });
+                if (dlBtn) dlBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const title = card.querySelector('h3')?.textContent.trim();
+                    const cert = certificateData[title];
+                    if (!cert) return;
+                    const a = document.createElement('a');
+                    a.href = cert.fileUrl;
+                    a.download = `${title} - Sertifikat.pdf`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                });
+            });
+        };
+
+        return { init };
+    })();
+
+    /* =============================================
+       14. MODULE: BLOG
+       ============================================= */
+    const Blog = (() => {
+        const init = () => {
+            const container = document.getElementById('blog-posts-container');
+            const pagination = document.getElementById('blog-pagination');
+            if (!container || !pagination) return;
+
+            const render = () => {
+                container.innerHTML = '';
+                const start = (state.blogCurrentPage - 1) * state.blogPostsPerPage;
+                blogPosts.slice(start, start + state.blogPostsPerPage).forEach((post, i) => {
+                    const el = document.createElement('div');
+                    el.className = 'blog-card gsap-stagger-child';
+                    el.innerHTML = `
+                        <img src="${post.image}" alt="${post.title}" class="blog-card-image" loading="lazy">
+                        <div class="blog-card-content">
+                            <span class="category">${post.category}</span>
+                            <h3>${post.title}</h3>
+                            <p>${post.excerpt}</p>
+                            <div class="blog-card-footer">
+                                <span>${post.date}</span>
+                                <a href="#" class="read-more">Baca &rarr;</a>
+                            </div>
+                        </div>`;
+                    container.appendChild(el);
+                });
+                renderPagination();
+            };
+
+            const renderPagination = () => {
+                pagination.innerHTML = '';
+                const total = Math.ceil(blogPosts.length / state.blogPostsPerPage);
+                if (total <= 1) return;
+                const btn = (txt, page, disabled, active) => {
+                    const b = document.createElement('button');
+                    b.innerHTML = txt; b.disabled = disabled;
+                    if (active) b.classList.add('active');
+                    b.addEventListener('click', () => { 
+                        state.blogCurrentPage = page; 
+                        render(); 
+                        // Use LenisScroll for consistent smooth scrolling
+                        LenisScroll.scrollTo(container);
+                    });
+                    return b;
+                };
+                pagination.append(btn('&laquo;', state.blogCurrentPage - 1, state.blogCurrentPage === 1));
+                for (let i = 1; i <= total; i++) pagination.append(btn(i, i, false, state.blogCurrentPage === i));
+                pagination.append(btn('&raquo;', state.blogCurrentPage + 1, state.blogCurrentPage === total));
+            };
+
+            render();
+        };
+
+        return { init };
+    })();
+
+    /* =============================================
+       15. MODULE: CONTACT FORM
+       ============================================= */
+    const ContactForm = (() => {
+        const form = document.getElementById('contact-form');
+        const statusEl = document.getElementById('form-status');
+
+        const validateField = (field) => {
+            const errEl = field.parentElement?.querySelector('.error-message');
+            let ok = true, msg = '';
+
+            if (field.required && !field.value.trim()) {
+                ok = false; msg = 'Kolom ini wajib diisi.';
+            } else if (field.type === 'email') {
+                // Improved RFC 5322 compliant email validation
+                const emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+                if (!emailRegex.test(field.value.trim())) {
+                    ok = false; msg = 'Format email tidak valid. Contoh: nama@email.com';
+                }
+            } else if (field.minLength > 0 && field.value.length < field.minLength) {
+                ok = false; msg = `Minimal ${field.minLength} karakter.`;
+            }
+
+            field.parentElement?.classList.toggle('error', !ok);
+            if (errEl) errEl.textContent = msg;
+            return ok;
+        };
+
+        const init = () => {
+            if (!form) return;
+
+            form.querySelectorAll('input, textarea').forEach(input => {
+                input.addEventListener('blur', (e) => validateField(e.target));
+                input.addEventListener('input', (e) => {
+                    if (e.target.parentElement?.classList.contains('error')) validateField(e.target);
+                });
+            });
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const fields = Array.from(form.querySelectorAll('input, textarea'));
+                const allValid = fields.every(f => validateField(f));
+                if (!allValid) return;
+
+                const submitBtn = form.querySelector('[type="submit"]');
+                if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Mengirim...'; }
+                if (statusEl) { statusEl.textContent = ''; statusEl.className = ''; }
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: form.method || 'POST',
+                        body: new FormData(form),
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    if (response.ok) {
+                        if (statusEl) { statusEl.textContent = '✓ Pesan berhasil terkirim! Terima kasih.'; statusEl.className = 'success'; }
+                        form.reset();
+                    } else {
+                        throw new Error(`Server responded with ${response.status}`);
+                    }
+                } catch (err) {
+                    console.error('Form submission error:', err);
+                    if (statusEl) { statusEl.textContent = '✗ Gagal mengirim pesan. Silakan coba lagi atau hubungi langsung via email.'; statusEl.className = 'error'; }
+                } finally {
+                    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Kirim Pesan'; }
+                }
+            });
+        };
+
+        return { init };
+    })();
+
+    /* =============================================
+       16. MODULE: UTILITIES
+       ============================================= */
+    const throttle = (fn, limit) => {
         let inThrottle;
-        return function (...args) {
-            if (!inThrottle) { func.apply(this, args); inThrottle = true; setTimeout(() => inThrottle = false, limit); }
+        return (...args) => {
+            if (!inThrottle) { fn(...args); inThrottle = true; setTimeout(() => inThrottle = false, limit); }
         };
     };
 
+    const updateCopyrightYear = () => {
+        const el = document.getElementById('copyright-year');
+        if (el) el.textContent = new Date().getFullYear();
+    };
+
     /* =============================================
-       LAUNCH
+       18. INITIALIZATION
        ============================================= */
+    const init = () => {
+        Theme.init();
+        TextFade.prepare();
+        Loader.init();
+        LenisScroll.init();
+        Navigation.init();
+        GSAPAnimations.init();
+        HeroParticles.init();
+        IdCard.init();
+        TypingEffect.init();
+        Blog.init();
+        Modal.init();
+        ContactForm.init();
+        updateCopyrightYear();
+        // Initial TextFade call
+        TextFade.handle();
+        // Ensure scroll-to-top button starts hidden
+        const scrollToTopBtn = document.getElementById('scroll-to-top');
+        if (scrollToTopBtn) scrollToTopBtn.classList.remove('show');
+    };
+
     init();
 });

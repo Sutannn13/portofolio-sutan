@@ -1,0 +1,11 @@
+/* ============================================================
+   MAIN CSS ENTRY — Vite + Tailwind + DaisyUI
+   ============================================================ */
+
+/* Tailwind base layers */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles are loaded via <link> tag in HTML AFTER Tailwind,
+   so they properly override Tailwind's reset/base styles. */
