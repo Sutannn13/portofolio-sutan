@@ -3266,7 +3266,7 @@ body {
   }
 }
 
-/* --- Touch device: no blur on project cards (no hover available) --- */
+/* --- Touch device: disable spotlight (since they can't hover), show all cards bright --- */
 @media (hover: none) and (pointer: coarse) {
   .project-card {
     filter: none !important;
@@ -3275,6 +3275,17 @@ body {
 
   .project-card.group {
     --tw-blur: none !important;
+  }
+
+  /* Disable cert gallery spotlight on touch devices */
+  .cert-gallery:hover .cert-card {
+    filter: none !important;
+    transform: none !important;
+  }
+
+  .cert-gallery .cert-card:hover {
+    filter: none !important;
+    transform: none !important;
   }
 }
 
@@ -3375,17 +3386,16 @@ body {
     top: 0;
     display: flex;
     flex-direction: column;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.97);
     backdrop-filter: blur(20px) saturate(150%);
     -webkit-backdrop-filter: blur(20px) saturate(150%);
     width: 100%;
     height: 100vh;
     height: 100dvh;
-    /* Dynamic viewport height for mobile browsers */
     text-align: center;
     transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    gap: 2rem;
-    padding-top: 6rem;
+    gap: 1.5rem;
+    padding-top: 5rem;
     z-index: 999;
     justify-content: flex-start;
     align-items: center;
@@ -3394,7 +3404,7 @@ body {
   }
 
   html.dark .nav-menu {
-    background: rgba(10, 14, 26, 0.95);
+    background: rgba(10, 14, 26, 0.97);
   }
 
   .nav-menu li {
@@ -3406,7 +3416,7 @@ body {
   }
 
   .nav-menu .nav-link {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 600;
     opacity: 0;
     transform: translateY(20px);
@@ -3420,37 +3430,14 @@ body {
     transform: translateY(0);
   }
 
-  .nav-menu.active li:nth-child(1) .nav-link {
-    transition-delay: 0.1s;
-  }
-
-  .nav-menu.active li:nth-child(2) .nav-link {
-    transition-delay: 0.15s;
-  }
-
-  .nav-menu.active li:nth-child(3) .nav-link {
-    transition-delay: 0.2s;
-  }
-
-  .nav-menu.active li:nth-child(4) .nav-link {
-    transition-delay: 0.25s;
-  }
-
-  .nav-menu.active li:nth-child(5) .nav-link {
-    transition-delay: 0.3s;
-  }
-
-  .nav-menu.active li:nth-child(6) .nav-link {
-    transition-delay: 0.35s;
-  }
-
-  .nav-menu.active li:nth-child(7) .nav-link {
-    transition-delay: 0.4s;
-  }
-
-  .nav-menu.active li:nth-child(8) .nav-link {
-    transition-delay: 0.45s;
-  }
+  .nav-menu.active li:nth-child(1) .nav-link { transition-delay: 0.1s; }
+  .nav-menu.active li:nth-child(2) .nav-link { transition-delay: 0.15s; }
+  .nav-menu.active li:nth-child(3) .nav-link { transition-delay: 0.2s; }
+  .nav-menu.active li:nth-child(4) .nav-link { transition-delay: 0.25s; }
+  .nav-menu.active li:nth-child(5) .nav-link { transition-delay: 0.3s; }
+  .nav-menu.active li:nth-child(6) .nav-link { transition-delay: 0.35s; }
+  .nav-menu.active li:nth-child(7) .nav-link { transition-delay: 0.4s; }
+  .nav-menu.active li:nth-child(8) .nav-link { transition-delay: 0.45s; }
 
   .hamburger {
     display: block;
@@ -3470,17 +3457,20 @@ body {
     transform: translateY(-8px) rotate(-45deg);
   }
 
-  /* === HERO MOBILE === */
+  /* === HERO MOBILE - Minimized vertical space === */
   .hero-section {
     text-align: center;
-    min-height: auto;
-    padding-top: 100px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding-top: 80px;
     padding-bottom: 2rem;
+    display: flex;
+    align-items: center;
   }
 
   .hero-content {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
   }
 
   .hero-text {
@@ -3493,13 +3483,13 @@ body {
   }
 
   .hero-text .subtitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .hero-text .description {
     margin-left: auto;
     margin-right: auto;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   .hero-cta {
@@ -3512,25 +3502,30 @@ body {
     font-size: 0.9rem;
   }
 
-  /* === ID CARD MOBILE ===
-     Note: clamp() in base styles handles fluid sizing automatically.
-     Only override order and margin here. */
+  /* === ID CARD MOBILE - Compact sizing === */
   .id-card-wrapper {
     order: 1;
     margin: 0 auto;
-    /* Reduce size on mobile for better fit */
-    max-width: min(280px, 90vw);
-    touch-action: manipulation; /* Better touch handling */
+    width: min(240px, 65vw) !important;
+    height: auto !important;
+    max-width: none;
+    touch-action: manipulation;
   }
 
-  /* Disable swing animation on mobile for simpler UX */
   .id-card-holder {
     animation: none;
+    width: min(240px, 65vw) !important;
+    height: min(320px, 85vw) !important;
   }
 
-  /* Simplify lanyard on mobile */
   .id-card-lanyard {
-    height: 50px; /* Shorter lanyard */
+    height: 45px;
+    width: 16px;
+  }
+
+  .id-card-clip {
+    width: 40px;
+    height: 24px;
   }
 
   /* === STATS MOBILE === */
@@ -3561,13 +3556,12 @@ body {
     gap: 1.25rem;
   }
 
-  /* Soft skills: 2x3 grid on mobile */
   .skill-category.md\:col-span-2.lg\:col-span-3 .grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 0.75rem;
   }
 
-  /* === TIMELINE MOBILE (Single column, left aligned) === */
+  /* === TIMELINE MOBILE === */
   .timeline::before,
   .timeline-progress {
     left: 20px;
@@ -3643,13 +3637,8 @@ body {
     height: 36px;
   }
 
-  .carousel-nav.prev {
-    left: 0;
-  }
-
-  .carousel-nav.next {
-    right: 0;
-  }
+  .carousel-nav.prev { left: 0; }
+  .carousel-nav.next { right: 0; }
 
   .testimonial-slide {
     padding: 1rem;
@@ -3672,10 +3661,9 @@ body {
     gap: 2rem;
   }
 
-  /* Prevent iOS zoom on focus */
   .contact-form input,
   .contact-form textarea {
-    font-size: 16px !important;
+    font-size: 16px !important; /* Prevent iOS zoom on focus */
   }
 
   .contact-info h2 {
@@ -3715,13 +3703,25 @@ body {
   }
 
   /* === MODAL MOBILE === */
+  .modal {
+    padding: 0.75rem;
+  }
+
   .modal-content {
-    width: 95%;
+    width: 100%;
     max-height: 90vh;
     max-height: 90dvh;
-    padding: 1.5rem;
-    margin: 0.5rem;
+    padding: 1.25rem;
+    margin: 0;
     border-radius: var(--border-radius-md);
+  }
+
+  .modal-close {
+    top: 0.5rem !important;
+    right: 0.5rem !important;
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 1.5rem !important;
   }
 
   .modal-body img,
@@ -3763,10 +3763,10 @@ body {
   }
 
   main {
-    padding-top: 100px !important;
+    padding-top: 80px !important;
   }
 
-  /* === BG ORBS MOBILE (smaller to prevent overflow) === */
+  /* === BG ORBS MOBILE === */
   .bg-orb-1 {
     width: 250px;
     height: 250px;
@@ -3806,9 +3806,14 @@ body {
   }
 
   .hero-section {
-    padding-top: 80px;
-    min-height: auto;
+    padding-top: 75px;
+    min-height: 100vh;
+    min-height: 100dvh;
     padding-bottom: 1.5rem;
+  }
+
+  .hero-content {
+    gap: 1rem;
   }
 
   .hero-text h1 {
@@ -3817,7 +3822,7 @@ body {
   }
 
   .hero-text .subtitle {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   .hero-text .description {
@@ -3833,10 +3838,34 @@ body {
     width: 100%;
     text-align: center;
     justify-content: center;
-    padding: 0.75rem 1rem;
+    padding: 0.7rem 1rem;
   }
 
-  /* ID Card: clamp() handles sizing, no override needed */
+  /* === ID CARD COMPACT === */
+  .id-card-wrapper {
+    width: min(200px, 58vw) !important;
+    height: auto !important;
+  }
+
+  .id-card-holder {
+    width: min(200px, 58vw) !important;
+    height: min(280px, 75vw) !important;
+  }
+
+  .id-card-lanyard {
+    height: 35px;
+    width: 14px;
+  }
+
+  .id-card-clip {
+    width: 36px;
+    height: 20px;
+  }
+
+  .id-card-clip::after {
+    width: 18px;
+    height: 10px;
+  }
 
   /* Section titles */
   .section-title {
@@ -3904,8 +3933,6 @@ body {
   }
 
   /* Timeline */
-  /* Remove general timeline-item padding override, use class-specific instead */
-
   .timeline-content {
     padding: 1rem !important;
   }
@@ -3929,9 +3956,24 @@ body {
   }
 
   /* Modal */
+  .modal {
+    padding: 0.5rem;
+  }
+
   .modal-content {
-    padding: 1.25rem;
-    margin: 0.75rem;
+    padding: 1rem;
+    margin: 0;
+    width: 100%;
+    max-height: 92vh;
+    max-height: 92dvh;
+  }
+
+  .modal-close {
+    top: 0.35rem !important;
+    right: 0.35rem !important;
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 1.3rem !important;
   }
 
   .modal-pdf-preview {
@@ -3951,13 +3993,18 @@ body {
     font-size: 0.85rem;
   }
 
-  /* Nav menu */
+  /* Nav menu links smaller */
   .nav-menu .nav-link {
-    font-size: 1.3rem;
+    font-size: 1.15rem;
   }
 
   .nav-menu {
-    gap: 1.5rem;
+    gap: 1.25rem;
+    padding-top: 4.5rem;
+  }
+
+  main {
+    padding-top: 75px !important;
   }
 }
 
@@ -3971,7 +4018,7 @@ body {
   }
 
   h1 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
 
   .container {
@@ -3979,37 +4026,51 @@ body {
     padding-right: 0.5rem;
   }
 
+  .hero-section {
+    padding-top: 70px;
+  }
+
+  .hero-content {
+    gap: 0.75rem;
+  }
+
   .hero-text h1 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     min-height: 32px;
   }
 
   .hero-text .subtitle {
-    font-size: 0.85rem;
-  }
-
-  .hero-text .description {
     font-size: 0.8rem;
   }
 
+  .hero-text .description {
+    font-size: 0.75rem;
+  }
+
+  /* === ID CARD EXTRA SMALL === */
   .id-card-wrapper {
-    width: 200px;
-    height: 380px;
+    width: min(180px, 55vw) !important;
+    height: auto !important;
   }
 
   .id-card-holder {
-    width: 200px;
-    height: 300px;
+    width: min(180px, 55vw) !important;
+    height: min(250px, 70vw) !important;
   }
 
   .id-card-lanyard {
-    height: 40px;
-    width: 10px;
+    height: 30px;
+    width: 12px;
   }
 
   .id-card-clip {
-    width: 45px;
-    height: 26px;
+    width: 32px;
+    height: 18px;
+  }
+
+  .id-card-clip::after {
+    width: 16px;
+    height: 8px;
   }
 
   .section-title {
@@ -4025,14 +4086,13 @@ body {
   }
 
   .nav-menu .nav-link {
-    font-size: 1.2rem;
+    font-size: 1.05rem;
   }
 
   .nav-menu {
-    gap: 1.25rem;
+    gap: 1rem;
+    padding-top: 4rem;
   }
-
-  /* Timeline padding handled by .timeline-left and .timeline-right classes */
 
   .timeline::before,
   .timeline-progress {
@@ -4095,6 +4155,23 @@ body {
 
   .cert-meta {
     font-size: 0.8rem;
+  }
+
+  /* Modal extra small */
+  .modal-content {
+    padding: 0.75rem;
+  }
+
+  .modal-close {
+    top: 0.25rem !important;
+    right: 0.25rem !important;
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 1.2rem !important;
+  }
+
+  main {
+    padding-top: 70px !important;
   }
 }
 

@@ -181,6 +181,72 @@
     .cert-card.gsap-stagger-child {
       will-change: transform, opacity;
     }
+
+    /* === Mobile responsive for cert page === */
+    @media (max-width: 767px) {
+      .cert-thumb-wrapper {
+        height: 180px;
+      }
+
+      .cert-card-body {
+        padding: 1rem;
+      }
+
+      .cert-card-title {
+        font-size: 1.05rem;
+      }
+
+      .cert-desc {
+        font-size: 0.85rem;
+        line-height: 1.5;
+      }
+
+      .cert-meta {
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+
+      .cert-type-badge {
+        font-size: 0.65rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .cert-thumb-wrapper {
+        height: 150px;
+      }
+
+      .cert-card-body {
+        padding: 0.85rem;
+      }
+
+      .cert-card-title {
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .cert-thumb-wrapper {
+        height: 120px;
+      }
+
+      .cert-card-title {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Disable spotlight on touch devices */
+    @media (hover: none) and (pointer: coarse) {
+      .cert-gallery:hover .cert-card {
+        filter: none !important;
+        transform: none !important;
+      }
+
+      .cert-gallery .cert-card:hover {
+        filter: none !important;
+        transform: none !important;
+      }
+    }
   </style>
 </head>
 
