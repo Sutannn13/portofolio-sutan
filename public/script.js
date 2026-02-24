@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 "Mempresentasikan solusi teknis kepada panel juri industri",
                 "Bersaing dengan puluhan tim peserta dari berbagai kampus",
             ],
-            imageUrl: "Sertifikat-Bootcamp-Sutan-Arlie_page-0001.jpg",
+            imageUrl: "Sertifikat-Bootcamp_page-0001.jpg",
         },
         "Surat Pencatatan Ciptaan HKI": {
             type: "certificate",
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 "Perlindungan hukum resmi terhadap karya intelektual asli",
                 "Nomor pencatatan resmi dari Dirjen Kekayaan Intelektual Kemenkumham RI",
             ],
-            imageUrl: "HKI.jpeg",
+            imageUrl: "Sertifikat-Bootcamp-Sutan-Arlie_page-0001.jpg",
         },
         "MikroTik Certified Network Associate (MTCNA)": {
             type: "certificate",
