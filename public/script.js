@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tech: ['React.js', 'Node.js', 'PostgreSQL', 'MQTT', 'IoT'],
             result: 'Prototipe fungsional dengan HKI resmi dari Kemenkumham RI.',
             liveLink: '#',
-            repoLink: 'https://github.com/sutanarlie/trash-point',
+            repoLink: 'https://github.com/Sutannn13/portofolio-sutan.git',
         },
         'Fish Market': {
             type: 'project',
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 "Mempresentasikan solusi teknis kepada panel juri industri",
                 "Bersaing dengan puluhan tim peserta dari berbagai kampus",
             ],
-            imageUrl: "HKI.jpeg",
+            imageUrl: "Sertifikat-Bootcamp-Sutan-Arlie_page-0001.jpg",
         },
         "Surat Pencatatan Ciptaan HKI": {
             type: "certificate",
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 "Perlindungan hukum resmi terhadap karya intelektual asli",
                 "Nomor pencatatan resmi dari Dirjen Kekayaan Intelektual Kemenkumham RI",
             ],
-            imageUrl: "Sertifikat-Bootcamp-Sutan-Arlie_page-0001.jpg",
+            imageUrl: "HKI.jpeg",
         },
         "MikroTik Certified Network Associate (MTCNA)": {
             type: "certificate",
@@ -504,23 +504,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const items = document.querySelectorAll('.timeline-item');
             if (!timeline || !progressBar || !scrollDot || !items.length) return;
 
-            // DEBUG: Log positioning
-            console.log('=== TIMELINE ITEMS DEBUG (margin-left approach) ===');
-            items.forEach((item, i) => {
-                const computed = window.getComputedStyle(item);
-                const hasLeft = item.classList.contains('timeline-left');
-                const hasRight = item.classList.contains('timeline-right');
-                console.log(`Item ${i + 1}:`, {
-                    classes: `${hasLeft ? 'LEFT' : ''} ${hasRight ? 'RIGHT' : ''}`,
-                    marginLeft: computed.marginLeft,
-                    width: computed.width,
-                    paddingLeft: computed.paddingLeft,
-                    paddingRight: computed.paddingRight,
-                    textAlign: computed.textAlign,
-                });
-            });
-            console.log('========================');
-
             // IMPORTANT: Clear any inline transforms that might override CSS positioning
             gsap.set(items, {
                 opacity: 0,
@@ -785,7 +768,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setupEventListeners();
             startAnimationLoop();
 
-            console.log('ID Card initialized successfully');
+            // ID Card initialized
         };
 
         const setupEventListeners = () => {
