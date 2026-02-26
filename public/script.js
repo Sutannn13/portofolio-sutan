@@ -124,90 +124,120 @@ onDOMReady(() => {
     };
 
     /* =============================================
-       3. MODULE: LOADER (Real Document-Ready)
+       3. MODULE: LOADER (Custom Creative — fixed duration)
        ============================================= */
     const Loader = (() => {
-        const loaderEl = document.getElementById('loader');
-        const fillEl = document.querySelector('.progress-bar-fill');
-        const pctEl = document.querySelector('.progress-percentage');
+        const loaderEl  = document.getElementById('loader');
+        const ringBar   = document.getElementById('loader-ring-bar');
+        const ringDot   = document.getElementById('loader-ring-dot');
+        const numEl     = document.querySelector('.loader-num');
+        const statusEl  = document.querySelector('.loader-status');
+        const CIRCUMFERENCE = 364.42;               // 2π × r=58
+        const STATUSES = [
+            '// initializing',
+            '// scanning modules',
+            '// loading assets',
+            '// compiling styles',
+            '// building experience',
+            '// almost ready',
+        ];
 
         const hide = () => {
             if (!loaderEl) { document.body.classList.remove('loading'); return; }
             loaderEl.classList.add('fade-out');
             document.body.classList.remove('loading');
-            // Trigger GSAP hero entrance after loader hides
-            setTimeout(() => {
-                HeroAnimations.entrance();
-                // Refresh ScrollTrigger after hero animation completes (dynamic timing)
-                if (typeof ScrollTrigger !== 'undefined') {
-                    // Wait for actual animation duration (1.2s stagger + 0.3s buffer)
-                    setTimeout(() => ScrollTrigger.refresh(), 1500);
-                }
-            }, 100);
+
+            const pathname = window.location.pathname.toLowerCase();
+            const isCertPage = pathname.includes('sertifikat') ||
+                pathname.includes('certificate') ||
+                document.querySelector('body[data-page="certificate"]') !== null;
+
+            if (!isCertPage) {
+                // Trigger GSAP hero entrance after curtains have cleared (~700ms)
+                setTimeout(() => {
+                    HeroAnimations.entrance();
+                    if (typeof ScrollTrigger !== 'undefined') {
+                        setTimeout(() => ScrollTrigger.refresh(), 1500);
+                    }
+                }, 750);
+            }
         };
 
         const init = () => {
             if (!loaderEl) { document.body.classList.remove('loading'); return; }
 
-            // Skip loader on certificate page (more robust detection)
             const pathname = window.location.pathname.toLowerCase();
-            const isCertificatePage = pathname.includes('sertifikat') ||
+            const isCertPage = pathname.includes('sertifikat') ||
                 pathname.includes('certificate') ||
                 document.querySelector('body[data-page="certificate"]') !== null;
 
-            if (isCertificatePage) {
-                hide();
-                return;
-            }
+            // Fixed durations: 5 s for main portfolio, 3 s for certificate page
+            const DURATION = isCertPage ? 3000 : 5000;
 
-            // Use real document readiness + image loading
-            let progress = 0;
-            const images = Array.from(document.images);
-            const total = images.length || 1;
-            let loaded = 0;
+            const startTime = performance.now();
+            let lastStatusIdx = -1;
+            let rafId;
 
-            const updateProgress = (val) => {
-                progress = Math.min(100, Math.round(val));
-                if (fillEl) fillEl.style.width = progress + '%';
-                if (pctEl) pctEl.textContent = progress + '%';
-                if (progress >= 100) {
-                    setTimeout(hide, 300);
+            const tick = (now) => {
+                const elapsed  = now - startTime;
+                const progress = Math.min(elapsed / DURATION, 1);
+                const pct      = Math.round(progress * 100);
+
+                // ── Ring fill (stroke-dashoffset: full→0) ──────────────────
+                if (ringBar) {
+                    ringBar.style.strokeDashoffset =
+                        (CIRCUMFERENCE * (1 - progress)).toFixed(2);
+                }
+
+                // ── Dot — rotate around ring centre to track tip ───────────
+                // The SVG is rotated -90°; the dot starts at (70,12) = top.
+                // We counter-rotate via transform-origin so it orbits correctly.
+                if (ringDot) {
+                    const deg = progress * 360;
+                    ringDot.style.transform = `rotate(${deg}deg)`;
+                    ringDot.style.transformOrigin = '70px 70px';
+                }
+
+                // ── Counter ────────────────────────────────────────────────
+                if (numEl) numEl.textContent = pct;
+
+                // ── Status text — changes at each 1/6th milestone ──────────
+                const sIdx = Math.min(
+                    Math.floor(progress * STATUSES.length),
+                    STATUSES.length - 1
+                );
+                if (statusEl && sIdx !== lastStatusIdx) {
+                    statusEl.style.opacity = '0';
+                    setTimeout(() => {
+                        if (statusEl) {
+                            statusEl.textContent = STATUSES[sIdx];
+                            statusEl.style.opacity = '1';
+                        }
+                    }, 120);
+                    lastStatusIdx = sIdx;
+                }
+
+                if (progress < 1) {
+                    rafId = requestAnimationFrame(tick);
+                } else {
+                    // Snap to 100 % cleanly
+                    if (numEl) numEl.textContent = '100';
+                    if (ringBar) ringBar.style.strokeDashoffset = '0';
+                    if (statusEl) {
+                        statusEl.style.opacity = '0';
+                        setTimeout(() => {
+                            if (statusEl) {
+                                statusEl.textContent = '// portfolio.ready()';
+                                statusEl.style.opacity = '1';
+                            }
+                        }, 120);
+                    }
+                    // Short pause so user reads "100 %" before curtains slide
+                    setTimeout(hide, 500);
                 }
             };
 
-            // Animate progress smoothly
-            const tick = () => {
-                const imgProgress = total > 0 ? (loaded / total) * 80 : 80;
-                const docProgress = document.readyState === 'complete' ? 20 : 0;
-                updateProgress(imgProgress + docProgress);
-            };
-
-            if (images.length === 0) {
-                // No images — animate quickly
-                let p = 0;
-                const interval = setInterval(() => {
-                    p += 8;
-                    updateProgress(p);
-                    if (p >= 100) clearInterval(interval);
-                }, 40);
-            } else {
-                images.forEach(img => {
-                    if (img.complete) {
-                        loaded++;
-                        tick();
-                    } else {
-                        img.addEventListener('load', () => { loaded++; tick(); });
-                        img.addEventListener('error', () => { loaded++; tick(); });
-                    }
-                });
-                tick();
-            }
-
-            // Fallback: ensure loader always hides.
-            // 8s timeout aligns with CSS fallback animation delay.
-            // window.load fires after CDN scripts finish — preferred.
-            window.addEventListener('load', () => updateProgress(100), { once: true });
-            setTimeout(() => updateProgress(100), 8000);
+            rafId = requestAnimationFrame(tick);
         };
 
         return { init };

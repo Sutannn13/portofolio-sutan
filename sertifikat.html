@@ -262,12 +262,50 @@
   </div>
 
   <!-- Loader -->
-  <div id="loader">
-    <div class="progress-container">
-      <div class="progress-bar-fill"></div>
+  <div id="loader" class="page-loader">
+    <!-- Floating code particles -->
+    <div class="loader-particles" aria-hidden="true">
+      <span class="lp lp-1">01</span>
+      <span class="lp lp-2">&lt;/&gt;</span>
+      <span class="lp lp-3">{}</span>
+      <span class="lp lp-4">./</span>
+      <span class="lp lp-5">fn()</span>
+      <span class="lp lp-6">npm</span>
+      <span class="lp lp-7">const</span>
+      <span class="lp lp-8">=&gt;</span>
+      <span class="lp lp-9">[ ]</span>
+      <span class="lp lp-10">∞</span>
     </div>
-    <span class="progress-percentage">0%</span>
-    <p>Memuat Sertifikat...</p>
+
+    <!-- Corner accents -->
+    <div class="loader-corner loader-corner-tl" aria-hidden="true"></div>
+    <div class="loader-corner loader-corner-tr" aria-hidden="true"></div>
+    <div class="loader-corner loader-corner-bl" aria-hidden="true"></div>
+    <div class="loader-corner loader-corner-br" aria-hidden="true"></div>
+
+    <!-- Core content -->
+    <div class="loader-core">
+      <div class="loader-ring-wrap">
+        <svg class="loader-ring-svg" viewBox="0 0 140 140" fill="none" aria-hidden="true">
+          <circle class="loader-ring-track" cx="70" cy="70" r="58" stroke-width="2.5"/>
+          <circle id="loader-ring-bar" class="loader-ring-fill" cx="70" cy="70" r="58"
+            stroke-width="2.5" stroke-dasharray="364.42" stroke-dashoffset="364.42"/>
+          <circle id="loader-ring-dot" class="loader-ring-dot" cx="70" cy="12" r="4"/>
+        </svg>
+        <div class="loader-logo-inner" aria-label="SAJ.">
+          <span class="ll ll-s">S</span><span class="ll ll-a">A</span><span class="ll ll-j">J</span><span class="ll ll-dot">.</span>
+        </div>
+      </div>
+
+      <div class="loader-pct-wrap">
+        <span class="loader-num">0</span><span class="loader-sym">%</span>
+      </div>
+
+      <p class="loader-status">// initializing</p>
+    </div>
+
+    <div class="loader-curtain loader-curtain-top" aria-hidden="true"></div>
+    <div class="loader-curtain loader-curtain-bottom" aria-hidden="true"></div>
   </div>
 
   <!-- Header / Navigation -->
