@@ -1303,11 +1303,12 @@ onDOMReady(() => {
                         body: new FormData(form),
                         headers: { 'Accept': 'application/json' }
                     });
-                    if (response.ok) {
-                        if (statusEl) { statusEl.textContent = '✓ Pesan berhasil terkirim! Terima kasih.'; statusEl.className = 'success'; }
+                    const data = await response.json();
+                    if (response.ok && data.success) {
+                        if (statusEl) { statusEl.textContent = '✓ Pesan berhasil terkirim! Terima kasih, akan segera dibalas.'; statusEl.className = 'success'; }
                         form.reset();
                     } else {
-                        throw new Error(`Server responded with ${response.status}`);
+                        throw new Error(data.message || `Server responded with ${response.status}`);
                     }
                 } catch (err) {
                     console.error('Form submission error:', err);

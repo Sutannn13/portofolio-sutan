@@ -36,11 +36,11 @@
 
     <link rel="icon" type="image/png" href="/sutanpixel.png">
 
-    <!-- Google Fonts: Plus Jakarta Sans (Modern Indonesian font) + JetBrains Mono (Code/Tech) -->
+    <!-- Google Fonts: Space Grotesk (dev heading) + Inter (body) + JetBrains Mono (code) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         rel="stylesheet">
 
     <!-- Vite + Tailwind CSS + DaisyUI (compiled via PostCSS) -->
@@ -970,9 +970,18 @@
                         </li>
                     </ul>
                 </div>
-                <!-- ⚠️ PENTING: Ganti 'xYOURREALID' dengan ID Formspree asli Anda dari https://formspree.io -->
+                <!-- Web3Forms: pesan dikirim langsung ke sutanarliejohan@gmail.com
+                     Cara aktivasi (1x saja):
+                     1. Buka https://web3forms.com/
+                     2. Masukkan email: sutanarliejohan@gmail.com → klik Create Access Key
+                     3. Cek email, salin access key-nya
+                     4. Ganti nilai YOUR_WEB3FORMS_KEY di bawah dengan key tersebut -->
                 <form id="contact-form" class="contact-form rounded-2xl p-8 shadow-lg space-y-6 gsap-fade-up"
-                    action="https://formspree.io/f/xYOURREALID" method="POST">
+                    action="https://api.web3forms.com/submit" method="POST">
+                    <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_KEY">
+                    <input type="hidden" name="subject" value="Pesan Baru dari Portofolio — Sutan Arlie Johan">
+                    <input type="hidden" name="from_name" value="Portofolio SAJ">
+                    <input type="hidden" name="redirect" value="false">
                     <div class="form-group">
                         <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama
                             Lengkap</label>
@@ -994,8 +1003,7 @@
                             class="w-full px-4 py-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all resize-none"></textarea>
                         <p class="error-message text-red-500 text-sm mt-1" aria-live="polite"></p>
                     </div>
-                    <!-- REVISION: Added note about Formspree ID -->
-                    <!-- Pastikan untuk mengganti 'xYOURREALID' dengan ID Formspree asli Anda -->
+
                     <button type="submit" class="btn btn-glow w-full px-8 py-3 font-semibold rounded-xl">Kirim
                         Pesan</button>
                     <p id="form-status" role="status" class="text-center text-sm"></p>
