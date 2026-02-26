@@ -7,7 +7,18 @@
 ================================================================================
 */
 
-document.addEventListener('DOMContentLoaded', () => {
+// Safe DOM-ready handler: works whether DOMContentLoaded has already fired
+// (e.g. when GSAP CDN scripts are synchronous & this runs as defer)
+// or has not yet fired. This prevents the first-load animation bug on Vercel.
+function onDOMReady(fn) {
+    if (document.readyState !== 'loading') {
+        fn();
+    } else {
+        document.addEventListener('DOMContentLoaded', fn);
+    }
+}
+
+onDOMReady(() => {
 
     /* =============================================
        1. STATE & CONSTANTS
@@ -192,9 +203,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 tick();
             }
 
-            // Fallback: ensure loader always hides
+            // Fallback: ensure loader always hides.
+            // 8s timeout aligns with CSS fallback animation delay.
+            // window.load fires after CDN scripts finish — preferred.
             window.addEventListener('load', () => updateProgress(100), { once: true });
-            setTimeout(() => updateProgress(100), 3000);
+            setTimeout(() => updateProgress(100), 8000);
         };
 
         return { init };

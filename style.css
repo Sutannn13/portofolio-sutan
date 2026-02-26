@@ -3040,14 +3040,16 @@ html.dark section + section {
   will-change: transform, opacity;
 }
 
-/* Fallback: If GSAP not loaded within 2 seconds, show elements */
+/* Fallback: If GSAP not loaded within 8 seconds, show elements.
+   Increased from 2s — CDN scripts are now synchronous so GSAP loads
+   before script.js runs; this long delay is purely a last resort. */
 body:not(.gsap-loaded) .animate-on-scroll {
   opacity: 0;
   transform: translateY(30px);
   transition:
     opacity 0.6s ease-out,
     transform 0.6s ease-out;
-  animation: fallbackScrollFadeIn 0.6s ease-out 2s forwards;
+  animation: fallbackScrollFadeIn 0.6s ease-out 8s forwards;
 }
 
 @keyframes fallbackScrollFadeIn {
@@ -3067,14 +3069,14 @@ body:not(.gsap-loaded) .animate-on-scroll {
   will-change: transform, opacity;
 }
 
-/* Fallback: If GSAP not loaded within 2 seconds, show stagger items */
+/* Fallback: If GSAP not loaded within 8 seconds, show stagger items */
 body:not(.gsap-loaded) .stagger-item {
   opacity: 0;
   transform: translateY(30px);
   transition:
     opacity 0.6s ease-out,
     transform 0.6s ease-out;
-  animation: fallbackStaggerFadeIn 0.6s ease-out 2s forwards;
+  animation: fallbackStaggerFadeIn 0.6s ease-out 8s forwards;
 }
 
 @keyframes fallbackStaggerFadeIn {
