@@ -190,11 +190,12 @@
     </script>
 </head>
 
-<body
-    class="loading font-body text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+<body class="loading font-body">
 
 
     <div class="animated-background">
+        <!-- Dot grid -->
+        <div class="bg-grid"></div>
         <!-- Rising particles -->
         <span></span><span></span><span></span><span></span><span></span>
         <span></span><span></span><span></span><span></span><span></span>
@@ -212,12 +213,9 @@
         <p>Memuat portofolio Sutan Arlie...</p>
     </div>
 
-    <header id="main-header"
-        class="main-header fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-all duration-300">
-        <nav class="navbar container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-            <a href="#hero"
-                class="nav-logo font-heading text-2xl font-bold text-gray-900 dark:text-white hover:text-indigo-400 dark:hover:text-indigo-300 transition-colors"
-                aria-label="Beranda Sutan Arlie Johan">SAJ.</a>
+    <header id="main-header" class="main-header">
+        <nav class="navbar">
+            <a href="#hero" class="nav-logo" aria-label="Beranda Sutan Arlie Johan">SAJ.</a>
             <ul class="nav-menu items-center space-x-8">
                 <li><a href="#about"
                         class="nav-link text-gray-700 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors font-medium">Tentang</a>
@@ -274,12 +272,18 @@
             <div class="hero-content container max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center"
                 style="position:relative;z-index:1;">
                 <div class="hero-text animate-on-scroll space-y-6">
+                    <div class="hero-eyebrow">
+                        <span class="hero-status-dot"></span>
+                        <span>// available_for_internship</span>
+                    </div>
                     <h1 id="hero-title"
-                        class="text-5xl lg:text-6xl xl:text-7xl font-heading font-bold text-gray-900 dark:text-white">
-                        <span id="typing-effect"></span><span
-                            class="typing-cursor text-indigo-400 dark:text-indigo-300">|</span>
+                        class="text-5xl lg:text-7xl xl:text-8xl font-heading font-bold dark:text-white leading-none tracking-tight">
+                        <span id="typing-effect"></span><span class="typing-cursor">|</span>
                     </h1>
-                    <p class="subtitle text-xl lg:text-2xl text-indigo-400 dark:text-indigo-300 font-semibold">Mahasiswa
+                    <div class="hero-code-tag">
+                        <span class="caret">&lt;</span>developer<span class="caret"> /&gt;</span>
+                    </div>
+                    <p class="subtitle text-xl lg:text-2xl font-semibold" style="color:var(--color-primary)">Mahasiswa
                         Teknologi Informasi & Pengembang Web</p>
                     <p class="description text-gray-600 dark:text-gray-400 text-lg leading-relaxed max-w-2xl">
                         Membangun solusi digital yang inovatif dan fungsional, dari ide hingga implementasi. Bersemangat
@@ -399,6 +403,7 @@
                         class="about-image w-full h-auto rounded-2xl shadow-2xl" loading="lazy">
                 </div>
                 <div class="about-content animate-on-scroll space-y-6">
+                    <div class="section-label">// about_me.js</div>
                     <h2 id="about-title"
                         class="section-title reveal-text font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                         Tentang Saya</h2>
@@ -435,6 +440,7 @@
         <!-- INTERNSHIP OBJECTIVES SECTION -->
         <section id="internship" class="internship-section py-20" aria-labelledby="internship-title">
             <div class="container max-w-5xl mx-auto px-4">
+                <div class="section-label" style="justify-content:center">// internship_goals.js</div>
                 <h2 id="internship-title"
                     class="section-title reveal-text font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-12">
                     Tujuan Magang</h2>
@@ -492,6 +498,7 @@
 
         <section id="skills" class="skills-section py-20" aria-labelledby="skills-title">
             <div class="container max-w-7xl mx-auto px-4">
+                <div class="section-label" style="justify-content:center">// tech_stack.js</div>
                 <h2 id="skills-title"
                     class="section-title reveal-text font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-12">
                     Keahlian & Teknologi</h2>
@@ -694,6 +701,7 @@
 
         <section id="experience" class="experience-section py-20" aria-labelledby="experience-title">
             <div class="container max-w-5xl mx-auto px-4">
+                <div class="section-label" style="justify-content:center">// experience.log</div>
                 <h2 id="experience-title"
                     class="section-title reveal-text font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-12">
                     Pengalaman & Sertifikat</h2>
@@ -772,6 +780,7 @@
 
         <section id="projects" class="projects-section py-20" aria-labelledby="projects-title">
             <div class="container max-w-7xl mx-auto px-4">
+                <div class="section-label" style="justify-content:center">// projects.config.js</div>
                 <h2 id="projects-title"
                     class="section-title reveal-text font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-4">
                     Proyek Unggulan
@@ -892,6 +901,7 @@
         <section id="contact" class="contact-section py-20" aria-labelledby="contact-title">
             <div class="container contact-container max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12">
                 <div class="contact-info gsap-fade-up space-y-6">
+                    <div class="section-label">// contact.form.js</div>
                     <h2 id="contact-title"
                         class="section-title reveal-text font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                         Hubungi Saya</h2>
@@ -970,15 +980,9 @@
                         </li>
                     </ul>
                 </div>
-                <!-- Web3Forms: pesan dikirim langsung ke sutanarliejohan@gmail.com
-                     Cara aktivasi (1x saja):
-                     1. Buka https://web3forms.com/
-                     2. Masukkan email: sutanarliejohan@gmail.com → klik Create Access Key
-                     3. Cek email, salin access key-nya
-                     4. Ganti nilai YOUR_WEB3FORMS_KEY di bawah dengan key tersebut -->
                 <form id="contact-form" class="contact-form rounded-2xl p-8 shadow-lg space-y-6 gsap-fade-up"
                     action="https://api.web3forms.com/submit" method="POST">
-                    <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_KEY">
+                    <input type="hidden" name="access_key" value="abae4477-5247-4fb4-8e0e-c211c098b71a">
                     <input type="hidden" name="subject" value="Pesan Baru dari Portofolio — Sutan Arlie Johan">
                     <input type="hidden" name="from_name" value="Portofolio SAJ">
                     <input type="hidden" name="redirect" value="false">
