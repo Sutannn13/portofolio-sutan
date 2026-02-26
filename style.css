@@ -4777,7 +4777,7 @@ section {
   box-shadow: 0 0 10px var(--color-primary-glow), 0 0 30px var(--color-primary-glow);
 }
 
-/* ── Noise Texture Overlay ─────────────────────────────────── */
+/* ── Noise Texture Overlay (premium grain) ─────────────────── */
 .noise-overlay {
   position: fixed;
   inset: 0;

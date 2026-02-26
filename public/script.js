@@ -284,6 +284,10 @@ onDOMReady(() => {
             gsap.registerPlugin(ScrollTrigger);
             state.gsapReady = true;
 
+            // Pre-hide hero elements NOW (before loader hides) so there's no
+            // opacity:1 → opacity:0 flicker when the entrance timeline starts.
+            HeroAnimations.prepare();
+
             // Generic fade-up for sections (.gsap-fade-up)
             document.querySelectorAll('.gsap-fade-up').forEach(el => {
                 gsap.from(el, {
@@ -606,23 +610,61 @@ onDOMReady(() => {
        7. MODULE: HERO ANIMATIONS (GSAP)
        ============================================= */
     const HeroAnimations = (() => {
+        // Pre-hide hero elements immediately so there's no flash while the
+        // loader is active. Called from GSAPAnimations.init() before loader hides.
+        const prepare = () => {
+            if (typeof gsap === 'undefined') return;
+            // Set explicit opacity:0 so we control all hero transitions
+            gsap.set([
+                '.hero-eyebrow',
+                '#hero-title',
+                '.hero-code-tag',
+                '.hero-text .subtitle',
+                '.hero-text .description',
+                '.hero-cta',
+                '.hero-code-window',
+                '.id-card-wrapper',
+            ], { opacity: 0, y: 0 });
+        };
+
         const entrance = () => {
             if (typeof gsap === 'undefined') return;
             const heroText = document.querySelector('.hero-text');
             if (!heroText) return;
 
+            // fromTo() with explicit {y:0, opacity:1} end state is critical:
+            // gsap.from() uses current computed style as the "to" value, which
+            // can be opacity:0 if already pre-hidden → card stays invisible.
             const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-            tl.from('.hero-eyebrow', { y: 20, opacity: 0, duration: 0.6 })
-                .from('#hero-title', { y: 60, opacity: 0, duration: 1 }, '-=0.3')
-                .from('.hero-code-tag', { y: 20, opacity: 0, duration: 0.5 }, '-=0.5')
-                .from('.hero-text .subtitle', { y: 40, opacity: 0, duration: 0.8 }, '-=0.4')
-                .from('.hero-text .description', { y: 30, opacity: 0, duration: 0.8 }, '-=0.4')
-                .from('.hero-cta', { y: 30, opacity: 0, duration: 0.8 }, '-=0.3')
-                .from('.hero-code-window', { y: 30, opacity: 0, duration: 0.9, ease: 'power2.out' }, '-=0.4')
-                .from('.id-card-wrapper', { y: 80, opacity: 0, duration: 1.2, ease: 'elastic.out(1, 0.5)' }, '-=0.6');
+            tl.fromTo('.hero-eyebrow',
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.6 })
+                .fromTo('#hero-title',
+                    { y: 60, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 1 }, '-=0.3')
+                .fromTo('.hero-code-tag',
+                    { y: 20, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.5 }, '-=0.5')
+                .fromTo('.hero-text .subtitle',
+                    { y: 40, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8 }, '-=0.4')
+                .fromTo('.hero-text .description',
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8 }, '-=0.4')
+                .fromTo('.hero-cta',
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8 }, '-=0.3')
+                .fromTo('.hero-code-window',
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.9, ease: 'power2.out' }, '-=0.4')
+                .fromTo('.id-card-wrapper',
+                    { y: 80, opacity: 0 },
+                    // clearProps:'transform' ensures the physics module (IdCard) can
+                    // freely move the wrapper after the entrance animation completes
+                    { y: 0, opacity: 1, duration: 1.2, ease: 'elastic.out(1, 0.5)', clearProps: 'y' }, '-=0.6');
         };
 
-        return { entrance };
+        return { prepare, entrance };
     })();
 
     /* =============================================
