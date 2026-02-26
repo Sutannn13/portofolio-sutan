@@ -1,13 +1,19 @@
 /**
  * Enhanced Modules Initializer
  * Loads and initializes all premium enhancements
+ *
+ * NOTE: PageTransitions and TextReveal are intentionally DISABLED.
+ * - PageTransitions.initPageLoadAnimation() calls gsap.from('body > *', {opacity:0})
+ *   which re-hides <main> ~1.4s after load, wiping out the hero entrance animation
+ *   and causing the ID card + profile to be invisible on first visit.
+ * - TextReveal.initHeroText() duplicates the hero title animations already handled
+ *   by script.js HeroAnimations.entrance(), causing conflicts.
+ * All other animations are handled exclusively by script.js.
  */
 
 import { CustomCursor } from './modules/CustomCursor.js';
 import { CardTilt } from './modules/CardTilt.js';
 import { ThreeBackground } from './modules/ThreeBackground.js';
-import { TextReveal } from './modules/TextReveal.js';
-import { PageTransitions } from './modules/PageTransitions.js';
 
 // Initialize when DOM is ready and GSAP is loaded
 const initEnhancements = () => {
@@ -18,7 +24,6 @@ const initEnhancements = () => {
 
             console.log('🚀 Initializing Premium Enhancements...');
 
-            // Initialize in order
             setTimeout(() => {
                 console.log('✨ Custom Cursor');
                 CustomCursor.init();
@@ -35,18 +40,8 @@ const initEnhancements = () => {
             }, 500);
 
             setTimeout(() => {
-                console.log('✨ Text Reveal Animations');
-                TextReveal.init();
-            }, 700);
-
-            setTimeout(() => {
-                console.log('✨ Page Transitions');
-                PageTransitions.init();
-            }, 900);
-
-            setTimeout(() => {
                 console.log('🎉 All enhancements loaded!');
-            }, 1200);
+            }, 700);
         }
     }, 100);
 
@@ -68,6 +63,4 @@ export {
     CustomCursor,
     CardTilt,
     ThreeBackground,
-    TextReveal,
-    PageTransitions
 };
