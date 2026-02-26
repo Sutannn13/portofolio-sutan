@@ -2011,6 +2011,105 @@ html.dark .moon-icon {
 }
 
 /* ============================================================
+   ID CARD BACK — Mobile overflow fix
+   Prevents back face content from being clipped on small screens
+   ============================================================ */
+
+/* Allow the back face to scroll its content on small viewports */
+@media (max-width: 480px) {
+  .id-card-back {
+    align-items: flex-start;    /* unpin flex-center so content starts at top */
+    overflow-y: auto;           /* scroll instead of clip */
+    overflow-x: hidden;
+    /* Hide scrollbar visually but keep it functional */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .id-card-back::-webkit-scrollbar {
+    display: none;
+  }
+
+  .id-card-back-content {
+    margin-top: 40px;           /* reduced from 55px */
+    padding: 0 14px;
+    padding-bottom: 8px;
+    flex-shrink: 0;             /* don't compress children */
+  }
+
+  .id-card-back-title {
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+  }
+
+  .id-card-back-subtitle {
+    font-size: 0.65rem;
+    margin-bottom: 8px;
+  }
+
+  .id-card-back-info {
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+
+  .id-card-back-info p {
+    padding: 5px 8px;
+    font-size: 0.62rem;
+  }
+
+  .id-card-back-info strong {
+    font-size: 0.52rem;
+    margin-bottom: 1px;
+  }
+
+  .id-card-back-footer {
+    margin-top: 6px;
+    padding-top: 6px;
+    gap: 4px;
+  }
+
+  .id-card-qr-icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  .id-card-back-note {
+    font-size: 0.58rem;
+    margin-top: 2px;
+  }
+
+  .id-card-magnetic-strip {
+    height: 38px;               /* slightly smaller strip on mobile */
+  }
+}
+
+/* For very narrow screens (≤375px — iPhone SE) go even more compact */
+@media (max-width: 375px) {
+  .id-card-back-content {
+    margin-top: 32px;
+    padding: 0 10px;
+  }
+
+  .id-card-back-title {
+    font-size: 0.85rem;
+  }
+
+  .id-card-back-info {
+    gap: 3px;
+  }
+
+  .id-card-back-info p {
+    padding: 4px 7px;
+    font-size: 0.58rem;
+    line-height: 1.35;
+  }
+
+  .id-card-back-info strong {
+    font-size: 0.48rem;
+  }
+}
+
+/* ============================================================
    9. STATS SECTION
    ============================================================ */
 .stats-section {
