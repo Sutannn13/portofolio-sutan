@@ -456,6 +456,7 @@ onDOMReady(() => {
             // Stat counters (improved with proper number formatting)
             document.querySelectorAll('.stat-number').forEach(stat => {
                 const target = parseInt(stat.getAttribute('data-target')) || 0;
+                const suffix = stat.getAttribute('data-suffix') || '';
                 ScrollTrigger.create({
                     trigger: stat,
                     start: 'top 85%',
@@ -467,7 +468,7 @@ onDOMReady(() => {
                             duration: 2,
                             ease: 'power2.out',
                             onUpdate: () => {
-                                stat.textContent = Math.round(obj.value);
+                                stat.textContent = Math.round(obj.value) + suffix;
                             }
                         });
                     }
@@ -611,10 +612,13 @@ onDOMReady(() => {
             if (!heroText) return;
 
             const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-            tl.from('#hero-title', { y: 60, opacity: 0, duration: 1 })
-                .from('.hero-text .subtitle', { y: 40, opacity: 0, duration: 0.8 }, '-=0.5')
+            tl.from('.hero-eyebrow', { y: 20, opacity: 0, duration: 0.6 })
+                .from('#hero-title', { y: 60, opacity: 0, duration: 1 }, '-=0.3')
+                .from('.hero-code-tag', { y: 20, opacity: 0, duration: 0.5 }, '-=0.5')
+                .from('.hero-text .subtitle', { y: 40, opacity: 0, duration: 0.8 }, '-=0.4')
                 .from('.hero-text .description', { y: 30, opacity: 0, duration: 0.8 }, '-=0.4')
                 .from('.hero-cta', { y: 30, opacity: 0, duration: 0.8 }, '-=0.3')
+                .from('.hero-code-window', { y: 30, opacity: 0, duration: 0.9, ease: 'power2.out' }, '-=0.4')
                 .from('.id-card-wrapper', { y: 80, opacity: 0, duration: 1.2, ease: 'elastic.out(1, 0.5)' }, '-=0.6');
         };
 
@@ -653,7 +657,7 @@ onDOMReady(() => {
                     vx: (Math.random() - 0.5) * 0.4,
                     vy: (Math.random() - 0.5) * 0.4,
                     r: Math.random() * 2 + 0.5,
-                    color: ['rgba(99,102,241,', 'rgba(139,92,246,', 'rgba(236,72,153,'][Math.floor(Math.random() * 3)]
+                    color: ['rgba(0,212,255,', 'rgba(139,92,246,', 'rgba(99,102,241,'][Math.floor(Math.random() * 3)]
                 });
             }
 
@@ -950,7 +954,9 @@ onDOMReady(() => {
 
         const handleScroll = () => {
             if (header) header.classList.toggle('scrolled', window.scrollY > 50);
-            if (scrollToTopBtn) scrollToTopBtn.classList.toggle('show', window.scrollY > 300);
+            if (scrollToTopBtn) {
+                scrollToTopBtn.classList.toggle('show', window.scrollY > 300);
+            }
             // Always call TextFade.handle() for word-by-word fade effect
             TextFade.handle();
         };
@@ -1338,6 +1344,62 @@ onDOMReady(() => {
     };
 
     /* =============================================
+       16. MODULE: SCROLL PROGRESS BAR
+       ============================================= */
+    const ScrollProgress = (() => {
+        const bar = document.getElementById('scroll-progress');
+        const ring = document.getElementById('scroll-ring-progress');
+        const circumference = 2 * Math.PI * 24; // r=24
+
+        const update = () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+            const pct = Math.min(1, Math.max(0, progress));
+
+            // Top bar
+            if (bar) bar.style.width = (pct * 100) + '%';
+
+            // Circular ring on scroll-to-top button
+            if (ring) {
+                const offset = circumference - (pct * circumference);
+                ring.style.strokeDashoffset = offset;
+            }
+        };
+
+        const init = () => {
+            window.addEventListener('scroll', update, { passive: true });
+            update();
+        };
+
+        return { init };
+    })();
+
+    /* =============================================
+       17. MODULE: MAGNETIC BUTTONS
+       ============================================= */
+    const MagneticButtons = (() => {
+        const init = () => {
+            if (state.isTouchDevice) return; // Only on desktop
+
+            document.querySelectorAll('[data-magnetic]').forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+                });
+
+                btn.addEventListener('mouseleave', () => {
+                    btn.style.transform = 'translate(0, 0)';
+                });
+            });
+        };
+
+        return { init };
+    })();
+
+    /* =============================================
        18. INITIALIZATION
        ============================================= */
     const init = () => {
@@ -1352,6 +1414,8 @@ onDOMReady(() => {
         TypingEffect.init();
         Modal.init();
         ContactForm.init();
+        ScrollProgress.init();
+        MagneticButtons.init();
         updateCopyrightYear();
         // Initial TextFade call
         TextFade.handle();

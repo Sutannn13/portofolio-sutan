@@ -192,6 +192,11 @@
 
 <body class="loading font-body">
 
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress" class="scroll-progress-bar"></div>
+
+    <!-- Noise Texture Overlay (premium grain) -->
+    <div class="noise-overlay"></div>
 
     <div class="animated-background">
         <!-- Dot grid -->
@@ -298,6 +303,23 @@
                             data-magnetic>Hubungi Saya</a>
                     </div>
 
+                    <!-- Mini Code Window -->
+                    <div class="hero-code-window animate-on-scroll">
+                        <div class="code-window-header">
+                            <span class="code-dot code-dot-red"></span>
+                            <span class="code-dot code-dot-yellow"></span>
+                            <span class="code-dot code-dot-green"></span>
+                            <span class="code-window-title">portfolio.js</span>
+                        </div>
+                        <pre class="code-window-body"><code><span class="code-keyword">const</span> <span class="code-variable">developer</span> = {
+  <span class="code-property">name</span>: <span class="code-string">"Sutan Arlie Johan"</span>,
+  <span class="code-property">role</span>: <span class="code-string">"Full Stack Developer"</span>,
+  <span class="code-property">skills</span>: [<span class="code-string">"React"</span>, <span class="code-string">"Node.js"</span>, <span class="code-string">"PHP"</span>],
+  <span class="code-property">available</span>: <span class="code-boolean">true</span>,
+  <span class="code-property">coffee</span>: <span class="code-string">"☕ always"</span>,
+};</code></pre>
+                    </div>
+
                 </div>
                 <!-- WRAPPER BARU UNTUK CARD GANTUNG -->
                 <div class="id-card-wrapper" id="id-card-wrapper">
@@ -361,7 +383,7 @@
                             </svg>
                         </div>
                         <span class="stat-number text-4xl md:text-5xl font-heading font-bold block"
-                            style="color:#a78bfa" data-target="2">0</span>
+                            style="color:#a78bfa" data-target="2" data-suffix="+">0</span>
                         <p class="premium-stat-label">Total Proyek</p>
                         <p class="premium-stat-sub">Web, IoT &amp; Mobile</p>
                     </div>
@@ -374,7 +396,7 @@
                             </svg>
                         </div>
                         <span class="stat-number text-4xl md:text-5xl font-heading font-bold block"
-                            style="color:#22d3ee" data-target="4">0</span>
+                            style="color:#22d3ee" data-target="4" data-suffix="+">0</span>
                         <p class="premium-stat-label">Sertifikat</p>
                         <p class="premium-stat-sub">International &amp; National</p>
                     </div>
@@ -394,6 +416,63 @@
                 </div>
             </div>
         </section>
+
+        <!-- Tech Marquee Strip -->
+        <div class="tech-marquee-wrapper">
+            <div class="tech-marquee">
+                <div class="tech-marquee-track">
+                    <span class="tech-marquee-item">React.js</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">Node.js</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">JavaScript</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">PHP</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">Laravel</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">PostgreSQL</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">MySQL</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">Tailwind CSS</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">Bootstrap</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">Git & GitHub</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">IoT / MQTT</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">Figma</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <!-- Duplicate for seamless loop -->
+                    <span class="tech-marquee-item">React.js</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">Node.js</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">JavaScript</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">PHP</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">Laravel</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">PostgreSQL</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">MySQL</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">Tailwind CSS</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">Bootstrap</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">Git & GitHub</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">IoT / MQTT</span>
+                    <span class="tech-marquee-divider">/</span>
+                    <span class="tech-marquee-item">Figma</span>
+                    <span class="tech-marquee-divider">/</span>
+                </div>
+            </div>
+        </div>
 
 
         <section id="about" class="about-section py-20" aria-labelledby="about-title">
@@ -1018,7 +1097,8 @@
 
     </main>
 
-    <footer id="main-footer" class="main-footer bg-gray-900 dark:bg-black text-gray-300 py-12">
+    <footer id="main-footer" class="main-footer relative bg-gray-900 dark:bg-black text-gray-300 py-12">
+        <div class="footer-gradient-border"></div>
         <div class="container footer-container max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8">
             <div class="footer-about">
                 <h3 class="text-xl font-heading font-bold text-white mb-4">Sutan Arlie Johan</h3>
@@ -1093,8 +1173,13 @@
     </div>
 
     <button id="scroll-to-top" aria-label="Kembali ke atas"
-        class="fixed bottom-8 right-8 w-12 h-12 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center opacity-0 pointer-events-none">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+        class="scroll-to-top-btn fixed bottom-8 right-8 w-14 h-14 rounded-full flex items-center justify-center opacity-0 pointer-events-none">
+        <svg class="scroll-progress-ring" width="56" height="56" viewBox="0 0 56 56">
+            <circle class="scroll-progress-ring-bg" cx="28" cy="28" r="24" fill="none" stroke-width="3"/>
+            <circle id="scroll-ring-progress" class="scroll-progress-ring-fill" cx="28" cy="28" r="24" fill="none" stroke-width="3"
+                stroke-dasharray="150.796" stroke-dashoffset="150.796"/>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="scroll-to-top-icon w-5 h-5">
             <path
                 d="M12.97 3.97a.75.75 0 011.06 0l6 6a.75.75 0 01-1.06 1.06L13.5 5.56V21a.75.75 0 01-1.5 0V5.56l-5.47 5.47a.75.75 0 01-1.06-1.06l6-6z" />
         </svg>
