@@ -44,7 +44,7 @@ Saya adalah Sutan Arlie Johan, mahasiswa TI yang berfokus pada pengembangan web 
 
 Mencari kesempatan magang di bidang:
 
-- Frontend / Fullstack Web Development
+- Frontend /Backends Dev
 - UI/UX Implementation
 - IoT & Web Integration
 
