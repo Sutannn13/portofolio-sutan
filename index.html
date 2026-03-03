@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id" class="dark" data-theme="portfolioDark">
 
 <head>
@@ -417,6 +417,11 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Gradient Orbs for Enhanced Background -->
+            <div class="gradient-orb"></div>
+            <div class="gradient-orb"></div>
+            <div class="gradient-orb"></div>
         </section>
 
 
@@ -1215,8 +1220,7 @@
             class="modal-content bg-white dark:bg-gray-900 rounded-2xl max-w-4xl mx-auto p-6 md:p-8 shadow-2xl relative">
             <button id="modal-close-btn"
                 class="modal-close absolute top-3 right-3 md:top-4 md:right-4 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 transition-colors text-3xl z-[9999] cursor-pointer pointer-events-auto shadow-md"
-                aria-label="Tutup Detail Proyek"
-                onclick="this.closest('.modal').classList.remove('open'); document.body.classList.remove('modal-open');">&times;</button>
+                aria-label="Tutup Detail Proyek">&times;</button>
             <div id="modal-body">
             </div>
         </div>
@@ -1243,6 +1247,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <!-- Lenis Smooth Scroll -->
     <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <!-- Three.js for 3D Background Effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r164/three.min.js"></script>
     <!-- Main Script (defer so it runs after HTML is fully parsed) -->
     <script src="/script.js" defer></script>
 
