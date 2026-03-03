@@ -650,8 +650,7 @@
   <div id="project-modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true"
     aria-labelledby="modal-title">
     <div class="modal-content">
-      <button id="modal-close-btn" class="modal-close" aria-label="Tutup Sertifikat" 
-        onclick="
+      <button id="modal-close-btn" class="modal-close" aria-label="Tutup Sertifikat" onclick="
           const modal = this.closest('.modal');
           if (modal) {
             modal.classList.remove('open');
@@ -670,13 +669,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
-  
+
   <!-- Fallback modal functionality for better reliability -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const modal = document.getElementById('project-modal');
       const closeBtn = document.getElementById('modal-close-btn');
-      
+
       function closeModal() {
         if (modal) {
           modal.classList.remove('open');
@@ -687,26 +686,26 @@
           document.body.style.width = '';
         }
       }
-      
+
       // Enhanced close button functionality
       if (closeBtn) {
-        closeBtn.addEventListener('click', function(e) {
+        closeBtn.addEventListener('click', function (e) {
           e.preventDefault();
           e.stopPropagation();
           closeModal();
         });
       }
-      
+
       // Close on escape key
-      document.addEventListener('keydown', function(e) {
+      document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && modal && modal.classList.contains('open')) {
           closeModal();
         }
       });
-      
+
       // Close when clicking outside modal
       if (modal) {
-        modal.addEventListener('click', function(e) {
+        modal.addEventListener('click', function (e) {
           if (e.target === modal) {
             closeModal();
           }
@@ -714,8 +713,8 @@
       }
     });
   </script>
-  
-  <script src="/public/script.js" defer></script>
+
+  <script src="/script.js" defer></script>
 
 </body>
 
