@@ -601,8 +601,14 @@ ul {
 }
 
 @keyframes loaderOverlayFadeOut {
-  0%   { opacity: 1; visibility: visible; }
-  100% { opacity: 0; visibility: hidden; }
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 /* ── Curtain panels ───────────────────────────────────────── */
@@ -617,8 +623,14 @@ ul {
   will-change: transform;
 }
 
-.loader-curtain-top  { top: 0;   transform: translateY(0); }
-.loader-curtain-bottom { bottom: 0; transform: translateY(0); }
+.loader-curtain-top {
+  top: 0;
+  transform: translateY(0);
+}
+.loader-curtain-bottom {
+  bottom: 0;
+  transform: translateY(0);
+}
 
 /* ── Floating code particles ──────────────────────────────── */
 .loader-particles {
@@ -645,23 +657,86 @@ html:not(.dark) .lp {
 }
 
 /* Positions & animation delays for each particle */
-.lp-1  { top: 8%;  left: 6%;  animation-delay: 0.0s; animation-duration: 7s; }
-.lp-2  { top: 15%; right: 8%; animation-delay: 0.6s; animation-duration: 6s; }
-.lp-3  { top: 35%; left: 4%;  animation-delay: 1.2s; animation-duration: 8s; }
-.lp-4  { top: 55%; right: 5%; animation-delay: 0.3s; animation-duration: 7.5s; }
-.lp-5  { top: 70%; left: 10%; animation-delay: 1.8s; animation-duration: 6s; }
-.lp-6  { top: 80%; right: 12%; animation-delay: 0.9s; animation-duration: 7s; }
-.lp-7  { top: 25%; left: 14%; animation-delay: 2.2s; animation-duration: 6.5s; }
-.lp-8  { top: 45%; right: 15%; animation-delay: 1.5s; animation-duration: 8s; }
-.lp-9  { top: 62%; left: 20%; animation-delay: 2.8s; animation-duration: 7s; }
-.lp-10 { top: 88%; right: 20%; animation-delay: 0.4s; animation-duration: 9s; }
+.lp-1 {
+  top: 8%;
+  left: 6%;
+  animation-delay: 0s;
+  animation-duration: 7s;
+}
+.lp-2 {
+  top: 15%;
+  right: 8%;
+  animation-delay: 0.6s;
+  animation-duration: 6s;
+}
+.lp-3 {
+  top: 35%;
+  left: 4%;
+  animation-delay: 1.2s;
+  animation-duration: 8s;
+}
+.lp-4 {
+  top: 55%;
+  right: 5%;
+  animation-delay: 0.3s;
+  animation-duration: 7.5s;
+}
+.lp-5 {
+  top: 70%;
+  left: 10%;
+  animation-delay: 1.8s;
+  animation-duration: 6s;
+}
+.lp-6 {
+  top: 80%;
+  right: 12%;
+  animation-delay: 0.9s;
+  animation-duration: 7s;
+}
+.lp-7 {
+  top: 25%;
+  left: 14%;
+  animation-delay: 2.2s;
+  animation-duration: 6.5s;
+}
+.lp-8 {
+  top: 45%;
+  right: 15%;
+  animation-delay: 1.5s;
+  animation-duration: 8s;
+}
+.lp-9 {
+  top: 62%;
+  left: 20%;
+  animation-delay: 2.8s;
+  animation-duration: 7s;
+}
+.lp-10 {
+  top: 88%;
+  right: 20%;
+  animation-delay: 0.4s;
+  animation-duration: 9s;
+}
 
 @keyframes lpFloat {
-  0%   { opacity: 0; transform: translateY(12px) scale(0.9); }
-  15%  { opacity: 0.25; }
-  50%  { opacity: 0.15; transform: translateY(-8px) scale(1.05); }
-  85%  { opacity: 0.2; }
-  100% { opacity: 0; transform: translateY(10px) scale(0.9); }
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.9);
+  }
+  15% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.15;
+    transform: translateY(-8px) scale(1.05);
+  }
+  85% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.9);
+  }
 }
 
 /* ── Corner accent lines ──────────────────────────────────── */
@@ -675,13 +750,35 @@ html:not(.dark) .lp {
 }
 
 @keyframes lcFadeIn {
-  to { opacity: 0.35; }
+  to {
+    opacity: 0.35;
+  }
 }
 
-.loader-corner-tl { top: 20px; left: 20px;  border-top:  2px solid var(--color-primary); border-left:  2px solid var(--color-primary); }
-.loader-corner-tr { top: 20px; right: 20px; border-top:  2px solid var(--color-primary); border-right: 2px solid var(--color-primary); }
-.loader-corner-bl { bottom: 20px; left: 20px;  border-bottom: 2px solid var(--color-primary); border-left:  2px solid var(--color-primary); }
-.loader-corner-br { bottom: 20px; right: 20px; border-bottom: 2px solid var(--color-primary); border-right: 2px solid var(--color-primary); }
+.loader-corner-tl {
+  top: 20px;
+  left: 20px;
+  border-top: 2px solid var(--color-primary);
+  border-left: 2px solid var(--color-primary);
+}
+.loader-corner-tr {
+  top: 20px;
+  right: 20px;
+  border-top: 2px solid var(--color-primary);
+  border-right: 2px solid var(--color-primary);
+}
+.loader-corner-bl {
+  bottom: 20px;
+  left: 20px;
+  border-bottom: 2px solid var(--color-primary);
+  border-left: 2px solid var(--color-primary);
+}
+.loader-corner-br {
+  bottom: 20px;
+  right: 20px;
+  border-bottom: 2px solid var(--color-primary);
+  border-right: 2px solid var(--color-primary);
+}
 
 /* ── Core (ring + logo + text) ────────────────────────────── */
 .loader-core {
@@ -691,7 +788,9 @@ html:not(.dark) .lp {
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
 }
 
 /* ── Circular ring ────────────────────────────────────────── */
@@ -709,7 +808,7 @@ html:not(.dark) .lp {
   inset: 0;
   width: 100%;
   height: 100%;
-  transform: rotate(-90deg);       /* start at top */
+  transform: rotate(-90deg); /* start at top */
   filter: drop-shadow(0 0 8px var(--color-primary-glow));
 }
 
@@ -745,14 +844,24 @@ html:not(.dark) .lp {
   position: absolute;
   inset: 8px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--color-primary-glow) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    var(--color-primary-glow) 0%,
+    transparent 70%
+  );
   opacity: 0.2;
   animation: ringHaloPulse 2s ease-in-out infinite alternate;
 }
 
 @keyframes ringHaloPulse {
-  0%   { transform: scale(0.92); opacity: 0.15; }
-  100% { transform: scale(1.08); opacity: 0.3;  }
+  0% {
+    transform: scale(0.92);
+    opacity: 0.15;
+  }
+  100% {
+    transform: scale(1.08);
+    opacity: 0.3;
+  }
 }
 
 /* ── SAJ. logo inside ring ────────────────────────────────── */
@@ -776,13 +885,25 @@ html:not(.dark) .lp {
   animation: llCascade 0.5s forwards cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.ll-s   { animation-delay: 0.1s; }
-.ll-a   { animation-delay: 0.2s; }
-.ll-j   { animation-delay: 0.3s; }
-.ll-dot { animation-delay: 0.4s; color: var(--color-accent-cyan, #06b6d4); }
+.ll-s {
+  animation-delay: 0.1s;
+}
+.ll-a {
+  animation-delay: 0.2s;
+}
+.ll-j {
+  animation-delay: 0.3s;
+}
+.ll-dot {
+  animation-delay: 0.4s;
+  color: var(--color-accent-cyan, #06b6d4);
+}
 
 @keyframes llCascade {
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* ── Percentage counter ───────────────────────────────────── */
@@ -829,7 +950,9 @@ html:not(.dark) .lp {
 }
 
 @keyframes statusFadeIn {
-  to { opacity: 1; }
+  to {
+    opacity: 1;
+  }
 }
 
 /* ── Responsive: mobile / tablet ─────────────────────────── */
@@ -839,9 +962,7 @@ html:not(.dark) .lp {
     height: 120px;
   }
 
-  .loader-ring-svg {
-    /* viewBox stays at 0 0 140 140, just shrinks via container */
-  }
+  /* .loader-ring-svg viewBox stays at 0 0 140 140, just shrinks via container */
 
   .loader-logo-inner {
     font-size: 1.4rem;
@@ -856,12 +977,26 @@ html:not(.dark) .lp {
     height: 22px;
   }
 
-  .loader-corner-tl { top: 12px; left: 12px; }
-  .loader-corner-tr { top: 12px; right: 12px; }
-  .loader-corner-bl { bottom: 12px; left: 12px; }
-  .loader-corner-br { bottom: 12px; right: 12px; }
+  .loader-corner-tl {
+    top: 12px;
+    left: 12px;
+  }
+  .loader-corner-tr {
+    top: 12px;
+    right: 12px;
+  }
+  .loader-corner-bl {
+    bottom: 12px;
+    left: 12px;
+  }
+  .loader-corner-br {
+    bottom: 12px;
+    right: 12px;
+  }
 
-  .lp { font-size: 0.6rem; }
+  .lp {
+    font-size: 0.6rem;
+  }
 
   .loader-core {
     gap: 1rem;
@@ -888,10 +1023,15 @@ html:not(.dark) .lp {
 }
 
 /* ── Old helper classes kept for compatibility (unused) ─── */
-.progress-container { display: none !important; }
-.progress-bar-fill  { display: none !important; }
-.progress-percentage { display: none !important; }
-
+.progress-container {
+  display: none !important;
+}
+.progress-bar-fill {
+  display: none !important;
+}
+.progress-percentage {
+  display: none !important;
+}
 
 /* ============================================================
    5. HEADER & NAVIGATION
@@ -1298,9 +1438,9 @@ html.dark .moon-icon {
    ============================================================ */
 .id-card-wrapper {
   position: relative;
-  /* Fluid sizing: scales from 200px (tiny mobile) to 380px (desktop) */
-  width: clamp(200px, 55vw, 380px);
-  height: clamp(380px, 90vw, 620px);
+  /* Fluid sizing */
+  width: auto;
+  height: auto;
   perspective: 1500px;
   z-index: 10;
   justify-self: center;
@@ -1326,16 +1466,18 @@ html.dark .moon-icon {
 }
 
 .id-card-lanyard {
-  width: 20px;
+  width: 6px;
   height: 90px;
-  background: linear-gradient(to right, #1e293b, #334155, #1e293b);
-  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    rgba(30, 41, 59, 0.25),
+    rgba(51, 65, 85, 0.35),
+    rgba(30, 41, 59, 0.25)
+  );
+  border-radius: 1px;
   position: relative;
   z-index: 5;
-  box-shadow:
-    inset 2px 0 4px rgba(0, 0, 0, 0.4),
-    inset -2px 0 4px rgba(0, 0, 0, 0.4),
-    0 4px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: none;
   margin-bottom: -10px; /* Connect seamlessly to the clip */
 }
 
@@ -1345,10 +1487,10 @@ html.dark .moon-icon {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 3px;
-  right: 3px;
-  border-left: 1px dashed rgba(255, 255, 255, 0.15);
-  border-right: 1px dashed rgba(255, 255, 255, 0.15);
+  left: 1px;
+  right: 1px;
+  border-left: none;
+  border-right: none;
   pointer-events: none;
 }
 
@@ -1383,9 +1525,10 @@ html.dark .moon-icon {
 
 .id-card-holder {
   position: relative;
-  /* Fluid: matches wrapper width, height is ~85% of wrapper height */
-  width: clamp(200px, 55vw, 380px);
-  height: clamp(320px, 76vw, 530px);
+  /* Fluid: matches wrapper width, keeping aspect ratio */
+  width: clamp(260px, 75vw, 380px);
+  aspect-ratio: 380 / 550;
+  height: auto;
   transform-style: preserve-3d;
   transform-origin: center center;
   animation: swing 3s ease-in-out infinite alternate;
@@ -1439,7 +1582,7 @@ html.dark .moon-icon {
 .id-card-image {
   width: 100%;
   height: 100%;
-  object-fit: fill;
+  object-fit: cover;
   border-radius: 20px;
   display: block;
   pointer-events: none;
@@ -1820,28 +1963,37 @@ html.dark .moon-icon {
   flex-direction: column;
   align-items: center;
   color: #fff;
-  margin-top: 55px;
-  padding: 0 25px;
+  margin-top: 50px;
+  padding: 0 20px;
   width: 100%;
   box-sizing: border-box;
+  /* Allow scroll if content overflows on very small cards */
+  overflow-y: auto;
+  max-height: calc(100% - 50px);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.id-card-back-content::-webkit-scrollbar {
+  display: none;
 }
 
 .id-card-back-title {
   font-family: var(--font-family-heading);
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 800;
-  margin: 0 0 4px;
-  letter-spacing: 1.2px;
+  margin: 0 0 3px;
+  letter-spacing: 1px;
   text-align: center;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .id-card-back-subtitle {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 600;
   color: #fbbf24;
-  margin: 0 0 12px;
-  letter-spacing: 1.2px;
+  margin: 0 0 8px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   text-align: center;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
@@ -1851,19 +2003,19 @@ html.dark .moon-icon {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-bottom: 10px;
+  gap: 4px;
+  margin-bottom: 8px;
 }
 
 .id-card-back-info p {
   background: rgba(255, 255, 255, 0.08);
-  padding: 6px 10px;
-  border-radius: 6px;
+  padding: 5px 8px;
+  border-radius: 5px;
   border-left: 3px solid #f59e0b;
   margin: 0;
   text-align: left;
-  font-size: 0.65rem;
-  line-height: 1.4;
+  font-size: 0.6rem;
+  line-height: 1.35;
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
@@ -1871,11 +2023,11 @@ html.dark .moon-icon {
 .id-card-back-info strong {
   display: block;
   color: #fbbf24;
-  font-size: 0.55rem;
+  font-size: 0.52rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
 
 /* Emergency Contact */
@@ -2018,8 +2170,8 @@ html.dark .moon-icon {
 /* Allow the back face to scroll its content on small viewports */
 @media (max-width: 480px) {
   .id-card-back {
-    align-items: flex-start;    /* unpin flex-center so content starts at top */
-    overflow-y: auto;           /* scroll instead of clip */
+    align-items: flex-start; /* unpin flex-center so content starts at top */
+    overflow-y: auto; /* scroll instead of clip */
     overflow-x: hidden;
     /* Hide scrollbar visually but keep it functional */
     scrollbar-width: none;
@@ -2031,10 +2183,10 @@ html.dark .moon-icon {
   }
 
   .id-card-back-content {
-    margin-top: 40px;           /* reduced from 55px */
+    margin-top: 40px; /* reduced from 55px */
     padding: 0 14px;
     padding-bottom: 8px;
-    flex-shrink: 0;             /* don't compress children */
+    flex-shrink: 0; /* don't compress children */
   }
 
   .id-card-back-title {
@@ -2079,7 +2231,7 @@ html.dark .moon-icon {
   }
 
   .id-card-magnetic-strip {
-    height: 38px;               /* slightly smaller strip on mobile */
+    height: 38px; /* slightly smaller strip on mobile */
   }
 }
 
@@ -3023,6 +3175,8 @@ html.dark .projects-section::before {
   padding: 1rem;
   z-index: 2000;
   opacity: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal.open {
@@ -3042,15 +3196,26 @@ html.dark .projects-section::before {
 
 .modal-content {
   background-color: var(--color-surface);
-  padding: 2rem;
   border-radius: var(--border-radius-lg);
   max-width: 800px;
   width: 90%;
   max-height: 90vh;
-  overflow-y: auto;
+  max-height: 90dvh;
   position: relative;
   transform: scale(0.9) translateY(20px);
   border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* No scrolling here */
+}
+
+#modal-body {
+  padding: 0 2rem 2rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+  min-height: 0;
+  position: relative;
 }
 
 .modal.open .modal-content {
@@ -3072,20 +3237,29 @@ html.dark .projects-section::before {
 .modal-close {
   position: absolute;
   top: 1rem;
-  right: 1.5rem;
-  font-size: 2.5rem;
-  font-weight: 300;
-  background: none;
-  border: none;
+  right: 1rem;
+  font-size: 1.8rem;
+  font-weight: 400;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   color: var(--color-text-muted);
   cursor: pointer;
-  transition: color var(--transition-speed) ease;
+  transition: all var(--transition-speed) ease;
   line-height: 1;
-  z-index: 50;
+  z-index: 1000; /* High z-index to guarantee clickability */
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .modal-close:hover {
   color: var(--color-text);
+  background: var(--color-border);
+  transform: scale(1.1);
 }
 
 /* Drag handle at top of modal */
@@ -3093,12 +3267,15 @@ html.dark .projects-section::before {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0.5rem 0 0.75rem;
+  padding: 1.25rem 0 0.5rem;
   cursor: grab;
   user-select: none;
   touch-action: none;
-  margin: -2rem -2rem 1rem;
   border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+  background-color: var(--color-surface);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 50;
 }
 
 .modal-drag-handle:active {
@@ -3116,8 +3293,10 @@ html.dark .projects-section::before {
 .modal-body img,
 .modal-image {
   width: 100%;
-  height: 300px;
-  object-fit: cover;
+  height: auto;
+  max-height: 60vh;
+  object-fit: contain;
+  background-color: var(--color-surface);
   border-radius: var(--border-radius-md);
   margin-bottom: 1.5rem;
 }
@@ -3271,6 +3450,108 @@ html.dark .projects-section::before {
   }
   .cert-modal-img {
     max-height: 260px;
+  }
+}
+
+/* ─── Mobile Modal: bottom-sheet style ─── */
+@media (max-width: 767px) {
+  .modal {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 94vh !important;
+    max-height: 94dvh !important;
+    border-radius: 20px 20px 0 0;
+    margin: 0;
+    animation: modalSlideUp 0.35s ease forwards;
+  }
+
+  #modal-body {
+    padding: 0 1.25rem 2rem;
+  }
+
+  .modal-content.cert-modal-wide {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .modal-close {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 36px;
+    height: 36px;
+    font-size: 1.5rem;
+  }
+
+  /* Adjust drag handle padding for mobile */
+  .modal-drag-handle {
+    padding: 1rem 0 0.5rem;
+  }
+
+  .cert-modal-img {
+    max-height: 220px;
+    border-radius: 8px;
+  }
+
+  .cert-modal-title {
+    font-size: 1.1rem;
+  }
+
+  .cert-modal-meta {
+    font-size: 0.8rem;
+  }
+
+  .cert-modal-description {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .cert-modal-highlights li {
+    font-size: 0.82rem;
+  }
+
+  /* Drag handle indicator */
+  .modal-drag-handle {
+    margin: 0 -1rem 0.5rem;
+    padding: 0.5rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    max-height: 92vh !important;
+    max-height: 92dvh !important;
+  }
+
+  #modal-body {
+    padding: 0 1rem 1.5rem;
+  }
+
+  .cert-modal-img {
+    max-height: 180px;
+  }
+
+  .modal-close {
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 34px;
+    height: 34px;
+    font-size: 1.4rem;
+  }
+}
+
+@keyframes modalSlideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0.5;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
@@ -3946,7 +4227,7 @@ body {
   .id-card-wrapper {
     order: 1;
     margin: 0 auto;
-    width: min(220px, 58vw) !important;
+    width: min(240px, 60vw) !important;
     height: auto !important;
     max-width: none;
     touch-action: manipulation;
@@ -3954,13 +4235,14 @@ body {
 
   .id-card-holder {
     animation: none;
-    width: min(220px, 58vw) !important;
-    height: min(300px, 78vw) !important;
+    width: min(240px, 60vw) !important;
+    height: auto !important;
+    aspect-ratio: 380 / 550 !important;
   }
 
   .id-card-lanyard {
     height: 35px;
-    width: 14px;
+    width: 5px;
   }
 
   .id-card-clip {
@@ -4157,27 +4439,7 @@ body {
     height: 16px;
   }
 
-  /* === MODAL MOBILE === */
-  .modal {
-    padding: 0.75rem;
-  }
-
-  .modal-content {
-    width: 100%;
-    max-height: 90vh;
-    max-height: 90dvh;
-    padding: 1.25rem;
-    margin: 0;
-    border-radius: var(--border-radius-md);
-  }
-
-  .modal-close {
-    top: 0.5rem !important;
-    right: 0.5rem !important;
-    width: 36px !important;
-    height: 36px !important;
-    font-size: 1.5rem !important;
-  }
+  /* === MODAL MOBILE: handled by bottom-sheet rules in modal section === */
 
   .modal-body img,
   .modal-image {
@@ -4199,8 +4461,14 @@ body {
     gap: 1.25rem;
   }
 
-  .cert-card {
+  /* Note: cert-card has padding: 0 !important globally for edge-to-edge thumb */
+  /* Only cert-card-body has padding */
+  .cert-card-body {
     padding: 1.25rem;
+  }
+
+  .cert-thumb-wrapper {
+    height: 200px;
   }
 
   .cert-preview-placeholder {
@@ -4310,18 +4578,19 @@ body {
 
   /* === ID CARD COMPACT === */
   .id-card-wrapper {
-    width: min(180px, 50vw) !important;
+    width: min(200px, 52vw) !important;
     height: auto !important;
   }
 
   .id-card-holder {
-    width: min(180px, 50vw) !important;
-    height: min(250px, 68vw) !important;
+    width: min(200px, 52vw) !important;
+    height: auto !important;
+    aspect-ratio: 380 / 550 !important;
   }
 
   .id-card-lanyard {
     height: 30px;
-    width: 12px;
+    width: 4px;
   }
 
   .id-card-clip {
@@ -4426,26 +4695,7 @@ body {
     gap: 1.5rem;
   }
 
-  /* Modal */
-  .modal {
-    padding: 0.5rem;
-  }
-
-  .modal-content {
-    padding: 1rem;
-    margin: 0;
-    width: 100%;
-    max-height: 92vh;
-    max-height: 92dvh;
-  }
-
-  .modal-close {
-    top: 0.35rem !important;
-    right: 0.35rem !important;
-    width: 32px !important;
-    height: 32px !important;
-    font-size: 1.3rem !important;
-  }
+  /* Modal: handled by bottom-sheet rules in modal section */
 
   .modal-pdf-preview {
     height: 250px;
@@ -4556,18 +4806,19 @@ body {
 
   /* === ID CARD EXTRA SMALL === */
   .id-card-wrapper {
-    width: min(160px, 48vw) !important;
+    width: min(175px, 50vw) !important;
     height: auto !important;
   }
 
   .id-card-holder {
-    width: min(160px, 48vw) !important;
-    height: min(220px, 62vw) !important;
+    width: min(175px, 50vw) !important;
+    height: auto !important;
+    aspect-ratio: 380 / 550 !important;
   }
 
   .id-card-lanyard {
-    height: 30px;
-    width: 12px;
+    height: 28px;
+    width: 4px;
   }
 
   .id-card-clip {
@@ -4664,18 +4915,7 @@ body {
     font-size: 0.8rem;
   }
 
-  /* Modal extra small */
-  .modal-content {
-    padding: 0.75rem;
-  }
-
-  .modal-close {
-    top: 0.25rem !important;
-    right: 0.25rem !important;
-    width: 28px !important;
-    height: 28px !important;
-    font-size: 1.2rem !important;
-  }
+  /* Modal extra small: handled by bottom-sheet rules */
 
   main {
     padding-top: 50px !important;
@@ -4821,6 +5061,7 @@ body {
 
   .id-card-lanyard {
     height: 25px;
+    width: 4px;
   }
 
   .id-card-clip {

@@ -127,11 +127,11 @@ onDOMReady(() => {
        3. MODULE: LOADER (Custom Creative — fixed duration)
        ============================================= */
     const Loader = (() => {
-        const loaderEl  = document.getElementById('loader');
-        const ringBar   = document.getElementById('loader-ring-bar');
-        const ringDot   = document.getElementById('loader-ring-dot');
-        const numEl     = document.querySelector('.loader-num');
-        const statusEl  = document.querySelector('.loader-status');
+        const loaderEl = document.getElementById('loader');
+        const ringBar = document.getElementById('loader-ring-bar');
+        const ringDot = document.getElementById('loader-ring-dot');
+        const numEl = document.querySelector('.loader-num');
+        const statusEl = document.querySelector('.loader-status');
         const CIRCUMFERENCE = 364.42;               // 2π × r=58
         const STATUSES = [
             '// initializing',
@@ -179,9 +179,9 @@ onDOMReady(() => {
             let rafId;
 
             const tick = (now) => {
-                const elapsed  = now - startTime;
+                const elapsed = now - startTime;
                 const progress = Math.min(elapsed / DURATION, 1);
-                const pct      = Math.round(progress * 100);
+                const pct = Math.round(progress * 100);
 
                 // ── Ring fill (stroke-dashoffset: full→0) ──────────────────
                 if (ringBar) {
@@ -667,8 +667,8 @@ onDOMReady(() => {
             // can be opacity:0 if already pre-hidden → card stays invisible.
             const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
             tl.fromTo('.hero-eyebrow',
-                    { y: 20, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.6 })
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.6 })
                 .fromTo('#hero-title',
                     { y: 60, opacity: 0 },
                     { y: 0, opacity: 1, duration: 1 }, '-=0.3')
@@ -1208,15 +1208,16 @@ onDOMReady(() => {
                 contentEl.prepend(handle);
             }
 
-            // Drag to reposition
+            // Drag handle for repositioning (desktop) / swipe-to-dismiss (mobile)
             const _contentEl = modal.querySelector('.modal-content');
             const _handle = _contentEl?.querySelector('.modal-drag-handle');
             if (_handle && _contentEl) {
-                let isDragging = false, startY = 0, startMargin = 0;
+                const isMobileView = window.innerWidth < 768;
+                let isDragging = false, startY = 0, currentDelta = 0;
                 const onDown = (e) => {
                     isDragging = true;
                     startY = e.touches ? e.touches[0].clientY : e.clientY;
-                    startMargin = parseInt(_contentEl.style.marginTop || '0', 10);
+                    currentDelta = 0;
                     _contentEl.style.transition = 'none';
                     document.addEventListener('mousemove', onMove);
                     document.addEventListener('mouseup', onUp);
@@ -1228,8 +1229,15 @@ onDOMReady(() => {
                     if (e.cancelable) e.preventDefault();
                     const y = e.touches ? e.touches[0].clientY : e.clientY;
                     const delta = y - startY;
-                    const next = Math.max(-200, Math.min(200, startMargin + delta));
-                    _contentEl.style.marginTop = next + 'px';
+                    currentDelta = delta;
+                    if (isMobileView) {
+                        // Bottom-sheet: only allow downward drag
+                        const downOnly = Math.max(0, delta);
+                        _contentEl.style.transform = `translateY(${downOnly}px)`;
+                    } else {
+                        const next = Math.max(-200, Math.min(200, delta));
+                        _contentEl.style.marginTop = next + 'px';
+                    }
                 };
                 const onUp = () => {
                     isDragging = false;
@@ -1238,6 +1246,15 @@ onDOMReady(() => {
                     document.removeEventListener('mouseup', onUp);
                     document.removeEventListener('touchmove', onMove);
                     document.removeEventListener('touchend', onUp);
+
+                    if (isMobileView && currentDelta > 150) {
+                        // Swipe down past threshold → close modal
+                        close();
+                    } else {
+                        // Reset position
+                        _contentEl.style.transform = '';
+                        _contentEl.style.marginTop = '';
+                    }
                 };
                 _handle.addEventListener('mousedown', onDown);
                 _handle.addEventListener('touchstart', onDown, { passive: true });
@@ -1250,7 +1267,10 @@ onDOMReady(() => {
             modal.querySelector('.modal-content')?.classList.remove('cert-modal-wide');
             // Reset drag position
             const contentEl = modal.querySelector('.modal-content');
-            if (contentEl) contentEl.style.marginTop = '';
+            if (contentEl) {
+                contentEl.style.marginTop = '';
+                contentEl.style.transform = '';
+            }
             modal.setAttribute('aria-hidden', 'true');
             document.body.classList.remove('modal-open');
 

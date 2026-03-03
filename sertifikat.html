@@ -247,6 +247,61 @@
         transform: none !important;
       }
     }
+
+    /* ─── iOS Safari / Apple Device specific fixes ─── */
+    /* iOS Safari requires explicit width/height for object-fit to work correctly */
+    .cert-thumb-img {
+      width: 100%;
+      height: 100%;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      /* Force GPU layer on Safari */
+    }
+
+    /* Ensure cert gallery doesn't overflow on small screens */
+    .cert-gallery {
+      overflow: hidden;
+    }
+
+    /* Fix modal overflow on iOS */
+    .modal-content {
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Sertifikat page mobile padding fix */
+    @media (max-width: 767px) {
+      #main-content {
+        padding-top: 80px !important;
+        padding-bottom: 2rem !important;
+      }
+
+      .cert-thumb-wrapper {
+        height: 190px;
+      }
+
+      /* Text adjustments for small screens */
+      .text-center.mb-16 {
+        margin-bottom: 2rem;
+      }
+
+      .cert-gallery {
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #main-content {
+        padding-top: 70px !important;
+      }
+
+      .cert-thumb-wrapper {
+        height: 160px;
+      }
+
+      .cert-card-body {
+        padding: 1rem;
+      }
+    }
   </style>
 </head>
 
@@ -287,13 +342,14 @@
     <div class="loader-core">
       <div class="loader-ring-wrap">
         <svg class="loader-ring-svg" viewBox="0 0 140 140" fill="none" aria-hidden="true">
-          <circle class="loader-ring-track" cx="70" cy="70" r="58" stroke-width="2.5"/>
-          <circle id="loader-ring-bar" class="loader-ring-fill" cx="70" cy="70" r="58"
-            stroke-width="2.5" stroke-dasharray="364.42" stroke-dashoffset="364.42"/>
-          <circle id="loader-ring-dot" class="loader-ring-dot" cx="70" cy="12" r="4"/>
+          <circle class="loader-ring-track" cx="70" cy="70" r="58" stroke-width="2.5" />
+          <circle id="loader-ring-bar" class="loader-ring-fill" cx="70" cy="70" r="58" stroke-width="2.5"
+            stroke-dasharray="364.42" stroke-dashoffset="364.42" />
+          <circle id="loader-ring-dot" class="loader-ring-dot" cx="70" cy="12" r="4" />
         </svg>
         <div class="loader-logo-inner" aria-label="SAJ.">
-          <span class="ll ll-s">S</span><span class="ll ll-a">A</span><span class="ll ll-j">J</span><span class="ll ll-dot">.</span>
+          <span class="ll ll-s">S</span><span class="ll ll-a">A</span><span class="ll ll-j">J</span><span
+            class="ll ll-dot">.</span>
         </div>
       </div>
 
@@ -345,7 +401,7 @@
   </header>
 
   <!-- Main Content -->
-  <main class="container max-w-7xl mx-auto px-4 py-32" id="main-content">
+  <main class="container max-w-7xl mx-auto px-4 pt-24 pb-16 md:pt-32 md:pb-24" id="main-content">
 
     <!-- Page Header -->
     <div class="text-center mb-16">
@@ -591,12 +647,10 @@
   </footer>
 
   <!-- Modal for cert detail (used by script.js) -->
-  <div id="project-modal" class="modal fixed inset-0 z-50 items-center justify-center bg-black/50 backdrop-blur-sm"
-    role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modal-title">
-    <div class="modal-content bg-white dark:bg-gray-900 rounded-2xl max-w-4xl mx-auto p-6 md:p-8 shadow-2xl relative">
-      <button id="modal-close-btn"
-        class="modal-close absolute top-3 right-3 md:top-4 md:right-4 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 transition-colors text-3xl z-[9999] cursor-pointer pointer-events-auto shadow-md"
-        aria-label="Tutup"
+  <div id="project-modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true"
+    aria-labelledby="modal-title">
+    <div class="modal-content">
+      <button id="modal-close-btn" class="modal-close" aria-label="Tutup Sertifikat"
         onclick="this.closest('.modal').classList.remove('open'); document.body.classList.remove('modal-open');">&times;</button>
       <div id="modal-body"></div>
     </div>
