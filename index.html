@@ -6,6 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <!-- Inline theme detection: prevents light-mode flash on page load -->
+    <script>
+        (function () {
+            var saved = localStorage.getItem('theme');
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (saved === 'dark' || (!saved && prefersDark)) {
+                document.documentElement.classList.add('dark');
+            } else if (saved === 'light') {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
+
     <title>Sutan Arlie Johan | Portofolio Teknologi Informasi</title>
     <meta name="description"
         content="Portofolio pribadi Sutan Arlie Johan, seorang mahasiswa Teknologi Informasi di UBSI Margonda dengan spesialisasi dalam pengembangan web dan proyek inovatif seperti 'Trash Point'.">
@@ -18,9 +31,9 @@
     <meta property="og:description"
         content="Jelajahi proyek, skill, dan pengalaman Sutan Arlie Johan, seorang inovator muda di bidang Teknologi Informasi.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://sutanarlie.example.com/">
-    <meta property="og:image" content="https://sutanarlie.example.com/assets/og-image.jpg">
-    <meta property="og:image:alt" content="Sutan Arlie Johan di depan kode proyeknya">
+    <meta property="og:url" content="https://portofolio-sutan.vercel.app/">
+    <meta property="og:image" content="https://portofolio-sutan.vercel.app/HKI.jpeg">
+    <meta property="og:image:alt" content="Sutan Arlie Johan - Portofolio Teknologi Informasi">
     <meta property="og:locale" content="id_ID">
     <meta property="og:site_name" content="Portofolio Sutan Arlie Johan">
 
@@ -28,10 +41,10 @@
     <meta name="twitter:title" content="Sutan Arlie Johan | Portofolio Teknologi Informasi">
     <meta name="twitter:description"
         content="Portofolio pribadi Sutan Arlie Johan, mahasiswa TI yang berfokus pada solusi inovatif.">
-    <meta name="twitter:image" content="https://sutanarlie.example.com/assets/twitter-card-image.jpg">
+    <meta name="twitter:image" content="https://portofolio-sutan.vercel.app/HKI.jpeg">
 
-    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
-    <meta name="theme-color" content="#f0f0f0" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#060b18" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
     <link rel="apple-touch-icon" href="/sutanpixel.png">
 
     <link rel="icon" type="image/png" href="/sutanpixel.png">
@@ -241,16 +254,17 @@
             <div class="loader-ring-wrap">
                 <svg class="loader-ring-svg" viewBox="0 0 140 140" fill="none" aria-hidden="true">
                     <!-- Faint track -->
-                    <circle class="loader-ring-track" cx="70" cy="70" r="58" stroke-width="2.5"/>
+                    <circle class="loader-ring-track" cx="70" cy="70" r="58" stroke-width="2.5" />
                     <!-- Animated fill -->
-                    <circle id="loader-ring-bar" class="loader-ring-fill" cx="70" cy="70" r="58"
-                        stroke-width="2.5" stroke-dasharray="364.42" stroke-dashoffset="364.42"/>
+                    <circle id="loader-ring-bar" class="loader-ring-fill" cx="70" cy="70" r="58" stroke-width="2.5"
+                        stroke-dasharray="364.42" stroke-dashoffset="364.42" />
                     <!-- Glow dot on tip -->
-                    <circle id="loader-ring-dot" class="loader-ring-dot" cx="70" cy="12" r="4"/>
+                    <circle id="loader-ring-dot" class="loader-ring-dot" cx="70" cy="12" r="4" />
                 </svg>
                 <!-- SAJ. logo inside ring -->
                 <div class="loader-logo-inner" aria-label="SAJ.">
-                    <span class="ll ll-s">S</span><span class="ll ll-a">A</span><span class="ll ll-j">J</span><span class="ll ll-dot">.</span>
+                    <span class="ll ll-s">S</span><span class="ll ll-a">A</span><span class="ll ll-j">J</span><span
+                        class="ll ll-dot">.</span>
                 </div>
             </div>
 
@@ -297,13 +311,13 @@
             <div class="nav-actions flex items-center gap-2 md:gap-4">
                 <button id="theme-toggle" aria-label="Toggle Dark/Light Mode"
                     class="p-1.5 md:p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                    <svg class="sun-icon w-5 h-5 md:w-6 md:h-6 text-gray-700 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24" fill="currentColor">
+                    <svg class="sun-icon w-5 h-5 md:w-6 md:h-6 text-gray-700 dark:text-gray-300"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path
                             d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 010 1.06l-1.591 1.59a.75.75 0 01-1.06-1.061l1.591-1.59a.75.75 0 011.06 0zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5h2.25a.75.75 0 01.75.75zM17.836 17.894a.75.75 0 011.06 0l1.591 1.59a.75.75 0 01-1.06 1.06l-1.591-1.59a.75.75 0 010-1.06zM12 21.75a.75.75 0 01-.75-.75v-2.25a.75.75 0 011.5 0v2.25a.75.75 0 01-.75-.75zM5.106 17.894a.75.75 0 010-1.06l1.591-1.59a.75.75 0 011.06 1.06l-1.591 1.59a.75.75 0 01-1.06 0zM2.25 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3a.75.75 0 01-.75-.75zM6.106 5.106a.75.75 0 011.06 0l1.591 1.59a.75.75 0 01-1.06 1.06L6.106 6.166a.75.75 0 010-1.06z" />
                     </svg>
-                    <svg class="moon-icon w-5 h-5 md:w-6 md:h-6 text-gray-700 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24" fill="currentColor">
+                    <svg class="moon-icon w-5 h-5 md:w-6 md:h-6 text-gray-700 dark:text-gray-300"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path fill-rule="evenodd"
                             d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 004.463-.948.75.75 0 01.981.634A11.25 11.25 0 0112 21.75c-6.21 0-11.25-5.04-11.25-11.25 0-4.346 2.456-8.053 6.082-9.94a.75.75 0 01.446.108z"
                             clip-rule="evenodd" />
@@ -417,7 +431,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Gradient Orbs for Enhanced Background -->
             <div class="gradient-orb"></div>
             <div class="gradient-orb"></div>
@@ -1229,11 +1243,12 @@
     <button id="scroll-to-top" aria-label="Kembali ke atas"
         class="scroll-to-top-btn fixed bottom-6 right-6 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center opacity-0 pointer-events-none">
         <svg class="scroll-progress-ring" viewBox="0 0 56 56">
-            <circle class="scroll-progress-ring-bg" cx="28" cy="28" r="24" fill="none" stroke-width="3"/>
-            <circle id="scroll-ring-progress" class="scroll-progress-ring-fill" cx="28" cy="28" r="24" fill="none" stroke-width="3"
-                stroke-dasharray="150.796" stroke-dashoffset="150.796"/>
+            <circle class="scroll-progress-ring-bg" cx="28" cy="28" r="24" fill="none" stroke-width="3" />
+            <circle id="scroll-ring-progress" class="scroll-progress-ring-fill" cx="28" cy="28" r="24" fill="none"
+                stroke-width="3" stroke-dasharray="150.796" stroke-dashoffset="150.796" />
         </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="scroll-to-top-icon w-4 h-4 md:w-5 md:h-5">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+            class="scroll-to-top-icon w-4 h-4 md:w-5 md:h-5">
             <path
                 d="M11.47 4.72a.75.75 0 011.06 0l3.75 3.75a.75.75 0 01-1.06 1.06L12.75 7.06V19.5a.75.75 0 01-1.5 0V7.06L8.78 9.53a.75.75 0 01-1.06-1.06l3.75-3.75z" />
         </svg>

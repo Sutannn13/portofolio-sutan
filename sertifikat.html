@@ -9,6 +9,41 @@
     content="Koleksi sertifikat dan penghargaan profesional Sutan Arlie Johan, mahasiswa Teknologi Informasi UBSI Margonda.">
   <link rel="icon" type="image/png" href="/sutanpixel.png">
 
+  <!-- Inline theme detection: prevents light-mode flash on page load -->
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      } else if (saved === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
+
+  <!-- OpenGraph Meta Tags -->
+  <meta property="og:title" content="Sertifikat & Penghargaan — Sutan Arlie Johan">
+  <meta property="og:description"
+    content="Koleksi sertifikat dan penghargaan profesional Sutan Arlie Johan, termasuk HKI Kemenkumham RI, MTCNA MikroTik, dan Cisco Cybersecurity.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://portofolio-sutan.vercel.app/sertifikat.html">
+  <meta property="og:image" content="https://portofolio-sutan.vercel.app/Sertifikat-Bootcamp-Sutan-Arlie_page-0001.jpg">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:site_name" content="Portofolio Sutan Arlie Johan">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sertifikat & Penghargaan — Sutan Arlie Johan">
+  <meta name="twitter:description"
+    content="Koleksi sertifikat dan penghargaan profesional Sutan Arlie Johan, mahasiswa TI UBSI Margonda.">
+  <meta name="twitter:image"
+    content="https://portofolio-sutan.vercel.app/Sertifikat-Bootcamp-Sutan-Arlie_page-0001.jpg">
+
+  <!-- Theme Color for browser chrome -->
+  <meta name="theme-color" content="#060b18" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

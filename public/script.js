@@ -28,6 +28,12 @@ onDOMReady(() => {
         gsapReady: false,
     };
 
+    // Detect if we're on the certificate page (used to skip hero-only modules)
+    const _pathname = window.location.pathname.toLowerCase();
+    const isMainPage = !(_pathname.includes('sertifikat') ||
+        _pathname.includes('certificate') ||
+        document.querySelector('body[data-page="certificate"]') !== null);
+
     /* =============================================
        2. DATA
        ============================================= */
@@ -171,8 +177,8 @@ onDOMReady(() => {
                 pathname.includes('certificate') ||
                 document.querySelector('body[data-page="certificate"]') !== null;
 
-            // Fixed durations: 5 s for main portfolio, 3 s for certificate page
-            const DURATION = isCertPage ? 3000 : 5000;
+            // Fixed durations: 3 s for main portfolio, 2 s for certificate page
+            const DURATION = isCertPage ? 2000 : 3000;
 
             const startTime = performance.now();
             let lastStatusIdx = -1;
@@ -316,7 +322,7 @@ onDOMReady(() => {
 
             // Pre-hide hero elements NOW (before loader hides) so there's no
             // opacity:1 → opacity:0 flicker when the entrance timeline starts.
-            HeroAnimations.prepare();
+            if (isMainPage) HeroAnimations.prepare();
 
             // Generic fade-up for sections (.gsap-fade-up)
             document.querySelectorAll('.gsap-fade-up').forEach(el => {
@@ -643,7 +649,9 @@ onDOMReady(() => {
         // Pre-hide hero elements immediately so there's no flash while the
         // loader is active. Called from GSAPAnimations.init() before loader hides.
         const prepare = () => {
-            if (typeof gsap === 'undefined') return;
+            if (typeof gsap === 'undefined' || !isMainPage) return;
+            const heroSection = document.querySelector('#hero');
+            if (!heroSection) return;
             // Set explicit opacity:0 so we control all hero transitions
             gsap.set([
                 '.hero-eyebrow',
@@ -658,7 +666,7 @@ onDOMReady(() => {
         };
 
         const entrance = () => {
-            if (typeof gsap === 'undefined') return;
+            if (typeof gsap === 'undefined' || !isMainPage) return;
             const heroText = document.querySelector('.hero-text');
             if (!heroText) return;
 
@@ -702,6 +710,7 @@ onDOMReady(() => {
        ============================================= */
     const HeroParticles = (() => {
         const init = () => {
+            if (!isMainPage) return;
             const canvas = document.getElementById('hero-particles');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
@@ -840,13 +849,11 @@ onDOMReady(() => {
         const CLICK_THRESHOLD = 5;
 
         const init = () => {
+            if (!isMainPage) return;
             wrapper = document.getElementById('id-card-wrapper');
             holder = document.getElementById('id-card');
 
-            if (!wrapper || !holder) {
-                console.warn('ID Card elements not found');
-                return;
-            }
+            if (!wrapper || !holder) return;
 
             container = holder.querySelector('.id-card-container');
             if (!container) {
@@ -991,6 +998,7 @@ onDOMReady(() => {
        ============================================= */
     const TypingEffect = (() => {
         const init = () => {
+            if (!isMainPage) return;
             const el = document.getElementById('typing-effect');
             if (!el) return;
             const words = ['Sutan Arlie Johan', 'Web Developer', 'IT Enthusiast', 'Backend Developer'];
